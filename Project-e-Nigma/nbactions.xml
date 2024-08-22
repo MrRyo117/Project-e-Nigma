@@ -10,7 +10,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
             </goals>
             <properties>
-                <exec.vmArgs>--module-path"C:\Program Files\Java\jdk-21\lib"--add-modules javafx.controls,javafx.fxml</exec.vmArgs>
+                <exec.vmArgs>--module-path "C:\Program Files\Java\jdk-21\lib" --add-modules javafx.controls,javafx.fxml</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.appArgs></exec.appArgs>
                 <exec.mainClass>${packageClassName}</exec.mainClass>
