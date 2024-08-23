@@ -6,6 +6,9 @@ public class Protoboard {
     Hoyito protoboard[][] = new Hoyito[14][30];
 
     //Metodos
+    public Protoboard() {
+
+    }
 
     public void CambiarCargaBus(int Columna, int Fila){
 
@@ -45,5 +48,8 @@ public class Protoboard {
     }
 
 
-
+    public int length (){
+        int length1 = protoboard.length;
+        return length1;
+    }
 }
