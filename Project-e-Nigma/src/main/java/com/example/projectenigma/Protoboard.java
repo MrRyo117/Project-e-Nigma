@@ -10,6 +10,7 @@ public class Protoboard {
 
     }
 
+
     public void CambiarCargaBus(int Columna, int Fila){
 
         switch (Fila){

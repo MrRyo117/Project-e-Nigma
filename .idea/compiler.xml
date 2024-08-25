@@ -11,6 +11,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Project-e-Nigma (1) (org.example)" />
         <module name="Project-e-Nigma (2) (com.example)" />
+        <module name="Project-e-Nigma" />
       </profile>
     </annotationProcessing>
   </component>
