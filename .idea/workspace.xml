@@ -4,22 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="feb721d2-9174-446b-88a0-01cf5c14d4fb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+
+    <list default="true" id="de489690-f963-4e48-b678-b98be65f9f2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/HelloApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Protoboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Protoboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Project-e-Nigma/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Project-e-Nigma/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/maven/archetype.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/archetype-resources/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/main/java/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/test/java/AppTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,27 +62,18 @@
   &quot;keyToString&quot;: {
     &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Pruebas&quot;,
+
+    &quot;git-widget-placeholder&quot;: &quot;Ignacio&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/pablo/OneDrive/Escritorio/Intento-de-proyecto-Pruebas/proyecxto&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ignac/.m2/repository/com/dlsc/formsfx/formsfx-core/11.6.0/formsfx-core-11.6.0.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.notifications&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\maste\Documents\GitHub\Intento-de-proyecto\Project-e-Nigma\src\main" />
-      <recent name="C:\Users\maste\Documents\GitHub\Intento-de-proyecto\Project-e-Nigma" />
-      <recent name="C:\Users\maste\Documents\GitHub\Intento-de-proyecto\Project-e-Nigma\src" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\pablo\OneDrive\Escritorio\PPAgain\Project-e-Nigma\Project-e-Nigma\src\main\resources\com\example\projectenigma" />
-    </key>
-  </component>
+
   <component name="RunManager">
     <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.projectenigma.HelloApplication" />
