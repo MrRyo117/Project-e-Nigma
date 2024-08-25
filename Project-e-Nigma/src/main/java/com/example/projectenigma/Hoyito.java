@@ -11,9 +11,9 @@ public class Hoyito {
 
     //Contructor
     public Hoyito(){
-        cargaVolt = 0;
-        cargaAmp = 0;
-        estado = false;
+        this.cargaVolt = 0;
+        this.cargaAmp = 0;
+        this.estado = false;
     }
 
     public Hoyito(int cargaVolt, int cargaAmp, boolean estado){
@@ -47,4 +47,7 @@ public class Hoyito {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+
+
 }

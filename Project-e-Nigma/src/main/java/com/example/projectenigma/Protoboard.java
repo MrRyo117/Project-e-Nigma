@@ -3,39 +3,42 @@ package com.example.projectenigma;
 public class Protoboard {
 
     //Atributos
-    Hoyito protoboard[][] = new Hoyito[14][30];
+    Hoyito[][] protoboard = new Hoyito[30][14];
 
     //Metodos
-    public Protoboard() {
 
-    }
-
-
-    public void CambiarCargaBus(int Columna, int Fila){
-
-        switch (Fila){
-            case 0, 12:
-            {
-                //Positivo
-                for (int j = 0; j < Columna; j++){
-                    Hoyito hoyito = new Hoyito(12,12, true);
-                    protoboard[Fila][j] = hoyito;
-                }
-                break;
-            }
-            case 1, 13:
-            {
-                //Negativo
-                for (int j = 0; j < Columna; j++) {
-                    Hoyito hoyito = new Hoyito(12, 12, false);
-                    protoboard[Fila][j] = hoyito;
-                }
-                break;
+    // Crea una matriz llena de hoyitos sin nada
+    public void CrearProtoboard(int fila, int columna){
+        for (int i = 0; i < fila; i++){
+            for (int j = 0; j < columna; j++){
+                Hoyito hoyito = new Hoyito();
+                protoboard[i][j] = hoyito;
             }
         }
     }
 
-    public void CambiarCArgaHoyito(int Columna, int Fila){
+
+    public void CambiarCargaBus(int fila, int columna){
+        //dependiendo del valor de la fila, sabemos si son buses
+        //el metodo crea un hoyito temporal que remplaza al original con los valores modificados
+        switch (fila){
+            case 0, 1, 12, 13:
+            {
+                for (int j = 0; j < columna; j++){
+                    Hoyito temp = new Hoyito(1,1,false);
+                    protoboard[fila][j] = temp;
+                }
+                break;
+            }
+
+        }
+        //cambia el estado del hoyito cual esta conectado con un cable
+        Hoyito temp = new Hoyito(1,1,true);
+        protoboard[fila][columna] = temp;
+    }
+
+    public void CambiarCArgaPistas(int fila, int columna){
+
 
     }
 
@@ -49,8 +52,5 @@ public class Protoboard {
     }
 
 
-    public int length (){
-        int length1 = protoboard.length;
-        return length1;
-    }
+
 }

@@ -13,12 +13,10 @@ public class HelloApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("sample.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
-        stage.setTitle("E-nigma");
+        stage.setTitle("E-nigma …\uD80C\uDC79‿\uD80C\uDC79…");
         stage.setScene(scene);
         stage.show();
 
     }
-
-
 
 }
