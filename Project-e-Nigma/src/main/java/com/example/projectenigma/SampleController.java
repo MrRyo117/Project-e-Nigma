@@ -18,27 +18,39 @@ public class SampleController {
     private Line linea;
 
     private Protoboard Protoboard2 = new Protoboard();
-    private Circle[][] ArCircles = new Circle[14][30];
+    private Circle[][] ArCircles = new Circle[30][14];
 
+    public int tamano_filas = Protoboard2.protoboard.length;
+    public int tamano_columnas =Protoboard2.protoboard[0].length;
 
     @FXML
     protected void inicio() {
 
-        Protoboard2.CrearProtoboard(Protoboard2.protoboard.length,Protoboard2.protoboard[0].length);
-        Protoboard2.CambiarCargaBus(Protoboard2.protoboard.length,Protoboard2.protoboard[0].length);
+        Protoboard2.CrearProtoboard(tamano_filas,tamano_columnas);
+        //Protoboard2.CambiarCargaBus(Protoboard2.protoboard.length,Protoboard2.protoboard[0].length);
 
 
-        for(int i = 0; i < Protoboard2.protoboard.length; i++) {
-            System.out.println("Fila: " + i);
+        for (int i = 0; i < 30; i++){
 
-            for (int j = 0; j < Protoboard2.protoboard[i].length; j++) {
-                System.out.println("Columna: " + j);
-                Circle cicle = new Circle(i*10, j*10, 1);
+            for (int j = 0; j< 14; j++){
+                Circle cicle = new Circle(i*20, j*30, 2);
                 ArCircles[i][j] = cicle;
-
+                AnchorPane.getChildren().add(ArCircles[i][j]);
             }
-            AnchorPane.getChildren().addAll(ArCircles[i]);
         }
+
+
+        /*for(int i = 0; i < tamano_filas; i++) {
+            System.out.println("Filas: " + (i+1));
+            for (int j = 0; j < tamano_columnas; j++) {
+                System.out.println("coordenadsas:" + i+" , "+j);
+                System.out.println("Columnas: " + (j+1));
+                Circle cicle = new Circle(i*20, j*30, 2);
+                ArCircles[i][j] = cicle;
+                AnchorPane.getChildren().add(ArCircles[i][j]);
+            }
+            //AnchorPane.getChildren().addAll(ArCircles[i]);
+        }*/
 
     }
 
@@ -48,5 +60,6 @@ public class SampleController {
         System.out.println("linea posision end y: "+linea.getEndY());
         System.out.println("linea posision start x: "+linea.getStartX());
         System.out.println("linea posision start y: "+linea.getStartY());
+        System.out.println("filas :"+tamano_filas+"\ncolumnas ;"+tamano_columnas);
     }
 }
