@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="666.0" prefWidth="666.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectenigma.SampleController">
+<VBox alignment="CENTER" prefHeight="666.0" prefWidth="666.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectenigma.SampleController">
+
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <AnchorPane fx:id="AnchorPane" prefHeight="568.0" prefWidth="626.0">
-      <children>
-         <Line fx:id="linea" endX="-86.0" endY="17.0" layoutX="200.0" layoutY="31.0" startX="-11.0" startY="-10.0" />
-          <Button layoutX="374.0" layoutY="445.0" onAction="#imprimeline" text="imprime pis linea" />
-         <Button layoutX="127.0" layoutY="445.0" mnemonicParsing="false" onAction="#inicio" text="imprime pos circulos" />
-      </children>
-   </AnchorPane>
+   <AnchorPane fx:id="AnchorPane" minWidth="-Infinity" prefHeight="578.0" prefWidth="1266.0" />
+
+   <Button mnemonicParsing="false" onAction="#inicio" text="imprime pos circulos" />
+    <Button onAction="#imprimeline" text="imprime pis linea" />
+   <Button mnemonicParsing="false" onAction="#Cables" text="Cable" />
+
 
     <Label fx:id="welcomeText" />
+
 </VBox>

@@ -3,7 +3,7 @@ package com.example.projectenigma;
 public class Protoboard {
 
     //Atributos
-    Hoyito[][] protoboard = new Hoyito[30][14];
+    Hoyito[][] protoboard = new Hoyito[32][16];
 
     //Metodos
 
