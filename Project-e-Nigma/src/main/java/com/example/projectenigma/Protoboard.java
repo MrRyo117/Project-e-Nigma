@@ -1,5 +1,11 @@
 package com.example.projectenigma;
 
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Circle;
+import javafx.scene.paint.Color;
+import javafx.scene.layout.AnchorPane;
+import java.awt.*;
+
 public class Protoboard {
 
     //Atributos
@@ -37,7 +43,16 @@ public class Protoboard {
         protoboard[fila][columna] = temp;
     }
 
-    public void CambiarCArgaPistas(int fila, int columna){
+    public void CambiarCArgaPistas(int fila, String columna){
+        if (fila==1 && columna.equals("j")){
+            Circle circle= new Circle(fila,450,7);
+            for(int i=0;i<5;i++) {
+                circle.setCenterX(450);
+                circle.setCenterY(120 + (i * 30));
+                circle.setFill(Color.RED);
+
+            }
+        }
 
 
     }

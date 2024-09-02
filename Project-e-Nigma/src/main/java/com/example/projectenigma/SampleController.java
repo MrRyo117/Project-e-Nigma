@@ -1,6 +1,6 @@
 package com.example.projectenigma;
 
-import javafx.css.Size;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +11,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class SampleController {
@@ -31,6 +32,7 @@ public class SampleController {
 
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
+    private Circle[][] Cargas = new Circle[5][5];
 
     public int tamano_filas = Protoboard2.protoboard.length;
     public int tamano_columnas =Protoboard2.protoboard[0].length;
@@ -379,24 +381,43 @@ public class SampleController {
         Scanner respuesta2 =new Scanner(System.in);
         System.out.println("Ingrese el numero del hoyito: ");
         int  res2= respuesta2.nextInt();
-        //Scanner respuesta3 =new Scanner(System.in);
-        //System.out.println("Ingrese el numero del hoyito: ");
-        //int res3= respuesta3.nextInt();
+        Scanner respuesta3 =new Scanner(System.in);
+        System.out.println("Ingrese el numero del hoyito: ");
+        String res3= respuesta3.nextLine();
         Line cable2 = new Line();
+
+
+
+
+
+
+
+
         if(res1==2){
             cable1.setStroke(Color.BLACK);
             cable1.setStrokeWidth(3);
             cable1.setEndX(930);
             cable1.setEndY(90);
             AnchorPane.getChildren().add(cable1);
-            if(res2==16){
+            if(res2==16 && res3.equals("j")){
                 cable2.setStartY(90);
                 cable2.setStartX(930);
                 cable2.setEndY(150);
                 cable2.setEndX(930);
                 cable2.setStroke(Color.BLACK);
                 cable2.setStrokeWidth(3);
+                int x=1;
+                for(int i=0;i<5;i++) {
+                    Circle circle= new Circle(450,450,7);
+                    circle.setCenterX(930);
+                    circle.setCenterY(120 + (i * 30));
+                    circle.setFill(Color.BLACK);
+                    Cargas[x][i]= circle;
+                    AnchorPane.getChildren().add(Cargas[x][i]);
+
+                }
                 AnchorPane.getChildren().add(cable2);
+
             }
 
         } else if (res1==3) {
@@ -405,6 +426,16 @@ public class SampleController {
             cable1.setEndX(930);
             cable1.setEndY(60);
             AnchorPane.getChildren().add(cable1);
+            if(res2==16){
+                cable2.setStartY(90);
+                cable2.setStartX(930);
+                cable2.setEndY(150);
+                cable2.setEndX(930);
+                cable2.setStroke(Color.BLACK);
+                cable2.setStrokeWidth(3);
+
+                AnchorPane.getChildren().add(cable2);
+            }
 
         } else if (res1==15) {
             cable1.setStroke(Color.BLACK);
@@ -412,6 +443,16 @@ public class SampleController {
             cable1.setEndX(930);
             cable1.setEndY(450);
             AnchorPane.getChildren().add(cable1);
+            if(res2==16){
+                cable2.setStartY(90);
+                cable2.setStartX(930);
+                cable2.setEndY(150);
+                cable2.setEndX(930);
+                cable2.setStroke(Color.BLACK);
+                cable2.setStrokeWidth(3);
+
+                AnchorPane.getChildren().add(cable2);
+            }
 
         } else if (res1==16) {
             cable1.setStroke(Color.RED);
@@ -419,11 +460,18 @@ public class SampleController {
             cable1.setEndX(930);
             cable1.setEndY(470);
             AnchorPane.getChildren().add(cable1);
+            if(res2==16){
+                cable2.setStartY(90);
+                cable2.setStartX(930);
+                cable2.setEndY(150);
+                cable2.setEndX(930);
+                cable2.setStroke(Color.BLACK);
+                cable2.setStrokeWidth(3);
+
+                AnchorPane.getChildren().add(cable2);
+            }
 
         }
-
-
-
 
     }
 }
