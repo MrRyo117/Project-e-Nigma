@@ -362,6 +362,7 @@ public class SampleController {
 
     }
 
+
     @FXML
     public void imprimeline(){
         System.out.println("linea posision end x: "+linea.getEndX());
@@ -379,12 +380,9 @@ public class SampleController {
         System.out.println("Ingrese si el numero del bus (arriba(negativo=2,positivo=3)-abajo(negativo=15,positivo=16: ");
         int res1=respuesta1.nextInt();
         Scanner respuesta2 =new Scanner(System.in);
-        System.out.println("Ingrese el numero del hoyito: ");
+        System.out.println("Ingrese el numero del hoyito del bus: ");
         int  res2= respuesta2.nextInt();
-        Scanner respuesta3 =new Scanner(System.in);
-        System.out.println("Ingrese el numero del hoyito: ");
-        String res3= respuesta3.nextLine();
-        Line cable2 = new Line();
+
 
 
 
@@ -394,22 +392,37 @@ public class SampleController {
 
 
         if(res1==2){
+
+            int colocacion_x = 930; // valor de la posx del hoyito 1 es 930 // se restan 30 para ir a la izquierda
+            int colocacion_y; // utilizar esta variable para cambiar el valor de la posy de los cables
+
+            Scanner respuesta3 =new Scanner(System.in);
+            System.out.println("Ingrese la letra del hoyito: ");
+            String res3= respuesta3.nextLine();
+            Line cable2 = new Line();
+
+
             cable1.setStroke(Color.BLACK);
             cable1.setStrokeWidth(3);
-            cable1.setEndX(930);
+            cable1.setEndX(colocacion_x-((res2-1)*30));
             cable1.setEndY(90);
             AnchorPane.getChildren().add(cable1);
-            if(res2==16 && res3.equals("j")){
+
+            if (res3.equals("j")){
                 cable2.setStartY(90);
-                cable2.setStartX(930);
+                cable2.setStartX(colocacion_x-((res2-1)*30));
+
+                Scanner respuesta4 = new Scanner(System.in);
+                System.out.println("Ingrese el numero del hoyito: ");
+                int res4 = respuesta4.nextInt();
                 cable2.setEndY(150);
-                cable2.setEndX(930);
+                cable2.setEndX(colocacion_x-((res4-1)*30));
                 cable2.setStroke(Color.BLACK);
                 cable2.setStrokeWidth(3);
                 int x=1;
                 for(int i=0;i<5;i++) {
                     Circle circle= new Circle(450,450,7);
-                    circle.setCenterX(930);
+                    circle.setCenterX(colocacion_x-((res4-1)*30));
                     circle.setCenterY(120 + (i * 30));
                     circle.setFill(Color.BLACK);
                     Cargas[x][i]= circle;
@@ -420,7 +433,102 @@ public class SampleController {
 
             }
 
-        } else if (res1==3) {
+            if (res3.equals("i")){
+                cable2.setStartY(90);
+                cable2.setStartX(colocacion_x-((res2-1)*30));
+
+                Scanner respuesta4 = new Scanner(System.in);
+                System.out.println("Ingrese el numero del hoyito: ");
+                int res4 = respuesta4.nextInt();
+                cable2.setEndY(180);
+                cable2.setEndX(colocacion_x-((res4-1)*30));
+                cable2.setStroke(Color.BLACK);
+                cable2.setStrokeWidth(3);
+                int x=1;
+                for(int i=0;i<5;i++) {
+                    Circle circle= new Circle(450,450,7);
+                    circle.setCenterX(colocacion_x-((res4-1)*30));
+                    circle.setCenterY(120 + (i * 30));
+                    circle.setFill(Color.BLACK);
+                    Cargas[x][i]= circle;
+                    AnchorPane.getChildren().add(Cargas[x][i]);
+
+                }
+                AnchorPane.getChildren().add(cable2);
+            }
+            if (res3.equals("h")){
+                cable2.setStartY(90);
+                cable2.setStartX(colocacion_x-((res2-1)*30));
+
+                Scanner respuesta4 = new Scanner(System.in);
+                System.out.println("Ingrese el numero del hoyito: ");
+                int res4 = respuesta4.nextInt();
+                cable2.setEndY(210);
+                cable2.setEndX(colocacion_x-((res4-1)*30));
+                cable2.setStroke(Color.BLACK);
+                cable2.setStrokeWidth(3);
+                int x=1;
+                for(int i=0;i<5;i++) {
+                    Circle circle= new Circle(450,450,7);
+                    circle.setCenterX(colocacion_x-((res4-1)*30));
+                    circle.setCenterY(120 + (i * 30));
+                    circle.setFill(Color.BLACK);
+                    Cargas[x][i]= circle;
+                    AnchorPane.getChildren().add(Cargas[x][i]);
+
+                }
+                AnchorPane.getChildren().add(cable2);
+            }
+            if (res3.equals("g")){
+                cable2.setStartY(90);
+                cable2.setStartX(colocacion_x-((res2-1)*30));
+
+                Scanner respuesta4 = new Scanner(System.in);
+                System.out.println("Ingrese el numero del hoyito: ");
+                int res4 = respuesta4.nextInt();
+                cable2.setEndY(230);
+                cable2.setEndX(colocacion_x-((res4-1)*30));
+                cable2.setStroke(Color.BLACK);
+                cable2.setStrokeWidth(3);
+                int x=1;
+                for(int i=0;i<5;i++) {
+                    Circle circle= new Circle(450,450,7);
+                    circle.setCenterX(colocacion_x-((res4-1)*30));
+                    circle.setCenterY(120 + (i * 30));
+                    circle.setFill(Color.BLACK);
+                    Cargas[x][i]= circle;
+                    AnchorPane.getChildren().add(Cargas[x][i]);
+
+                }
+                AnchorPane.getChildren().add(cable2);
+            }
+            if (res3.equals("f")){
+                cable2.setStartY(90);
+                cable2.setStartX(colocacion_x-((res2-1)*30));
+
+                Scanner respuesta4 = new Scanner(System.in);
+                System.out.println("Ingrese el numero del hoyito: ");
+                int res4 = respuesta4.nextInt();
+                cable2.setEndY(250);
+                cable2.setEndX(colocacion_x-((res4-1)*30));
+                cable2.setStroke(Color.BLACK);
+                cable2.setStrokeWidth(3);
+                int x=1;
+                for(int i=0;i<5;i++) {
+                    Circle circle= new Circle(450,450,7);
+                    circle.setCenterX(colocacion_x-((res4-1)*30));
+                    circle.setCenterY(120 + (i * 30));
+                    circle.setFill(Color.BLACK);
+                    Cargas[x][i]= circle;
+                    AnchorPane.getChildren().add(Cargas[x][i]);
+
+                }
+                AnchorPane.getChildren().add(cable2);
+            }
+
+
+
+        /*} else if (res1==3) {
             cable1.setStroke(Color.RED);
             cable1.setStrokeWidth(3);
             cable1.setEndX(930);
@@ -469,7 +577,7 @@ public class SampleController {
                 cable2.setStrokeWidth(3);
 
                 AnchorPane.getChildren().add(cable2);
-            }
+            }*/
 
         }
 
