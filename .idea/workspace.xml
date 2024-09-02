@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de489690-f963-4e48-b678-b98be65f9f2c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_08_2024_21_27_[Changes]/HelloApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_08_2024_21_27_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_24_08_2024_21_27__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Protoboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Protoboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,20 +52,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Martin&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ignac/.m2/repository/com/dlsc/formsfx/formsfx-core/11.6.0/formsfx-core-11.6.0.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.notifications&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Ignacio-2",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "21",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/ignac/.m2/repository/com/dlsc/formsfx/formsfx-core/11.6.0/formsfx-core-11.6.0.jar",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.notifications"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.projectenigma.HelloApplication" />
