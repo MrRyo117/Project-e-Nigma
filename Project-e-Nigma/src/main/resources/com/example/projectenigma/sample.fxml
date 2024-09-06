@@ -14,7 +14,6 @@
    <AnchorPane fx:id="AnchorPane" minWidth="-Infinity" prefHeight="578.0" prefWidth="1266.0" />
 
    <Button mnemonicParsing="false" onAction="#inicio" text="imprime pos circulos" />
-    <Button onAction="#imprimeline" text="imprime pis linea" />
    <Button mnemonicParsing="false" onAction="#Cables" text="Cable" />
 
 
