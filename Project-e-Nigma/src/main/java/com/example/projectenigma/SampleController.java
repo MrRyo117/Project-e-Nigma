@@ -4,6 +4,7 @@ package com.example.projectenigma;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -28,6 +29,8 @@ public class SampleController {
     private Line linea;
     @FXML
     private Rectangle rectangle;
+    @FXML
+    private TextArea textArea;
 
 
     private Protoboard Protoboard2 = new Protoboard();
@@ -164,8 +167,6 @@ public class SampleController {
         label3.setFont(Font.font(15));
         label3.setRotate(-90);
         AnchorPane.getChildren().addAll(label3);
-        System.out.println(label3.getText());
-        System.out.println(label3.getLayoutY());
 
         Label label4=new Label();
         label4.setLayoutX(25);
@@ -175,8 +176,6 @@ public class SampleController {
         label4.setFont(Font.font(15));
         label4.setRotate(-90);
         AnchorPane.getChildren().addAll(label4);
-        System.out.println(label4.getText());
-        System.out.println(label4.getLayoutY());
 
         Label label5=new Label();
         label5.setLayoutX(25);
@@ -186,8 +185,6 @@ public class SampleController {
         label5.setFont(Font.font(15));
         label5.setRotate(-90);
         AnchorPane.getChildren().addAll(label5);
-        System.out.println(label5.getText());
-        System.out.println(label5.getLayoutY());
 
         Label label6=new Label();
         label6.setLayoutX(25);
@@ -197,8 +194,6 @@ public class SampleController {
         label6.setFont(Font.font(15));
         label6.setRotate(-90);
         AnchorPane.getChildren().addAll(label6);
-        System.out.println(label6.getText());
-        System.out.println(label6.getLayoutY());
 
         Label label7=new Label();
         label7.setLayoutX(25);
@@ -208,8 +203,6 @@ public class SampleController {
         label7.setFont(Font.font(15));
         label7.setRotate(-90);
         AnchorPane.getChildren().addAll(label7);
-        System.out.println(label7.getText());
-        System.out.println(label7.getLayoutY());
 
         Label label8=new Label();
         label8.setLayoutX(28);
@@ -219,8 +212,6 @@ public class SampleController {
         label8.setFont(Font.font(15));
         label8.setRotate(-90);
         AnchorPane.getChildren().addAll(label8);
-        System.out.println(label8.getText());
-        System.out.println(label8.getLayoutY());
 
         Label label9=new Label();
         label9.setLayoutX(25);
@@ -230,8 +221,6 @@ public class SampleController {
         label9.setFont(Font.font(15));
         label9.setRotate(-90);
         AnchorPane.getChildren().addAll(label9);
-        System.out.println(label9.getText());
-        System.out.println(label9.getLayoutY());
 
         Label label10=new Label();
         label10.setLayoutX(25);
@@ -241,8 +230,6 @@ public class SampleController {
         label10.setFont(Font.font(15));
         label10.setRotate(-90);
         AnchorPane.getChildren().addAll(label10);
-        System.out.println(label10.getText());
-        System.out.println(label10.getLayoutY());
 
         Label label11=new Label();
         label11.setLayoutX(25);
@@ -252,8 +239,6 @@ public class SampleController {
         label11.setFont(Font.font(15));
         label11.setRotate(-90);
         AnchorPane.getChildren().addAll(label11);
-        System.out.println(label11.getText());
-        System.out.println(label11.getLayoutY());
 
         Label label12=new Label();
         label12.setLayoutX(25);
@@ -263,8 +248,6 @@ public class SampleController {
         label12.setFont(Font.font(15));
         label12.setRotate(-90);
         AnchorPane.getChildren().addAll(label12);
-        System.out.println(label12.getText());
-        System.out.println(label12.getLayoutY());
 
         //abecedario lado derecho
 
@@ -363,27 +346,52 @@ public class SampleController {
 
             for (int j = 2; j< 16; j++){
 
-                Circle cicle = new Circle(i, j, 7);
+                Circle circle = new Circle(i, j, 7);
 
                 if(j==4 || j==9 || j==14){
                     AuxSpace+=20;
                 }
 
-                cicle.setCenterX(i*30);
-                cicle.setCenterY(j*30+AuxSpace);
-                System.out.println(cicle.getCenterY());
-                cicle.setStroke(Color.BLACK);
-                cicle.setFill(Color.WHITE);
+                circle.setCenterX(i*30);
+                circle.setCenterY(j*30+AuxSpace);
+                System.out.println(circle.getCenterY());
+                circle.setStroke(Color.BLACK);
+                circle.setFill(Color.WHITE);
+                circle.setOnMouseClicked(event -> ClickCirculo(circle));
 
-                ArCircles[i][j] = cicle;
+                ArCircles[i][j] = circle;
                 AnchorPane.getChildren().add(ArCircles[i][j]);
 
             }
             AuxSpace=0;
         }
+
     }
 
+    private void ClickCirculo(Circle circle){
+        int Columna = 0;
+        int Fila = 0;
 
+        Columna = (((int) circle.getCenterX())- 30) / 30;
+
+        System.out.println("Columna: " + Columna);
+        System.out.println(circle.getCenterY());
+        if ((int) circle.getCenterY() <= 90){
+            Fila = ( (int) circle.getCenterY() - 60) / 30;
+        }
+        else if ( (int) circle.getCenterY() > 90  && (int) circle.getCenterY() <= 260){
+            Fila = ( (int) circle.getCenterY() -80) / 30;
+        }
+        else if ( (int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480){
+            Fila = ( (int) circle.getCenterY() -100) / 30;
+        }
+        else {
+            Fila = ( (int) circle.getCenterY() -120) / 30;
+        }
+        Fila += 1;
+        System.out.println("Fila : " + Fila);
+
+    }
     @FXML
     public void imprimeline(){
         System.out.println("linea posision end x: "+linea.getEndX());
@@ -392,6 +400,7 @@ public class SampleController {
         System.out.println("linea posision start y: "+linea.getStartY());
         System.out.println("filas :"+tamano_filas+"\ncolumnas ;"+tamano_columnas);
     }
+
     @FXML
     public void Cables(){
         Line cable1 = new Line();
@@ -403,14 +412,6 @@ public class SampleController {
         Scanner respuesta2 =new Scanner(System.in);
         System.out.println("Ingrese el numero del hoyito del bus: ");
         int  res2= respuesta2.nextInt();
-
-
-
-
-
-
-
-
 
         if(res1==2){
 
@@ -548,7 +549,6 @@ public class SampleController {
             }
 
 
-
         /*} else if (res1==3) {
             cable1.setStroke(Color.RED);
             cable1.setStrokeWidth(3);
@@ -601,6 +601,5 @@ public class SampleController {
             }*/
 
         }
-
     }
 }
