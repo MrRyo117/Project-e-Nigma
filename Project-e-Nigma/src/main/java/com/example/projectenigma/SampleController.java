@@ -4,6 +4,7 @@ package com.example.projectenigma;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -28,6 +29,8 @@ public class SampleController {
     private Line linea;
     @FXML
     private Rectangle rectangle;
+    @FXML
+    private TextArea textArea;
 
 
     private Protoboard Protoboard2 = new Protoboard();
@@ -51,6 +54,7 @@ public class SampleController {
         Rectangulo.setY(-10);
         Rectangulo.setFill(Color.LIGHTGRAY);
         Rectangulo.setStroke(Color.BLACK);
+        Rectangulo.setOnMouseClicked(event -> funcion(Rectangulo));
         AnchorPane.getChildren().addAll(Rectangulo);
 
         //creacion dibujo bateria
@@ -94,7 +98,7 @@ public class SampleController {
         //Signo "-" arriba izq
         Label label2=new Label();
         label2.setLayoutX(25);
-        label2.setLayoutY(70);
+        label2.setLayoutY(65);
         label2.setText("-");
         label2.setTextFill(Color.BLACK);
         label2.setFont(Font.font(30));
@@ -103,7 +107,7 @@ public class SampleController {
         //Signo "+" Abajo iqz
         Label label23=new Label();
         label23.setLayoutX(20);
-        label23.setLayoutY(440);
+        label23.setLayoutY(458);
         label23.setText("+");
         label23.setTextFill(Color.RED);
         label23.setFont(Font.font(30));
@@ -112,7 +116,7 @@ public class SampleController {
         //Signo "-" Abajo izq
         Label label24=new Label();
         label24.setLayoutX(25);
-        label24.setLayoutY(420);
+        label24.setLayoutY(488);
         label24.setText("-");
         label24.setTextFill(Color.BLACK);
         label24.setFont(Font.font(30));
@@ -139,7 +143,7 @@ public class SampleController {
         //Signo "+" Abajo der
         Label label27=new Label();
         label27.setLayoutX(945);
-        label27.setLayoutY(440);
+        label27.setLayoutY(458);
         label27.setText("+");
         label27.setTextFill(Color.RED);
         label27.setFont(Font.font(30));
@@ -148,7 +152,7 @@ public class SampleController {
         //Signo "-" Abajo der
         Label label28=new Label();
         label28.setLayoutX(950);
-        label28.setLayoutY(420);
+        label28.setLayoutY(488);
         label28.setText("-");
         label28.setTextFill(Color.BLACK);
         label28.setFont(Font.font(30));
@@ -158,7 +162,7 @@ public class SampleController {
 
         Label label3=new Label();
         label3.setLayoutX(25);
-        label3.setLayoutY(380);
+        label3.setLayoutY(418);
         label3.setText("a");
         label3.setTextFill(Color.BLACK);
         label3.setFont(Font.font(15));
@@ -167,7 +171,7 @@ public class SampleController {
 
         Label label4=new Label();
         label4.setLayoutX(25);
-        label4.setLayoutY(350);
+        label4.setLayoutY(388);
         label4.setText("b");
         label4.setTextFill(Color.BLACK);
         label4.setFont(Font.font(15));
@@ -176,7 +180,7 @@ public class SampleController {
 
         Label label5=new Label();
         label5.setLayoutX(25);
-        label5.setLayoutY(320);
+        label5.setLayoutY(358);
         label5.setText("c");
         label5.setTextFill(Color.BLACK);
         label5.setFont(Font.font(15));
@@ -185,7 +189,7 @@ public class SampleController {
 
         Label label6=new Label();
         label6.setLayoutX(25);
-        label6.setLayoutY(305);
+        label6.setLayoutY(328);
         label6.setText("d");
         label6.setTextFill(Color.BLACK);
         label6.setFont(Font.font(15));
@@ -194,7 +198,7 @@ public class SampleController {
 
         Label label7=new Label();
         label7.setLayoutX(25);
-        label7.setLayoutY(290);
+        label7.setLayoutY(298);
         label7.setText("e");
         label7.setTextFill(Color.BLACK);
         label7.setFont(Font.font(15));
@@ -203,7 +207,7 @@ public class SampleController {
 
         Label label8=new Label();
         label8.setLayoutX(28);
-        label8.setLayoutY(230);
+        label8.setLayoutY(248);
         label8.setText("f");
         label8.setTextFill(Color.BLACK);
         label8.setFont(Font.font(15));
@@ -212,7 +216,7 @@ public class SampleController {
 
         Label label9=new Label();
         label9.setLayoutX(25);
-        label9.setLayoutY(200);
+        label9.setLayoutY(218);
         label9.setText("g");
         label9.setTextFill(Color.BLACK);
         label9.setFont(Font.font(15));
@@ -221,7 +225,7 @@ public class SampleController {
 
         Label label10=new Label();
         label10.setLayoutX(25);
-        label10.setLayoutY(170);
+        label10.setLayoutY(188);
         label10.setText("h");
         label10.setTextFill(Color.BLACK);
         label10.setFont(Font.font(15));
@@ -230,7 +234,7 @@ public class SampleController {
 
         Label label11=new Label();
         label11.setLayoutX(25);
-        label11.setLayoutY(155);
+        label11.setLayoutY(158);
         label11.setText("i");
         label11.setTextFill(Color.BLACK);
         label11.setFont(Font.font(15));
@@ -239,7 +243,7 @@ public class SampleController {
 
         Label label12=new Label();
         label12.setLayoutX(25);
-        label12.setLayoutY(140);
+        label12.setLayoutY(128);
         label12.setText("j");
         label12.setTextFill(Color.BLACK);
         label12.setFont(Font.font(15));
@@ -250,7 +254,7 @@ public class SampleController {
 
         Label label13=new Label();
         label13.setLayoutX(950);
-        label13.setLayoutY(380);
+        label13.setLayoutY(418);
         label13.setText("a");
         label13.setTextFill(Color.BLACK);
         label13.setFont(Font.font(15));
@@ -259,7 +263,7 @@ public class SampleController {
 
         Label label14=new Label();
         label14.setLayoutX(950);
-        label14.setLayoutY(350);
+        label14.setLayoutY(388);
         label14.setText("b");
         label14.setTextFill(Color.BLACK);
         label14.setFont(Font.font(15));
@@ -268,7 +272,7 @@ public class SampleController {
 
         Label label15=new Label();
         label15.setLayoutX(950);
-        label15.setLayoutY(320);
+        label15.setLayoutY(358);
         label15.setText("c");
         label15.setTextFill(Color.BLACK);
         label15.setFont(Font.font(15));
@@ -277,7 +281,7 @@ public class SampleController {
 
         Label label16=new Label();
         label16.setLayoutX(950);
-        label16.setLayoutY(305);
+        label16.setLayoutY(328);
         label16.setText("d");
         label16.setTextFill(Color.BLACK);
         label16.setFont(Font.font(15));
@@ -286,7 +290,7 @@ public class SampleController {
 
         Label label17=new Label();
         label17.setLayoutX(950);
-        label17.setLayoutY(290);
+        label17.setLayoutY(298);
         label17.setText("e");
         label17.setTextFill(Color.BLACK);
         label17.setFont(Font.font(15));
@@ -295,7 +299,7 @@ public class SampleController {
 
         Label label18=new Label();
         label18.setLayoutX(950);
-        label18.setLayoutY(230);
+        label18.setLayoutY(248);
         label18.setText("f");
         label18.setTextFill(Color.BLACK);
         label18.setFont(Font.font(15));
@@ -304,7 +308,7 @@ public class SampleController {
 
         Label label19=new Label();
         label19.setLayoutX(945);
-        label19.setLayoutY(200);
+        label19.setLayoutY(218);
         label19.setText("g");
         label19.setTextFill(Color.BLACK);
         label19.setFont(Font.font(15));
@@ -313,7 +317,7 @@ public class SampleController {
 
         Label label20=new Label();
         label20.setLayoutX(950);
-        label20.setLayoutY(170);
+        label20.setLayoutY(188);
         label20.setText("h");
         label20.setTextFill(Color.BLACK);
         label20.setFont(Font.font(15));
@@ -322,7 +326,7 @@ public class SampleController {
 
         Label label21=new Label();
         label21.setLayoutX(950);
-        label21.setLayoutY(155);
+        label21.setLayoutY(158);
         label21.setText("i");
         label21.setTextFill(Color.BLACK);
         label21.setFont(Font.font(15));
@@ -331,38 +335,68 @@ public class SampleController {
 
         Label label22=new Label();
         label22.setLayoutX(950);
-        label22.setLayoutY(140);
+        label22.setLayoutY(128);
         label22.setText("j");
         label22.setTextFill(Color.BLACK);
         label22.setFont(Font.font(15));
         label22.setRotate(-90);
         AnchorPane.getChildren().addAll(label22);
 
-
+        int AuxSpace = 0;
         for (int i = 2; i < 32; i++){
-            for (int j = 2; j< 16; j++){
-                Circle cicle = new Circle(i, j, 7);
-                if(j==4 || j==9 || j==14){
-                    cicle.setCenterY((j*30)+50);
-                    cicle.setCenterX(i*30);
 
-                }else{
-                    cicle.setCenterX(i*30);
-                    cicle.setCenterY(j*30);
+            for (int j = 2; j< 16; j++){
+
+                Circle circle = new Circle(i, j, 7);
+
+                if(j==4 || j==9 || j==14){
+                    AuxSpace+=20;
                 }
-                cicle.setStroke(Color.BLACK);
-                cicle.setFill(Color.WHITE);
-                ArCircles[i][j] = cicle;
+
+                circle.setCenterX(i*30);
+                circle.setCenterY(j*30+AuxSpace);
+                System.out.println(circle.getCenterY());
+                circle.setStroke(Color.BLACK);
+                circle.setFill(Color.WHITE);
+                circle.setOnMouseClicked(event -> ClickCirculo(circle));
+
+                ArCircles[i][j] = circle;
                 AnchorPane.getChildren().add(ArCircles[i][j]);
 
             }
+            AuxSpace=0;
         }
-
-
 
     }
 
+    private void ClickCirculo(Circle circle){
+        int Columna = 0;
+        int Fila = 0;
 
+        Columna = (((int) circle.getCenterX())- 30) / 30;
+
+        System.out.println("Columna: " + Columna);
+        System.out.println(circle.getCenterY());
+        if ((int) circle.getCenterY() <= 90){
+            Fila = ( (int) circle.getCenterY() - 60) / 30;
+        }
+        else if ( (int) circle.getCenterY() > 90  && (int) circle.getCenterY() <= 260){
+            Fila = ( (int) circle.getCenterY() -80) / 30;
+        }
+        else if ( (int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480){
+            Fila = ( (int) circle.getCenterY() -100) / 30;
+        }
+        else {
+            Fila = ( (int) circle.getCenterY() -120) / 30;
+        }
+        Fila += 1;
+        System.out.println("Fila : " + Fila);
+
+    }
+
+    public void funcion (Rectangle rectangulo){
+        System.out.println("AaA");
+    }
     @FXML
     public void imprimeline(){
         System.out.println("linea posision end x: "+linea.getEndX());
@@ -371,6 +405,7 @@ public class SampleController {
         System.out.println("linea posision start y: "+linea.getStartY());
         System.out.println("filas :"+tamano_filas+"\ncolumnas ;"+tamano_columnas);
     }
+    
     @FXML
     public void Cables(){
         Line cable1 = new Line();
@@ -382,14 +417,6 @@ public class SampleController {
         Scanner respuesta2 =new Scanner(System.in);
         System.out.println("Ingrese el numero del hoyito del bus: ");
         int  res2= respuesta2.nextInt();
-
-
-
-
-
-
-
-
 
         if(res1==2){
 
@@ -527,7 +554,6 @@ public class SampleController {
             }
 
 
-
         /*} else if (res1==3) {
             cable1.setStroke(Color.RED);
             cable1.setStrokeWidth(3);
@@ -580,6 +606,5 @@ public class SampleController {
             }*/
 
         }
-
     }
 }
