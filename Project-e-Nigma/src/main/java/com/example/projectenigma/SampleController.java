@@ -54,6 +54,7 @@ public class SampleController {
         Rectangulo.setY(-10);
         Rectangulo.setFill(Color.LIGHTGRAY);
         Rectangulo.setStroke(Color.BLACK);
+        Rectangulo.setOnMouseClicked(event -> funcion(Rectangulo));
         AnchorPane.getChildren().addAll(Rectangulo);
 
         //creacion dibujo bateria
@@ -392,6 +393,10 @@ public class SampleController {
         System.out.println("Fila : " + Fila);
 
     }
+
+    public void funcion (Rectangle rectangulo){
+        System.out.println("AaA");
+    }
     @FXML
     public void imprimeline(){
         System.out.println("linea posision end x: "+linea.getEndX());
@@ -400,7 +405,7 @@ public class SampleController {
         System.out.println("linea posision start y: "+linea.getStartY());
         System.out.println("filas :"+tamano_filas+"\ncolumnas ;"+tamano_columnas);
     }
-
+    
     @FXML
     public void Cables(){
         Line cable1 = new Line();
