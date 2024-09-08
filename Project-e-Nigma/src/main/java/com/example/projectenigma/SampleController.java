@@ -38,6 +38,7 @@ public class SampleController {
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
     private Circle[][] Cargas = new Circle[5][5];
+    private int[][] registro = new int[2][2];
 
     public int tamano_filas = Protoboard2.protoboard.length;
     public int tamano_columnas =Protoboard2.protoboard[0].length;
@@ -56,7 +57,6 @@ public class SampleController {
         Rectangulo.setY(-10);
         Rectangulo.setFill(Color.LIGHTGRAY);
         Rectangulo.setStroke(Color.BLACK);
-        Rectangulo.setOnMouseClicked(event -> funcion(Rectangulo));
         AnchorPane.getChildren().addAll(Rectangulo);
 
         //creacion dibujo bateria
@@ -68,6 +68,7 @@ public class SampleController {
         bateria.setFill(Color.BLACK);
         bateria.setStroke(Color.BLACK);
         bateria.setRotate(90);
+        Rectangulo.setOnMouseClicked(event -> funcion(bateria));
         AnchorPane.getChildren().addAll(bateria);
 
         Rectangle bateria2 = new Rectangle();
@@ -321,7 +322,7 @@ public class SampleController {
         AnchorPane.getChildren().add(dib_switch);
     }
 
-    private int[] ClickCirculo(Circle circle){
+    private void ClickCirculo(Circle circle){
         int Columna =0;
         int Fila;
 
@@ -344,11 +345,32 @@ public class SampleController {
         }
         Fila += 1;
         System.out.println("Fila : " + Fila);
-        return new int[]{Fila,Columna};
+
+        System.out.println(registro[0][0]);
+
+        if (registro[0][0]== 0){
+
+            registro[0][0] = Columna;
+            registro[0][1] = Fila;
+        }
+
+        else if (registro[1][0] == 0){
+
+            registro[1][0] = Columna;
+            registro[1][1] = Fila;
+        }
+
+
+        else {
+            registro[0][0] = registro[1][0];
+            registro[0][1] = registro[1][1];
+            registro[1][0] = Columna;
+            registro[1][1] = Fila;
+        }
 
     }
 
-    public void funcion (Rectangle rectangulo){
+    public void funcion (Rectangle bateria){
         System.out.println("AaA");
     }
 
@@ -356,29 +378,21 @@ public class SampleController {
 
     @FXML
     public void Cables(){
-        Line cable1 = new Line();
-        cable1.setStroke(Color.BLACK);
-        cable1.setStrokeWidth(3);
+
+        Line cable1 = new Line(
+                ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterX(),
+                ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterY(),
+                ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX(),
+                ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY()
+        );
+        
+         cable1.setStroke(Color.BLACK);
+         cable1.setStrokeWidth(3);
+
         AnchorPane.getChildren().add(cable1);
 
-        Circle circle =new Circle(7,Color.RED);
-        circle.setOnMousePressed(event->{
-            int[] InicioLinea= ClickCirculo(circle);
-            cable1.setStartX(InicioLinea[1]*30+30);
-            cable1.setStartY(InicioLinea[0]*30+60);
-            System.out.println(InicioLinea);
-
-        });
-
-        circle.setOnMouseDragged(event->{
-            int[] FinLinea =ClickCirculo(circle);
-            cable1.setEndX(FinLinea[1]*30+30);
-            cable1.setEndY(FinLinea[0]*30+60);
-        });
-        AnchorPane.getChildren().add(circle);
-
-
         }
+
     }
 
 
