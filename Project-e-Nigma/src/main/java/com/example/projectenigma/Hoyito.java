@@ -8,7 +8,6 @@ public class Hoyito {
     private int cargaAmp;
     private boolean estado;
 
-    
 
     //Contructor
     public Hoyito(){
