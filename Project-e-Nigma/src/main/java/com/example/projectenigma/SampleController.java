@@ -1,34 +1,46 @@
 package com.example.projectenigma;
 
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import javax.swing.plaf.metal.MetalIconFactory;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class SampleController {
 
-
+    @FXML
+    private Circle circle;
     @FXML
     private Button iniciar;
     @FXML
     private Button Cable;
     @FXML
-    private Button Led;
-    @FXML
-    private Button Switch;
-    @FXML
     private AnchorPane AnchorPane;
+    @FXML
+    private Line linea;
+    @FXML
+    private Rectangle rectangle;
+    @FXML
+    private TextArea textArea;
+
 
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
+    private Circle[][] Cargas = new Circle[5][5];
     private int[][] registro = new int[2][2];
+
     public int tamano_filas = Protoboard2.protoboard.length;
     public int tamano_columnas = Protoboard2.protoboard[0].length;
 
@@ -88,7 +100,7 @@ public class SampleController {
         bateria.setFill(Color.BLACK);
         bateria.setStroke(Color.BLACK);
         bateria.setRotate(90);
-        bateria.setOnMouseClicked(event -> capturaBateria(33));
+        Rectangulo.setOnMouseClicked(event -> funcion(bateria));
         AnchorPane.getChildren().addAll(bateria);
 
         Rectangle bateria2 = new Rectangle();
@@ -98,7 +110,6 @@ public class SampleController {
         bateria2.setY(120);
         bateria2.setFill(Color.GOLD);
         bateria2.setStroke(Color.BLACK);
-        bateria2.setOnMouseClicked(event -> capturaBateria(34));
         AnchorPane.getChildren().addAll(bateria2);
 
         Label label13 = new Label();
@@ -256,7 +267,6 @@ public class SampleController {
             }
         }
 
-
         //creacion de los numeros parte superior
         for (int i = 1; i <= 30; i++) {
             Label label11 = new Label();
@@ -284,7 +294,7 @@ public class SampleController {
         }
 
 
-        //Dibujo de hoyitos y creacion de matriz registro
+        //Creacion del protoboard
         int AuxSpace = 0;
         for (int i = 2; i < 32; i++) {
 
@@ -346,6 +356,11 @@ public class SampleController {
         Arc semicirculo = new Arc();
         semicirculo.setCenterX(puntoX1 + (puntoX2 - puntoX1) / 2);
         semicirculo.setCenterY((puntoY1 * 2 - puntoY2) - 60);
+
+    public void DibujoLed(){
+        Arc semicirculo= new Arc();
+        semicirculo.setCenterX(1200);
+        semicirculo.setCenterY(500);
         semicirculo.setRadiusX(20);
         semicirculo.setRadiusY(20);
         semicirculo.setStartAngle(0);
@@ -381,7 +396,6 @@ public class SampleController {
 
         led.getChildren().addAll(semicirculo, partebaja, conector2, conector1);
         AnchorPane.getChildren().add(led);
-        Historial.add(2);
     }
 
 
@@ -471,6 +485,54 @@ public class SampleController {
 
     }
 
+    public void funcion (Rectangle bateria){
+        System.out.println("AaA");
+    }
+
+        Columna = (((int) circle.getCenterX())- 30) / 30;
+
+
+        System.out.println("Columna: " + Columna);
+        //System.out.println(circle.getCenterY());
+        if ((int) circle.getCenterY() <= 90){
+            Fila = ( (int) circle.getCenterY() - 60) / 30;
+        }
+        else if ( (int) circle.getCenterY() > 90  && (int) circle.getCenterY() <= 260){
+            Fila = ( (int) circle.getCenterY() -80) / 30;
+        }
+        else if ( (int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480){
+            Fila = ( (int) circle.getCenterY() -100) / 30;
+        }
+        else {
+            Fila = ( (int) circle.getCenterY() -120) / 30;
+        }
+        Fila += 1;
+        System.out.println("Fila : " + Fila);
+
+        System.out.println(registro[0][0]);
+
+        if (registro[0][0]== 0){
+
+            registro[0][0] = Columna;
+            registro[0][1] = Fila;
+        }
+
+        else if (registro[1][0] == 0){
+
+            registro[1][0] = Columna;
+            registro[1][1] = Fila;
+        }
+
+
+        else {
+            registro[0][0] = registro[1][0];
+            registro[0][1] = registro[1][1];
+            registro[1][0] = Columna;
+            registro[1][1] = Fila;
+        }
+
+    }
+
     /*
         private void ClickCirculo(Circle circle){
             int Columna =0;
@@ -479,22 +541,6 @@ public class SampleController {
             Columna = (((int) circle.getCenterX())- 30) / 30;
 
 
-            System.out.println("Columna: " + Columna);
-            //System.out.println(circle.getCenterY());
-            if ((int) circle.getCenterY() <= 90){
-                Fila = ( (int) circle.getCenterY() - 60) / 30;
-            }
-            else if ( (int) circle.getCenterY() > 90  && (int) circle.getCenterY() <= 260){
-                Fila = ( (int) circle.getCenterY() -80) / 30;
-            }
-            else if ( (int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480){
-                Fila = ( (int) circle.getCenterY() -100) / 30;
-            }
-            else {
-                Fila = ( (int) circle.getCenterY() -120) / 30;
-            }
-            Fila += 1;
-            System.out.println("Fila : " + Fila);
 
             System.out.println(registro[0][0]);
 
@@ -535,7 +581,16 @@ public class SampleController {
          cable1.setStrokeWidth(3);
 
         AnchorPane.getChildren().add(cable1);
-        Historial.add(1);
+
+        }
+
+
+        circle.setOnMouseDragged(event->{
+            int[] FinLinea =ClickCirculo(circle);
+            cable1.setEndX(FinLinea[1]*30+30);
+            cable1.setEndY(FinLinea[0]*30+60);
+        });
+        AnchorPane.getChildren().add(circle);
 
 
         }
