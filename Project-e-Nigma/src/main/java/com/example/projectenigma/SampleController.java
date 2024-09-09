@@ -30,7 +30,7 @@ public class SampleController {
     private Circle[][] ArCircles = new Circle[32][16];
     private int[][] registro = new int[2][2];
     public int tamano_filas = Protoboard2.protoboard.length;
-    public int tamano_columnas =Protoboard2.protoboard[0].length;
+    public int tamano_columnas = Protoboard2.protoboard[0].length;
 
     public ArrayList<Integer> Historial = new ArrayList<Integer>(); //cada numero representa una pieza: 1 cable, 2 led, 3 switch
 
@@ -39,71 +39,20 @@ public class SampleController {
 
     //Funcion para identificar el lugar del hoyito dentreo de la matriz
     // Ademas deja registrado los ultimos 2 clickeados
-    private void ClickCirculo(Circle circle){
-        int Columna =0;
-        int Fila;
 
-        Columna = (((int) circle.getCenterX())- 30) / 30;
-
-
-        System.out.println("Columna: " + Columna);
-        //System.out.println(circle.getCenterY());
-        if ((int) circle.getCenterY() <= 90){
-            Fila = ( (int) circle.getCenterY() - 60) / 30;
-        }
-        else if ( (int) circle.getCenterY() > 90  && (int) circle.getCenterY() <= 260){
-            Fila = ( (int) circle.getCenterY() -80) / 30;
-        }
-        else if ( (int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480){
-            Fila = ( (int) circle.getCenterY() -100) / 30;
-        }
-        else {
-            Fila = ( (int) circle.getCenterY() -120) / 30;
-        }
-        Fila += 1;
-        System.out.println("Fila : " + Fila);
-
-        System.out.println(registro[0][0]);
-
-        if (registro[0][0]== 0){
-
-            registro[0][0] = Columna;
-            registro[0][1] = Fila;
-        }
-
-        else if (registro[1][0] == 0){
-
-            registro[1][0] = Columna;
-            registro[1][1] = Fila;
-        }
-
-
-        else {
-            registro[0][0] = registro[1][0];
-            registro[0][1] = registro[1][1];
-            registro[1][0] = Columna;
-            registro[1][1] = Fila;
-        }
-
-    }
 
     //Funcion para dejar en "registro" cuando se clickee la bateria
     //Utiliza numeros fuera de la matriz esperanda (matriz de hoyitos) para registrar como algo distinto
-    public void capturaBateria (int op){
-        if (registro[0][0]== 0){
+    public void capturaBateria(int op) {
+        if (registro[0][0] == 0) {
 
             registro[0][0] = op;
             registro[0][1] = 14;
-        }
-
-        else if (registro[1][0] == 0){
+        } else if (registro[1][0] == 0) {
 
             registro[1][0] = op;
             registro[1][1] = 14;
-        }
-
-
-        else {
+        } else {
             registro[0][0] = registro[1][0];
             registro[0][1] = registro[1][1];
             registro[1][0] = op;
@@ -232,15 +181,15 @@ public class SampleController {
         label8.setFont(Font.font(30));
         AnchorPane.getChildren().addAll(label8);
 
-        int correcion_posy= 0, salto = 0; //valores para corregir la disposicion visual de las letras
+        int correcion_posy = 0, salto = 0; //valores para corregir la disposicion visual de las letras
 
         //creacion del abcedario parte izquierda
-        for(char letter='a';letter<='j';letter++){
-            if (letter=='f'){
+        for (char letter = 'a'; letter <= 'j'; letter++) {
+            if (letter == 'f') {
                 //añade una separacion
-                Label label9= new Label();
+                Label label9 = new Label();
                 label9.setLayoutX(25);
-                label9.setLayoutY(418-(letter-'a')*30);
+                label9.setLayoutY(418 - (letter - 'a') * 30);
                 label9.setText(String.valueOf(' '));
                 label9.setTextFill(Color.BLACK);
                 label9.setFont(Font.font(15));
@@ -249,7 +198,7 @@ public class SampleController {
                 //coloca la letra f
                 Label label9_5 = new Label();
                 label9_5.setLayoutX(25);
-                label9_5.setLayoutY(429-(letter-'a'+1)*30);
+                label9_5.setLayoutY(429 - (letter - 'a' + 1) * 30);
                 label9_5.setText(String.valueOf(letter));
                 label9_5.setTextFill(Color.BLACK);
                 label9_5.setFont(Font.font(15));
@@ -258,7 +207,7 @@ public class SampleController {
                 correcion_posy = 11;
                 salto++;
 
-            }else {
+            } else {
                 Label label9 = new Label();
                 label9.setLayoutX(25);
                 label9.setLayoutY((418 + correcion_posy) - (letter - 'a' + salto) * 30);
@@ -269,15 +218,16 @@ public class SampleController {
             }
         }
 
-        correcion_posy= 0; salto = 0;
+        correcion_posy = 0;
+        salto = 0;
 
         //creacion del abcedario parte derecha
-        for(char letter='a';letter<='j';letter++){
-            if (letter=='f'){
+        for (char letter = 'a'; letter <= 'j'; letter++) {
+            if (letter == 'f') {
                 //añade una separacion
-                Label label10= new Label();
+                Label label10 = new Label();
                 label10.setLayoutX(950);
-                label10.setLayoutY(418-(letter-'a')*30);
+                label10.setLayoutY(418 - (letter - 'a') * 30);
                 label10.setText(String.valueOf(' '));
                 label10.setTextFill(Color.BLACK);
                 label10.setFont(Font.font(15));
@@ -286,7 +236,7 @@ public class SampleController {
                 //coloca la letra f
                 Label label10_5 = new Label();
                 label10_5.setLayoutX(950);
-                label10_5.setLayoutY(429-(letter-'a'+1)*30);
+                label10_5.setLayoutY(429 - (letter - 'a' + 1) * 30);
                 label10_5.setText(String.valueOf(letter));
                 label10_5.setTextFill(Color.BLACK);
                 label10_5.setFont(Font.font(15));
@@ -295,10 +245,10 @@ public class SampleController {
                 correcion_posy = 11;
                 salto++;
 
-            }else {
-                Label label10= new Label();
+            } else {
+                Label label10 = new Label();
                 label10.setLayoutX(950);
-                label10.setLayoutY((418 + correcion_posy)-(letter-'a' + salto)*30);
+                label10.setLayoutY((418 + correcion_posy) - (letter - 'a' + salto) * 30);
                 label10.setText(String.valueOf(letter));
                 label10.setTextFill(Color.BLACK);
                 label10.setFont(Font.font(15));
@@ -308,9 +258,9 @@ public class SampleController {
 
 
         //creacion de los numeros parte superior
-        for(int i=1;i<=30;i++){
-            Label label11= new Label();
-            label11.setLayoutX(25+(i*30));
+        for (int i = 1; i <= 30; i++) {
+            Label label11 = new Label();
+            label11.setLayoutX(25 + (i * 30));
             label11.setLayoutY(110);
             label11.setText(String.valueOf(i));
             label11.setTextFill(Color.BLACK);
@@ -321,9 +271,9 @@ public class SampleController {
         }
 
         //creacion de los numeros parte inferior
-        for(int i=1;i<=30;i++){
-            Label label12= new Label();
-            label12.setLayoutX(25+(i*30));
+        for (int i = 1; i <= 30; i++) {
+            Label label12 = new Label();
+            label12.setLayoutX(25 + (i * 30));
             label12.setLayoutY(440);
             label12.setText(String.valueOf(i));
             label12.setTextFill(Color.BLACK);
@@ -336,19 +286,19 @@ public class SampleController {
 
         //Dibujo de hoyitos y creacion de matriz registro
         int AuxSpace = 0;
-        for (int i = 2; i < 32; i++){
+        for (int i = 2; i < 32; i++) {
 
-            for (int j = 2; j< 16; j++){
+            for (int j = 2; j < 16; j++) {
 
                 Circle circle = new Circle(i, j, 7);
 
                 //espacios extra
-                if(j==4 || j==9 || j==14){
-                    AuxSpace+=20;
+                if (j == 4 || j == 9 || j == 14) {
+                    AuxSpace += 20;
                 }
 
-                circle.setCenterX(i*30);
-                circle.setCenterY(j*30+AuxSpace);
+                circle.setCenterX(i * 30);
+                circle.setCenterY(j * 30 + AuxSpace);
                 circle.setStroke(Color.BLACK);
                 circle.setFill(Color.WHITE);
                 circle.setOnMouseClicked(event -> ClickCirculo(circle));
@@ -357,14 +307,14 @@ public class SampleController {
                 AnchorPane.getChildren().add(ArCircles[i][j]);
 
             }
-            AuxSpace=0;
+            AuxSpace = 0;
         }
 
     }
 
-    public void Borrar_pieza(){
-        if ((AnchorPane.getChildren().size()%514) != 0 ){
-            switch (Historial.getLast()){
+    public void Borrar_pieza() {
+        if ((AnchorPane.getChildren().size() % 514) != 0) {
+            switch (Historial.getLast()) {
                 case 1: // Cables
                     AnchorPane.getChildren().removeLast();
                     Historial.removeLast();
@@ -381,55 +331,21 @@ public class SampleController {
         }
     }
 
-    public void bloquear_boton(){
+    public void bloquear_boton() {
         iniciar.setDisable(true);
     }
+
     @FXML
-    public void Cables(){
-        Line cable1 = new Line();
-        System.out.println("Cable: " + registro[0][0]);
-        if (registro[0][0] != 33 && registro[0][0] != 34){
-            cable1 = new Line(
-                    ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterX(),
-                    ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterY(),
-                    ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX(),
-                    ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY()
-            );
-
-        } else if (registro[0][0] == 34) {
-            cable1 = new Line(
-                    1200,
-                    120 ,
-                    ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX(),
-                    ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY()
-            );
-        } else if (registro[0][0] == 33) {
-            cable1 = new Line(
-                    1200,
-                    380 ,
-                    ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX(),
-                    ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY()
-            );
-        }
+    public void DibujoLed() {
+        double puntoX1 = ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterX();
+        double puntoY1 = ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY();
+        double puntoX2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX();
+        double puntoY2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY();
 
 
-        cable1.setStroke(Color.BLACK);
-        cable1.setStrokeWidth(3);
-
-        AnchorPane.getChildren().add(cable1);
-
-    }
-    @FXML
-    public void DibujoLed(){
-        double puntoX1 =ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterX();
-        double puntoY1 =ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterY();
-        double puntoX2 =ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX();
-        double puntoY2 =ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY();
-
-
-        Arc semicirculo= new Arc();
-        semicirculo.setCenterX(puntoX1+(puntoX2-puntoX1)/2);
-        semicirculo.setCenterY((puntoY1 * 2 - puntoY2)- 60);
+        Arc semicirculo = new Arc();
+        semicirculo.setCenterX(puntoX1 + (puntoX2 - puntoX1) / 2);
+        semicirculo.setCenterY((puntoY1 * 2 - puntoY2) - 60);
         semicirculo.setRadiusX(20);
         semicirculo.setRadiusY(20);
         semicirculo.setStartAngle(0);
@@ -437,19 +353,19 @@ public class SampleController {
         semicirculo.setType(ArcType.ROUND);
         semicirculo.setFill(Color.RED);
 
-        Rectangle partebaja= new Rectangle();
+        Rectangle partebaja = new Rectangle();
         partebaja.setWidth(40);
         partebaja.setHeight(35);
-        partebaja.setX(puntoX1-5);
-        partebaja.setY((puntoY1 * 2 - puntoY2)- 60);
+        partebaja.setX(puntoX1 - 5);
+        partebaja.setY((puntoY1 * 2 - puntoY2) - 60);
         partebaja.setFill(Color.RED);
         partebaja.setStroke(Color.RED);
 
-        Line conector1= new Line();
+        Line conector1 = new Line();
         conector1.setStartX(puntoX1);
         conector1.setStartY(puntoY1);
         conector1.setEndX(puntoX1);
-        conector1.setEndY(puntoY1-20);
+        conector1.setEndY(puntoY1 - 20);
         conector1.setStroke(Color.BLACK);
         conector1.setStrokeWidth(3);
 
@@ -457,13 +373,13 @@ public class SampleController {
         conector2.setStartX(puntoX2);
         conector2.setStartY(puntoY2);
         conector2.setEndX(puntoX2);
-        conector2.setEndY(puntoY2-20);
+        conector2.setEndY(puntoY2 - 20);
         conector2.setStroke(Color.BLACK);
         conector2.setStrokeWidth(3);
 
         Group led = new Group();
 
-        led.getChildren().addAll(semicirculo,partebaja,conector2,conector1);
+        led.getChildren().addAll(semicirculo, partebaja, conector2, conector1);
         AnchorPane.getChildren().add(led);
         Historial.add(2);
     }
@@ -471,9 +387,9 @@ public class SampleController {
 
     //Funciones de dibujo incompletas e inutiles :D
     @FXML
-    public void DibujoSwitch(){
+    public void DibujoSwitch() {
 
-        Rectangle base= new Rectangle();
+        Rectangle base = new Rectangle();
         base.setWidth(30);
         base.setHeight(30);
         base.setX(1280);
@@ -510,51 +426,43 @@ public class SampleController {
         circulo_Centro.setFill(Color.BLACK);
 
         Group dib_switch = new Group();
-        dib_switch.getChildren().addAll(base,circulo_Centro,circulo_arriba_der,circulo_abajo_der,circulo_abajo_izq,circulo_arriba_izq);
+        dib_switch.getChildren().addAll(base, circulo_Centro, circulo_arriba_der, circulo_abajo_der, circulo_abajo_izq, circulo_arriba_izq);
         AnchorPane.getChildren().add(dib_switch);
         Historial.add(3);
     }
 
-    private void ClickCirculo(Circle circle){
-        int Columna =0;
+    private void ClickCirculo(Circle circle) {
+        int Columna = 0;
         int Fila;
 
-        Columna = (((int) circle.getCenterX())- 30) / 30;
+        Columna = (((int) circle.getCenterX()) - 30) / 30;
 
 
         System.out.println("Columna: " + Columna);
         //System.out.println(circle.getCenterY());
-        if ((int) circle.getCenterY() <= 90){
-            Fila = ( (int) circle.getCenterY() - 60) / 30;
-        }
-        else if ( (int) circle.getCenterY() > 90  && (int) circle.getCenterY() <= 260){
-            Fila = ( (int) circle.getCenterY() -80) / 30;
-        }
-        else if ( (int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480){
-            Fila = ( (int) circle.getCenterY() -100) / 30;
-        }
-        else {
-            Fila = ( (int) circle.getCenterY() -120) / 30;
+        if ((int) circle.getCenterY() <= 90) {
+            Fila = ((int) circle.getCenterY() - 60) / 30;
+        } else if ((int) circle.getCenterY() > 90 && (int) circle.getCenterY() <= 260) {
+            Fila = ((int) circle.getCenterY() - 80) / 30;
+        } else if ((int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480) {
+            Fila = ((int) circle.getCenterY() - 100) / 30;
+        } else {
+            Fila = ((int) circle.getCenterY() - 120) / 30;
         }
         Fila += 1;
         System.out.println("Fila : " + Fila);
 
         System.out.println(registro[0][0]);
 
-        if (registro[0][0]== 0){
+        if (registro[0][0] == 0) {
 
             registro[0][0] = Columna;
             registro[0][1] = Fila;
-        }
-
-        else if (registro[1][0] == 0){
+        } else if (registro[1][0] == 0) {
 
             registro[1][0] = Columna;
             registro[1][1] = Fila;
-        }
-
-
-        else {
+        } else {
             registro[0][0] = registro[1][0];
             registro[0][1] = registro[1][1];
             registro[1][0] = Columna;
@@ -563,9 +471,56 @@ public class SampleController {
 
     }
 
+    /*
+        private void ClickCirculo(Circle circle){
+            int Columna =0;
+            int Fila;
+
+            Columna = (((int) circle.getCenterX())- 30) / 30;
 
 
+            System.out.println("Columna: " + Columna);
+            //System.out.println(circle.getCenterY());
+            if ((int) circle.getCenterY() <= 90){
+                Fila = ( (int) circle.getCenterY() - 60) / 30;
+            }
+            else if ( (int) circle.getCenterY() > 90  && (int) circle.getCenterY() <= 260){
+                Fila = ( (int) circle.getCenterY() -80) / 30;
+            }
+            else if ( (int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480){
+                Fila = ( (int) circle.getCenterY() -100) / 30;
+            }
+            else {
+                Fila = ( (int) circle.getCenterY() -120) / 30;
+            }
+            Fila += 1;
+            System.out.println("Fila : " + Fila);
 
+            System.out.println(registro[0][0]);
+
+            if (registro[0][0]== 0){
+
+                registro[0][0] = Columna;
+                registro[0][1] = Fila;
+            }
+
+            else if (registro[1][0] == 0){
+
+                registro[1][0] = Columna;
+                registro[1][1] = Fila;
+            }
+
+
+            else {
+                registro[0][0] = registro[1][0];
+                registro[0][1] = registro[1][1];
+                registro[1][0] = Columna;
+                registro[1][1] = Fila;
+            }
+
+        }
+    */
+/*
     @FXML
     public void Cables(){
 
@@ -585,8 +540,42 @@ public class SampleController {
 
         }
 
+    }*/
+    @FXML
+    public void Cables() {
+        Line cable1 = new Line();
+        System.out.println("Cable: " + registro[0][0]);
+        if (registro[0][0] != 33 && registro[0][0] != 34) {
+            cable1 = new Line(
+                    ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterX(),
+                    ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY(),
+                    ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX(),
+                    ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
+            );
+
+        } else if (registro[0][0] == 34) {
+            cable1 = new Line(
+                    1200,
+                    120,
+                    ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX(),
+                    ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
+            );
+        } else if (registro[0][0] == 33) {
+            cable1 = new Line(
+                    1200,
+                    380,
+                    ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX(),
+                    ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
+            );
+        }
+
+
+        cable1.setStroke(Color.BLACK);
+        cable1.setStrokeWidth(3);
+
+        AnchorPane.getChildren().add(cable1);
+        Historial.add(1);
     }
-
-
+}
 
 
