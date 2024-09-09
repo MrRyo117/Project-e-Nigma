@@ -7,7 +7,7 @@
     <list default="true" id="de489690-f963-4e48-b678-b98be65f9f2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/HelloApplication.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +57,7 @@
   &quot;keyToString&quot;: {
     &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Pablo&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -104,7 +104,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="feb721d2-9174-446b-88a0-01cf5c14d4fb" name="Changes" comment="" />
+      <changelist id="de489690-f963-4e48-b678-b98be65f9f2c" name="Changes" comment="" />
       <created>1723242588447</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -115,6 +115,8 @@
       <workItem from="1725062346221" duration="925000" />
       <workItem from="1725154532552" duration="1164000" />
       <workItem from="1725155715562" duration="1077000" />
+      <workItem from="1725847357015" duration="158000" />
+      <workItem from="1725847527271" duration="383000" />
     </task>
     <servers />
   </component>
@@ -139,6 +141,20 @@
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java</url>
+          <line>397</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java</url>
+          <line>499</line>
+          <properties class="SampleController" method="Cables">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
