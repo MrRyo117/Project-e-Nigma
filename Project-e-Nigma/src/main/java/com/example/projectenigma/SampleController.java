@@ -15,20 +15,11 @@ import java.util.ArrayList;
 
 public class SampleController {
 
-    @FXML
-    private Circle circle;
+
     @FXML
     private Button iniciar;
     @FXML
-    private Button Cable;
-    @FXML
     private AnchorPane AnchorPane;
-    @FXML
-    private Line linea;
-    @FXML
-    private Rectangle rectangle;
-    @FXML
-    private TextArea textArea;
 
 
     private Protoboard Protoboard2 = new Protoboard();
