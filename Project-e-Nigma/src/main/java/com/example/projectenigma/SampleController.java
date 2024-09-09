@@ -289,6 +289,29 @@ public class SampleController {
 
     }
 
+    public void Borrar_pieza(){
+        if ((AnchorPane.getChildren().size()%514) != 0 ){
+            switch (Historial.getLast()){
+                case 1: // Cables
+                    AnchorPane.getChildren().removeLast();
+                    AnchorPane.getChildren().removeLast();
+                    Historial.removeLast();
+                    break;
+                case 2: // Led
+                    AnchorPane.getChildren().removeLast();
+                    Historial.removeLast();
+                    break;
+                case 3: // Switch
+                    AnchorPane.getChildren().removeLast();
+                    Historial.removeLast();
+                    break;
+            }
+        }
+    }
+
+    public void bloquear_boton(){
+        iniciar.setDisable(true);
+    }
 
     public void DibujoLed(){
         Arc semicirculo= new Arc();
