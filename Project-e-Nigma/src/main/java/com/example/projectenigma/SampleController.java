@@ -1,22 +1,17 @@
 package com.example.projectenigma;
 
-
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
-
 import java.util.ArrayList;
-import javax.swing.plaf.metal.MetalIconFactory;
-import java.util.Objects;
-import java.util.Scanner;
+
 
 public class SampleController {
 
@@ -54,7 +49,7 @@ public class SampleController {
 
     //Funcion para dejar en "registro" cuando se clickee la bateria
     //Utiliza numeros fuera de la matriz esperanda (matriz de hoyitos) para registrar como algo distinto
-    public void capturaBateria(int op) {
+    public void capturaBateria (int op) {
         if (registro[0][0] == 0) {
 
             registro[0][0] = op;
@@ -99,7 +94,7 @@ public class SampleController {
         bateria.setFill(Color.BLACK);
         bateria.setStroke(Color.BLACK);
         bateria.setRotate(90);
-        Rectangulo.setOnMouseClicked(event -> capturaBateria(bateria));
+        bateria.setOnMouseClicked(event -> capturaBateria(33));
         AnchorPane.getChildren().addAll(bateria);
 
         Rectangle bateria2 = new Rectangle();
@@ -109,6 +104,7 @@ public class SampleController {
         bateria2.setY(120);
         bateria2.setFill(Color.GOLD);
         bateria2.setStroke(Color.BLACK);
+        bateria2.setOnMouseClicked(event -> capturaBateria(34));
         AnchorPane.getChildren().addAll(bateria2);
 
         Label label13 = new Label();
@@ -391,7 +387,6 @@ public class SampleController {
         AnchorPane.getChildren().add(led);
     }
 
-
     //Funciones de dibujo incompletas e inutiles :D
     @FXML
     public void DibujoSwitch() {
@@ -479,69 +474,6 @@ public class SampleController {
     }
 
 
-    /*
-        private void ClickCirculo(Circle circle){
-            int Columna =0;
-            int Fila;
-
-            Columna = (((int) circle.getCenterX())- 30) / 30;
-
-
-
-            System.out.println(registro[0][0]);
-
-            if (registro[0][0]== 0){
-
-                registro[0][0] = Columna;
-                registro[0][1] = Fila;
-            }
-
-            else if (registro[1][0] == 0){
-
-                registro[1][0] = Columna;
-                registro[1][1] = Fila;
-            }
-
-
-            else {
-                registro[0][0] = registro[1][0];
-                registro[0][1] = registro[1][1];
-                registro[1][0] = Columna;
-                registro[1][1] = Fila;
-            }
-
-        }
-    */
-/*
-    @FXML
-    public void Cables(){
-
-        Line cable1 = new Line(
-                ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterX(),
-                ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterY(),
-                ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX(),
-                ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY()
-        );
-        
-         cable1.setStroke(Color.BLACK);
-         cable1.setStrokeWidth(3);
-
-        AnchorPane.getChildren().add(cable1);
-
-        }
-
-
-        circle.setOnMouseDragged(event->{
-            int[] FinLinea =ClickCirculo(circle);
-            cable1.setEndX(FinLinea[1]*30+30);
-            cable1.setEndY(FinLinea[0]*30+60);
-        });
-        AnchorPane.getChildren().add(circle);
-
-
-        }
-
-    }*/
     @FXML
     public void Cables() {
         Line cable1 = new Line();
@@ -569,36 +501,11 @@ public class SampleController {
                     ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
             );
         }
-
-        public void capturaBateria (int op){
-            if (registro[0][0]== 0){
-
-                registro[0][0] = op;
-                registro[0][1] = 14;
-            }
-
-            else if (registro[1][0] == 0){
-
-                registro[1][0] = op;
-                registro[1][1] = 14;
-            }
-
-
-            else {
-                registro[0][0] = registro[1][0];
-                registro[0][1] = registro[1][1];
-                registro[1][0] = op;
-                registro[1][1] = 14;
-
-            }
-            System.out.println("Bateria");
-        }
         cable1.setStroke(Color.BLACK);
         cable1.setStrokeWidth(3);
-
         AnchorPane.getChildren().add(cable1);
-        Historial.add(1);
     }
+
 }
 
 
