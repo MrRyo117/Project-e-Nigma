@@ -292,7 +292,6 @@ public class SampleController {
             switch (Historial.getLast()){
                 case 1: // Cables
                     AnchorPane.getChildren().removeLast();
-                    AnchorPane.getChildren().removeLast();
                     Historial.removeLast();
                     break;
                 case 2: // Led
