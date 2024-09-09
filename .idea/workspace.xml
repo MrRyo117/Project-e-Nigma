@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="de489690-f963-4e48-b678-b98be65f9f2c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +64,7 @@
   "keyToString": {
     "Application.HelloApplication.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Merging Pruebas",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "21",
     "kotlin-language-version-configured": "true",
