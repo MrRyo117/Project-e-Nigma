@@ -501,6 +501,7 @@ public class SampleController {
                     ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
             );
         }
+
         cable1.setStroke(Color.BLACK);
         cable1.setStrokeWidth(3);
         AnchorPane.getChildren().add(cable1);
