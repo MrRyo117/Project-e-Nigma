@@ -1,21 +1,17 @@
 package com.example.projectenigma;
 
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 
-import javax.swing.plaf.metal.MetalIconFactory;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class SampleController {
 
@@ -42,6 +38,8 @@ public class SampleController {
 
     public int tamano_filas = Protoboard2.protoboard.length;
     public int tamano_columnas =Protoboard2.protoboard[0].length;
+
+    public ArrayList<Integer> Historial = new ArrayList<Integer>(); //cada numero representa una pieza: 1 cable, 2 led, 3 switch
 
     @FXML
     protected void inicio() {
@@ -160,29 +158,80 @@ public class SampleController {
         label8.setFont(Font.font(30));
         AnchorPane.getChildren().addAll(label8);
 
+        int correcion_posy= 0, salto = 0; //valores para corregir la disposicion visual de las letras
+
         //creacion del abcedario parte izquierda
         for(char letter='a';letter<='j';letter++){
-            Label label9= new Label();
-            label9.setLayoutX(25);
-            label9.setLayoutY(418-(letter-'a')*30);
-            label9.setText(String.valueOf(letter));
-            label9.setTextFill(Color.BLACK);
-            label9.setFont(Font.font(15));
-            AnchorPane.getChildren().addAll(label9);
+            if (letter=='f'){
+                //añade una separacion
+                Label label9= new Label();
+                label9.setLayoutX(25);
+                label9.setLayoutY(418-(letter-'a')*30);
+                label9.setText(String.valueOf(' '));
+                label9.setTextFill(Color.BLACK);
+                label9.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label9);
 
+                //coloca la letra f
+                Label label9_5 = new Label();
+                label9_5.setLayoutX(25);
+                label9_5.setLayoutY(429-(letter-'a'+1)*30);
+                label9_5.setText(String.valueOf(letter));
+                label9_5.setTextFill(Color.BLACK);
+                label9_5.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label9_5);
+
+                correcion_posy = 11;
+                salto++;
+
+            }else {
+                Label label9 = new Label();
+                label9.setLayoutX(25);
+                label9.setLayoutY((418 + correcion_posy) - (letter - 'a' + salto) * 30);
+                label9.setText(String.valueOf(letter));
+                label9.setTextFill(Color.BLACK);
+                label9.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label9);
+            }
         }
+
+        correcion_posy= 0; salto = 0;
 
         //creacion del abcedario parte derecha
         for(char letter='a';letter<='j';letter++){
-            Label labe10= new Label();
-            labe10.setLayoutX(950);
-            labe10.setLayoutY(418-(letter-'a')*30);
-            labe10.setText(String.valueOf(letter));
-            labe10.setTextFill(Color.BLACK);
-            labe10.setFont(Font.font(15));
-            AnchorPane.getChildren().addAll(labe10);
+            if (letter=='f'){
+                //añade una separacion
+                Label label10= new Label();
+                label10.setLayoutX(950);
+                label10.setLayoutY(418-(letter-'a')*30);
+                label10.setText(String.valueOf(' '));
+                label10.setTextFill(Color.BLACK);
+                label10.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label10);
 
+                //coloca la letra f
+                Label label10_5 = new Label();
+                label10_5.setLayoutX(950);
+                label10_5.setLayoutY(429-(letter-'a'+1)*30);
+                label10_5.setText(String.valueOf(letter));
+                label10_5.setTextFill(Color.BLACK);
+                label10_5.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label10_5);
+
+                correcion_posy = 11;
+                salto++;
+
+            }else {
+                Label label10= new Label();
+                label10.setLayoutX(950);
+                label10.setLayoutY((418 + correcion_posy)-(letter-'a' + salto)*30);
+                label10.setText(String.valueOf(letter));
+                label10.setTextFill(Color.BLACK);
+                label10.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label10);
+            }
         }
+
 
         //creacion de los numeros parte superior
         for(int i=1;i<=30;i++){
@@ -238,6 +287,29 @@ public class SampleController {
 
     }
 
+    public void Borrar_pieza(){
+        if ((AnchorPane.getChildren().size()%514) != 0 ){
+            switch (Historial.getLast()){
+                case 1: // Cables
+                    AnchorPane.getChildren().removeLast();
+                    AnchorPane.getChildren().removeLast();
+                    Historial.removeLast();
+                    break;
+                case 2: // Led
+                    AnchorPane.getChildren().removeLast();
+                    Historial.removeLast();
+                    break;
+                case 3: // Switch
+                    AnchorPane.getChildren().removeLast();
+                    Historial.removeLast();
+                    break;
+            }
+        }
+    }
+
+    public void bloquear_boton(){
+        iniciar.setDisable(true);
+    }
 
     public void DibujoLed(){
         Arc semicirculo= new Arc();
@@ -278,6 +350,7 @@ public class SampleController {
 
         led.getChildren().addAll(semicirculo,partebaja,conector2,conector1);
         AnchorPane.getChildren().add(led);
+        Historial.add(2);
     }
 
     public void DibujoSwitch(){
@@ -320,6 +393,7 @@ public class SampleController {
         Group dib_switch = new Group();
         dib_switch.getChildren().addAll(base,circulo_Centro,circulo_arriba_der,circulo_abajo_der,circulo_abajo_izq,circulo_arriba_izq);
         AnchorPane.getChildren().add(dib_switch);
+        Historial.add(3);
     }
 
     private void ClickCirculo(Circle circle){
@@ -390,6 +464,25 @@ public class SampleController {
          cable1.setStrokeWidth(3);
 
         AnchorPane.getChildren().add(cable1);
+
+
+        Circle circle =new Circle(7,Color.RED);
+        circle.setOnMousePressed(event->{
+            int[] InicioLinea= ClickCirculo(circle);
+            cable1.setStartX(InicioLinea[1]*30+30);
+            cable1.setStartY(InicioLinea[0]*30+60);
+            System.out.println(InicioLinea);
+
+        });
+
+        circle.setOnMouseDragged(event->{
+            int[] FinLinea =ClickCirculo(circle);
+            cable1.setEndX(FinLinea[1]*30+30);
+            cable1.setEndY(FinLinea[0]*30+60);
+        });
+        AnchorPane.getChildren().add(circle);
+        Historial.add(1);
+
 
         }
 
