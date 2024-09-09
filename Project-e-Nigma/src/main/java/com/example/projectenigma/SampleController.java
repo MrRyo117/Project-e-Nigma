@@ -38,7 +38,6 @@ public class SampleController {
 
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
-    private Circle[][] Cargas = new Circle[5][5];
     private int[][] registro = new int[2][2];
 
     public int tamano_filas = Protoboard2.protoboard.length;
@@ -100,7 +99,7 @@ public class SampleController {
         bateria.setFill(Color.BLACK);
         bateria.setStroke(Color.BLACK);
         bateria.setRotate(90);
-        Rectangulo.setOnMouseClicked(event -> funcion(bateria));
+        Rectangulo.setOnMouseClicked(event -> capturaBateria(bateria));
         AnchorPane.getChildren().addAll(bateria);
 
         Rectangle bateria2 = new Rectangle();
@@ -345,22 +344,16 @@ public class SampleController {
         iniciar.setDisable(true);
     }
 
-    @FXML
-    public void DibujoLed() {
+
+    public void DibujoLed(){
+
         double puntoX1 = ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterX();
         double puntoY1 = ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY();
         double puntoX2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX();
         double puntoY2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY();
-
-
-        Arc semicirculo = new Arc();
+        Arc semicirculo= new Arc();
         semicirculo.setCenterX(puntoX1 + (puntoX2 - puntoX1) / 2);
         semicirculo.setCenterY((puntoY1 * 2 - puntoY2) - 60);
-
-    public void DibujoLed(){
-        Arc semicirculo= new Arc();
-        semicirculo.setCenterX(1200);
-        semicirculo.setCenterY(500);
         semicirculo.setRadiusX(20);
         semicirculo.setRadiusY(20);
         semicirculo.setStartAngle(0);
@@ -485,53 +478,6 @@ public class SampleController {
 
     }
 
-    public void funcion (Rectangle bateria){
-        System.out.println("AaA");
-    }
-
-        Columna = (((int) circle.getCenterX())- 30) / 30;
-
-
-        System.out.println("Columna: " + Columna);
-        //System.out.println(circle.getCenterY());
-        if ((int) circle.getCenterY() <= 90){
-            Fila = ( (int) circle.getCenterY() - 60) / 30;
-        }
-        else if ( (int) circle.getCenterY() > 90  && (int) circle.getCenterY() <= 260){
-            Fila = ( (int) circle.getCenterY() -80) / 30;
-        }
-        else if ( (int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480){
-            Fila = ( (int) circle.getCenterY() -100) / 30;
-        }
-        else {
-            Fila = ( (int) circle.getCenterY() -120) / 30;
-        }
-        Fila += 1;
-        System.out.println("Fila : " + Fila);
-
-        System.out.println(registro[0][0]);
-
-        if (registro[0][0]== 0){
-
-            registro[0][0] = Columna;
-            registro[0][1] = Fila;
-        }
-
-        else if (registro[1][0] == 0){
-
-            registro[1][0] = Columna;
-            registro[1][1] = Fila;
-        }
-
-
-        else {
-            registro[0][0] = registro[1][0];
-            registro[0][1] = registro[1][1];
-            registro[1][0] = Columna;
-            registro[1][1] = Fila;
-        }
-
-    }
 
     /*
         private void ClickCirculo(Circle circle){
@@ -624,7 +570,29 @@ public class SampleController {
             );
         }
 
+        public void capturaBateria (int op){
+            if (registro[0][0]== 0){
 
+                registro[0][0] = op;
+                registro[0][1] = 14;
+            }
+
+            else if (registro[1][0] == 0){
+
+                registro[1][0] = op;
+                registro[1][1] = 14;
+            }
+
+
+            else {
+                registro[0][0] = registro[1][0];
+                registro[0][1] = registro[1][1];
+                registro[1][0] = op;
+                registro[1][1] = 14;
+
+            }
+            System.out.println("Bateria");
+        }
         cable1.setStroke(Color.BLACK);
         cable1.setStrokeWidth(3);
 
