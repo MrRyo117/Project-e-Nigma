@@ -439,20 +439,13 @@ public class SampleController {
         }
 
 
-    @FXML
-    public void Cables(){
+        circle.setOnMouseDragged(event->{
+            int[] FinLinea =ClickCirculo(circle);
+            cable1.setEndX(FinLinea[1]*30+30);
+            cable1.setEndY(FinLinea[0]*30+60);
+        });
+        AnchorPane.getChildren().add(circle);
 
-        Line cable1 = new Line(
-                ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterX(),
-                ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterY(),
-                ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX(),
-                ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY()
-        );
-        
-         cable1.setStroke(Color.BLACK);
-         cable1.setStrokeWidth(3);
-
-        AnchorPane.getChildren().add(cable1);
 
         }
 
