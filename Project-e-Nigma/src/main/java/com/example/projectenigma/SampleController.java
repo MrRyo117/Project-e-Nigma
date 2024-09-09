@@ -510,6 +510,23 @@ public class SampleController {
          cable1.setStrokeWidth(3);
 
         AnchorPane.getChildren().add(cable1);
+
+
+        Circle circle =new Circle(7,Color.RED);
+        circle.setOnMousePressed(event->{
+            int[] InicioLinea= ClickCirculo(circle);
+            cable1.setStartX(InicioLinea[1]*30+30);
+            cable1.setStartY(InicioLinea[0]*30+60);
+            System.out.println(InicioLinea);
+
+        });
+
+        circle.setOnMouseDragged(event->{
+            int[] FinLinea =ClickCirculo(circle);
+            cable1.setEndX(FinLinea[1]*30+30);
+            cable1.setEndY(FinLinea[0]*30+60);
+        });
+        AnchorPane.getChildren().add(circle);
         Historial.add(1);
 
 
