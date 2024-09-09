@@ -33,6 +33,7 @@ public class SampleController {
 
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
+
     private int[][] registro = new int[2][2];
 
     public int tamano_filas = Protoboard2.protoboard.length;
@@ -68,7 +69,7 @@ public class SampleController {
         System.out.println("Bateria");
     }
 
-    //Funciones que si funcionan
+    //Metodos que si funcionan
     @FXML
     protected void inicio() {
 
@@ -385,9 +386,10 @@ public class SampleController {
 
         led.getChildren().addAll(semicirculo, partebaja, conector2, conector1);
         AnchorPane.getChildren().add(led);
+        Historial.add(2);
     }
 
-    //Funciones de dibujo incompletas e inutiles :D
+    //Metodos de dibujo incompletas e inutiles :D
     @FXML
     public void DibujoSwitch() {
 
@@ -505,6 +507,7 @@ public class SampleController {
         cable1.setStroke(Color.BLACK);
         cable1.setStrokeWidth(3);
         AnchorPane.getChildren().add(cable1);
+        Historial.add(1);
     }
 
 }
