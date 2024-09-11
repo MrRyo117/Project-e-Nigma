@@ -3,10 +3,7 @@ package com.example.projectenigma;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -86,39 +83,61 @@ public class SampleController implements Initializable {
         double puntoY1 = ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY();
         double puntoX2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX();
         double puntoY2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY();
+
+        if (puntoX1 > puntoX2){
+            double aux = puntoX1;
+            puntoX1 = puntoX2;
+            puntoX2 = aux;
+
+            aux = puntoY1;
+            puntoY1 = puntoY2;
+            puntoY2 = aux;
+
+        }
+        double DiffSpaceX = puntoX2 - puntoX1;
+        double DiffSpaceY = puntoY2 - puntoY1;
         Arc semicirculo= new Arc();
-        semicirculo.setCenterX(puntoX1 + (puntoX2 - puntoX1) / 2);
-        semicirculo.setCenterY((puntoY1 * 2 - puntoY2) - 60);
-        semicirculo.setRadiusX(20);
-        semicirculo.setRadiusY(20);
-        semicirculo.setStartAngle(0);
-        semicirculo.setLength(180);
-        semicirculo.setType(ArcType.ROUND);
-        semicirculo.setFill(Color.RED);
-
         Rectangle partebaja = new Rectangle();
-        partebaja.setWidth(40);
-        partebaja.setHeight(35);
-        partebaja.setX(puntoX1 - 5);
-        partebaja.setY((puntoY1 * 2 - puntoY2) - 60);
-        partebaja.setFill(Color.RED);
-        partebaja.setStroke(Color.RED);
-
         Line conector1 = new Line();
-        conector1.setStartX(puntoX1);
-        conector1.setStartY(puntoY1);
-        conector1.setEndX(puntoX1);
-        conector1.setEndY(puntoY1 - 20);
-        conector1.setStroke(Color.BLACK);
-        conector1.setStrokeWidth(3);
-
         Line conector2 = new Line();
-        conector2.setStartX(puntoX2);
-        conector2.setStartY(puntoY2);
-        conector2.setEndX(puntoX2);
-        conector2.setEndY(puntoY2 - 20);
-        conector2.setStroke(Color.BLACK);
-        conector2.setStrokeWidth(3);
+        if (puntoY1 == puntoY2){
+
+            semicirculo.setCenterX(puntoX1 + (puntoX2 - puntoX1) / 2);
+            semicirculo.setCenterY((puntoY1 * 2 - puntoY2) - 60);
+            semicirculo.setRadiusX(20);
+            semicirculo.setRadiusY(20);
+            semicirculo.setStartAngle(0);
+            semicirculo.setLength(180);
+            semicirculo.setType(ArcType.ROUND);
+            semicirculo.setFill(Color.RED);
+
+
+            partebaja.setWidth(40);
+            partebaja.setHeight(35);
+            partebaja.setX(puntoX1 - 5);
+            partebaja.setY((puntoY1 * 2 - puntoY2) - 60);
+            partebaja.setFill(Color.RED);
+            partebaja.setStroke(Color.RED);
+
+
+
+            conector1.setStartX(puntoX1);
+            conector1.setStartY(puntoY1);
+            conector1.setEndX(puntoX1);
+            conector1.setEndY(puntoY1 - 20);
+            conector1.setStroke(Color.BLACK);
+            conector1.setStrokeWidth(3);
+
+
+            conector2.setStartX(puntoX2);
+            conector2.setStartY(puntoY2);
+            conector2.setEndX(puntoX2);
+            conector2.setEndY(puntoY2 - 20);
+            conector2.setStroke(Color.BLACK);
+            conector2.setStrokeWidth(3);
+        }
+
+
 
         Group led = new Group();
 
@@ -127,7 +146,7 @@ public class SampleController implements Initializable {
         Historial.add(2);
     }
 
-    //Metodos de dibujo incompletas e inutiles :D
+    //Metodo de dibujo incompletas e inutiles :D
     @FXML
     public void DibujoSwitch() {
 
@@ -250,9 +269,8 @@ public class SampleController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("123");
-        Protoboard2.CrearProtoboard(tamano_filas, tamano_columnas);
-        //Protoboard2.CambiarCargaBus(Protoboard2.protoboard.length,Protoboard2.protoboard[0].length);
+
+        Protoboard2.CrearProtoboard(Protoboard2.protoboard.length,Protoboard2.protoboard[0].length);
 
         //Creacion del rectangulo
         Rectangle Rectangulo = new Rectangle();

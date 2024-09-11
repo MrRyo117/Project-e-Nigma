@@ -11,8 +11,6 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <AnchorPane fx:id="AnchorPane" minWidth="-Infinity" prefHeight="578.0" prefWidth="1266.0" />
-
-   <Button fx:id="iniciar" mnemonicParsing="false" onMouseReleased="#bloquear_boton" text="Inicia Protoboard" />
    <Button mnemonicParsing="false" onAction="#Cables" text="Cable" />
    <Button mnemonicParsing="false" onAction="#DibujoLed" text="Led" />
    <Button mnemonicParsing="false" onAction="#DibujoSwitch" text="Switch" />
