@@ -27,6 +27,8 @@ public class SampleController implements Initializable {
     public int tamano_filas = Protoboard2.protoboard.length;
     public int tamano_columnas = Protoboard2.protoboard[0].length;
 
+    public int lastInt;
+
     public ArrayList<Integer> Historial = new ArrayList<Integer>(); //cada numero representa una pieza: 1 cable, 2 led, 3 switch
 
     //Recurso a utilizar (Futuro)
@@ -198,9 +200,8 @@ public class SampleController implements Initializable {
 
         Columna = (((int) circle.getCenterX()) - 30) / 30;
 
-
         System.out.println("Columna: " + Columna);
-        //System.out.println(circle.getCenterY());
+
         if ((int) circle.getCenterY() <= 90) {
             Fila = ((int) circle.getCenterY() - 60) / 30;
         } else if ((int) circle.getCenterY() > 90 && (int) circle.getCenterY() <= 260) {
@@ -224,12 +225,22 @@ public class SampleController implements Initializable {
             registro[1][0] = Columna;
             registro[1][1] = Fila;
         } else {
+
+            int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
+            System.out.println("diff : " + diff);
+
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.BLACK);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(1);
+
             registro[0][0] = registro[1][0];
             registro[0][1] = registro[1][1];
+
             registro[1][0] = Columna;
             registro[1][1] = Fila;
-        }
 
+        }
+        circle.setStroke(Color.BLUE);
+        circle.setStrokeWidth(3);
     }
 
 
@@ -503,11 +514,16 @@ public class SampleController implements Initializable {
                 circle.setOnMouseClicked(event -> ClickCirculo(circle));
 
                 ArCircles[i][j] = circle;
+
                 AnchorPane.getChildren().add(ArCircles[i][j]);
+
 
             }
             AuxSpace = 0;
         }
+
+        lastInt = AnchorPane.getChildren().size();
+        System.out.println(lastInt);
     }
 }
 
