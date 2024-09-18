@@ -40,22 +40,35 @@ public class SampleController implements Initializable {
 
     //Funcion para dejar en "registro" cuando se clickee la bateria
     //Utiliza numeros fuera de la matriz esperanda (matriz de hoyitos) para registrar como algo distinto
-    public void capturaBateria (int op) {
+    public void capturaBateria (int op, Rectangle rectangle) {
+
         if (registro[0][0] == 0) {
 
             registro[0][0] = op;
             registro[0][1] = 14;
+
+
+
         } else if (registro[1][0] == 0) {
 
             registro[1][0] = op;
             registro[1][1] = 14;
         } else {
+
+            int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
+            System.out.println("diff : " + diff);
+
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.BLACK);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(1);
+
             registro[0][0] = registro[1][0];
             registro[0][1] = registro[1][1];
             registro[1][0] = op;
             registro[1][1] = 14;
 
         }
+        rectangle.setStroke(Color.GREEN);
+        rectangle.setStrokeWidth(4);
         System.out.println("Bateria");
     }
 
@@ -226,12 +239,27 @@ public class SampleController implements Initializable {
             registro[1][1] = Fila;
         } else {
 
-            int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
-            System.out.println("diff : " + diff);
+            if (registro[0][0] != 33 && registro[0][0] != 34) {
+                //calvculo para encontrar el punto dentro de la matriz de la protoboard
+                int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
+                System.out.println("diff : " + diff);
 
-            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.BLACK);
-            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(1);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.BLACK);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(1);
 
+
+
+            } else {
+                int op;
+                if(registro[0][0] == 33){
+                    op = 2;
+                }else {
+                    op = 3;
+                }
+                ((Rectangle) AnchorPane.getChildren().get(op-1) ).setStroke(Color.BLACK);
+                ((Rectangle) AnchorPane.getChildren().get(op-1) ).setStrokeWidth(1);
+
+            }
             registro[0][0] = registro[1][0];
             registro[0][1] = registro[1][1];
 
@@ -239,7 +267,7 @@ public class SampleController implements Initializable {
             registro[1][1] = Fila;
 
         }
-        circle.setStroke(Color.BLUE);
+        circle.setStroke(Color.GREEN);
         circle.setStrokeWidth(3);
     }
 
@@ -302,7 +330,8 @@ public class SampleController implements Initializable {
         bateria.setFill(Color.BLACK);
         bateria.setStroke(Color.BLACK);
         bateria.setRotate(90);
-        bateria.setOnMouseClicked(event -> capturaBateria(33));
+        bateria.setOnMouseClicked(event -> capturaBateria(33, bateria));
+        System.out.println(AnchorPane.getChildren().size());
         AnchorPane.getChildren().addAll(bateria);
 
         Rectangle bateria2 = new Rectangle();
@@ -312,7 +341,7 @@ public class SampleController implements Initializable {
         bateria2.setY(120);
         bateria2.setFill(Color.GOLD);
         bateria2.setStroke(Color.BLACK);
-        bateria2.setOnMouseClicked(event -> capturaBateria(34));
+        bateria2.setOnMouseClicked(event -> capturaBateria(34, bateria2));
         AnchorPane.getChildren().addAll(bateria2);
 
         Label label13 = new Label();
