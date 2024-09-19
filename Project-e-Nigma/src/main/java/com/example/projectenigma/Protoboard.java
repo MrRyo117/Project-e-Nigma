@@ -24,14 +24,14 @@ public class Protoboard {
     }
 
 
-    public void CambiarCargaBus(int fila, int columna){
+    public void CambiarCargaBus(int fila, int columna, int carga){
         //dependiendo del valor de la fila, sabemos si son buses
         //el metodo crea un hoyito temporal que remplaza al original con los valores modificados
         switch (fila){
             case 0, 1, 12, 13:
             {
                 for (int j = 0; j < columna; j++){
-                    Hoyito temp = new Hoyito(1,1,false);
+                    Hoyito temp = new Hoyito(0,carga,false);
                     protoboard[fila][j] = temp;
                 }
                 break;
@@ -39,7 +39,7 @@ public class Protoboard {
 
         }
         //cambia el estado del hoyito cual esta conectado con un cable
-        Hoyito temp = new Hoyito(1,1,true);
+        Hoyito temp = new Hoyito(0,1,true);
         protoboard[fila][columna] = temp;
     }
 
@@ -60,8 +60,8 @@ public class Protoboard {
     public void EstadoHoyito(int Columna, int Fila){
         System.out.println("Fila:"+ Fila + " Columna:"+ Columna );
         System.out.println("Contenido:");
-        System.out.println("Cargavolt : "+ protoboard[Fila][Columna].getCargaVolt());
-        System.out.println("Cargaamp : "+ protoboard[Fila][Columna].getCargaAmp());
+        System.out.println("Volt : "+ protoboard[Fila][Columna].getVolt());
+        System.out.println("Carga : "+ protoboard[Fila][Columna].getCarga());
         System.out.println("Estado : "+ protoboard[Fila][Columna].isEstado());
 
     }

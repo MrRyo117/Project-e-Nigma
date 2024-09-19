@@ -4,40 +4,40 @@ public class Hoyito {
 
 
     //Atributos
-    private int cargaVolt;
-    private int cargaAmp;
+    private int Volt;
+    private int carga;
     private boolean estado;
 
 
     //Contructor
     public Hoyito(){
-        this.cargaVolt = 0;
-        this.cargaAmp = 0;
+        this.Volt = 0;
+        this.carga = 0;
         this.estado = false;
     }
 
-    public Hoyito(int cargaVolt, int cargaAmp, boolean estado){
-        this.cargaVolt = cargaVolt;
-        this.cargaAmp = cargaAmp;
+    public Hoyito(int Volt, int carga, boolean estado){
+        this.Volt = Volt;
+        this.carga = carga;
         this.estado = estado;
     }
 
     //Getters y Setters
 
-    public int getCargaVolt() {
-        return cargaVolt;
+    public int getVolt() {
+        return Volt;
     }
 
-    public void setCargaVolt(int cargaVolt) {
-        this.cargaVolt = cargaVolt;
+    public void setVolt(int Volt) {
+        this.Volt = Volt;
     }
 
-    public int getCargaAmp() {
-        return cargaAmp;
+    public int getCarga() {
+        return carga;
     }
 
-    public void setCargaAmp(int cargaAmp) {
-        this.cargaAmp = cargaAmp;
+    public void setCarga(int carga) {
+        this.carga = carga;
     }
 
     public boolean isEstado() {
