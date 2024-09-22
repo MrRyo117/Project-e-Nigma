@@ -132,7 +132,6 @@ public class SampleController implements Initializable {
             partebaja.setStroke(Color.RED);
 
 
-
             conector1.setStartX(puntoX1);
             conector1.setStartY(puntoY1);
             conector1.setEndX(puntoX1);
@@ -162,39 +161,39 @@ public class SampleController implements Initializable {
     public void DibujoSwitch() {
 
         Rectangle base = new Rectangle();
-        base.setWidth(30);
-        base.setHeight(30);
+        base.setWidth(60);
+        base.setHeight(60);
         base.setX(1280);
         base.setY(500);
         base.setFill(Color.GRAY);
         base.setStroke(Color.BLACK);
 
         Circle circulo_arriba_der = new Circle();
-        circulo_arriba_der.setCenterX(1305);
-        circulo_arriba_der.setCenterY(505);
-        circulo_arriba_der.setRadius(2);
+        circulo_arriba_der.setCenterX(1335);
+        circulo_arriba_der.setCenterY(506);
+        circulo_arriba_der.setRadius(5);
 
         Circle circulo_abajo_der = new Circle();
-        circulo_abajo_der.setCenterX(1305);
-        circulo_abajo_der.setCenterY(525);
-        circulo_abajo_der.setRadius(2);
+        circulo_abajo_der.setCenterX(1335);
+        circulo_abajo_der.setCenterY(555);
+        circulo_abajo_der.setRadius(5);
 
         Circle circulo_arriba_izq = new Circle();
         circulo_arriba_izq.setCenterX(1285);
-        circulo_arriba_izq.setCenterY(505);
-        circulo_arriba_izq.setRadius(2);
+        circulo_arriba_izq.setCenterY(506);
+        circulo_arriba_izq.setRadius(5);
         circulo_arriba_izq.setFill(Color.BLACK);
 
         Circle circulo_abajo_izq = new Circle();
         circulo_abajo_izq.setCenterX(1285);
-        circulo_abajo_izq.setCenterY(525);
-        circulo_abajo_izq.setRadius(2);
+        circulo_abajo_izq.setCenterY(555);
+        circulo_abajo_izq.setRadius(5);
         circulo_abajo_izq.setFill(Color.BLACK);
 
         Circle circulo_Centro = new Circle();
-        circulo_Centro.setCenterX(1295);
-        circulo_Centro.setCenterY(515);
-        circulo_Centro.setRadius(6);
+        circulo_Centro.setCenterX(1310);
+        circulo_Centro.setCenterY(530);
+        circulo_Centro.setRadius(15);
         circulo_Centro.setFill(Color.BLACK);
 
         Group dib_switch = new Group();
@@ -202,6 +201,7 @@ public class SampleController implements Initializable {
         AnchorPane.getChildren().add(dib_switch);
         Historial.add(3);
     }
+
 
     private void ClickCirculo(Circle circle) {
         int Columna = (((int) circle.getCenterX()) - 30) / 30;
@@ -232,7 +232,7 @@ public class SampleController implements Initializable {
         } else {
 
             if (registro[0][0] != 33 && registro[0][0] != 34) {
-                //calvculo para encontrar el punto dentro de la matriz de la protoboard
+                //calculo para encontrar el punto dentro de la matriz de la protoboard
                 int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
 
                 if ( ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ){
