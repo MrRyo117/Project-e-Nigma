@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
+import org.controlsfx.control.PrefixSelectionChoiceBox;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class SampleController implements Initializable {
     public int tamano_columnas = Protoboard2.protoboard[0].length;
 
     public int lastInt;
+    public int lastMod;
 
     public ArrayList<Integer> Historial = new ArrayList<Integer>(); //cada numero representa una pieza: 1 cable, 2 led, 3 switch
 
@@ -109,41 +111,33 @@ public class SampleController implements Initializable {
         double DiffSpaceX = puntoX2 - puntoX1;
         double DiffSpaceY = puntoY2 - puntoY1;
         Arc semicirculo= new Arc();
-        Rectangle partebaja = new Rectangle();
         Line conector1 = new Line();
         Line conector2 = new Line();
         if (puntoY1 == puntoY2){
 
-            semicirculo.setCenterX(puntoX1 + (puntoX2 - puntoX1) / 2);
-            semicirculo.setCenterY((puntoY1 * 2 - puntoY2) - 60);
-            semicirculo.setRadiusX(20);
+            semicirculo.setCenterX(puntoX1 + (DiffSpaceX) / 2);
+            semicirculo.setCenterY((puntoY1 * 2 - puntoY2) - 10);
+            semicirculo.setRadiusX(10);
             semicirculo.setRadiusY(20);
             semicirculo.setStartAngle(0);
             semicirculo.setLength(180);
             semicirculo.setType(ArcType.ROUND);
             semicirculo.setFill(Color.RED);
-
-
-            partebaja.setWidth(40);
-            partebaja.setHeight(35);
-            partebaja.setX(puntoX1 - 5);
-            partebaja.setY((puntoY1 * 2 - puntoY2) - 60);
-            partebaja.setFill(Color.RED);
-            partebaja.setStroke(Color.RED);
+            semicirculo.setStroke(Color.BLACK);
 
 
             conector1.setStartX(puntoX1);
             conector1.setStartY(puntoY1);
-            conector1.setEndX(puntoX1);
-            conector1.setEndY(puntoY1 - 20);
+            conector1.setEndX(puntoX1+7);
+            conector1.setEndY(puntoY1 - 10);
             conector1.setStroke(Color.BLACK);
             conector1.setStrokeWidth(3);
 
 
             conector2.setStartX(puntoX2);
             conector2.setStartY(puntoY2);
-            conector2.setEndX(puntoX2);
-            conector2.setEndY(puntoY2 - 20);
+            conector2.setEndX(puntoX2-7);
+            conector2.setEndY(puntoY2 - 10);
             conector2.setStroke(Color.BLACK);
             conector2.setStrokeWidth(3);
         }
@@ -152,7 +146,7 @@ public class SampleController implements Initializable {
 
         Group led = new Group();
 
-        led.getChildren().addAll(semicirculo, partebaja, conector2, conector1);
+        led.getChildren().addAll(semicirculo, conector2, conector1);
         AnchorPane.getChildren().add(led);
         Historial.add(2);
     }
@@ -270,7 +264,7 @@ public class SampleController implements Initializable {
     @FXML
     public void Cables() {
         Line cable1;
-
+        int op = 0, op2 = 0, carga = 0;
         if (registro[0][0] != 33 && registro[0][0] != 34 && registro[1][0] != 33 && registro[1][0] != 34) {
 
             cable1 = new Line(
@@ -284,7 +278,7 @@ public class SampleController implements Initializable {
 
         } else {
 
-            int op, carga;
+
 
             if (registro[0][0] == 34) {
 
@@ -296,8 +290,9 @@ public class SampleController implements Initializable {
                         ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
 
                 );
+                op = registro[1][0];
+                op2 = registro[1][1];
 
-                op = registro[1][1];
                 carga = 1;
 
             } else if (registro[1][0] == 34) {
@@ -310,8 +305,9 @@ public class SampleController implements Initializable {
                         ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY()
 
                 );
+                op = registro[0][0];
+                op2 = registro[0][1];
 
-                op = registro[0][1];
                 carga = 1;
 
             } else if (registro[0][0] == 33) {
@@ -324,8 +320,9 @@ public class SampleController implements Initializable {
                         ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
 
                 );
+                op = registro[1][0];
+                op2 = registro[1][1];
 
-                op = registro[1][1];
                 carga = -1;
 
             } else {
@@ -339,26 +336,29 @@ public class SampleController implements Initializable {
 
                 );
 
-                op = registro[0][1];
+                op = registro[0][0];
+                op2 = registro[0][1];
+
                 carga = -1;
             }
             op -=1;
+            op2 -=1;
 
             if (op == 1 || op == 2 || op == 13 || op == 14) {
-                CargasBuses(op, carga);
+                CargasBuses(op2, carga);
             }
 
             else{
-                CargarMedio(op, carga);
+                CargarMedio(op2, carga);
             }
 
-            Protoboard2.CambiarCargaBus(op-1, 1, carga);
+            Protoboard2.CambiarCargaBus(op2, op, carga);
         }
 
         cable1.setStroke(Color.BLACK);
         cable1.setStrokeWidth(3);
 
-        Protoboard2.EstadoHoyito(0,0);
+        Protoboard2.EstadoHoyito(op,op2);
         AnchorPane.getChildren().add(cable1);
         Historial.add(1);
 
@@ -404,7 +404,9 @@ public class SampleController implements Initializable {
         }
     }
 
-
+    public void reset(){
+        
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -621,6 +623,7 @@ public class SampleController implements Initializable {
             AnchorPane.getChildren().addAll(label12);
 
         }
+        lastMod = AnchorPane.getChildren().size();
         //Creacion del protoboard
         int AuxSpace = 0;
         for (int i = 2; i < 32; i++) {
@@ -646,10 +649,13 @@ public class SampleController implements Initializable {
 
 
             }
+
             AuxSpace = 0;
         }
-
+        System.out.println(lastInt);
+        System.out.println(AnchorPane.getChildren().get(lastInt-1).getClass().getTypeName());
         lastInt = AnchorPane.getChildren().size();
+
     }
 }
 
