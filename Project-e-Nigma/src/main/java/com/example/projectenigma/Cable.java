@@ -4,13 +4,22 @@ public class Cable {
     //Atributos
 
     public int volt;
-    public int posicion_x;
-    public int posicion_y;
+    public int carga;
+    public int hoyitosConectados[][] = new int[2][2];
 
 
     //Metodos
 
-    public void Conecion(int posicion_x, int posicion_y){
+    public void Conecion(){
+
+    }
+
+    public Cable(int volt, int carga, int hoyitoF, int hoyitoC) {
+        this.volt = volt;
+        this.carga = carga;
+        this.hoyitosConectados[0][0] = hoyitoF;
+        this.hoyitosConectados[0][1] = hoyitoC;
+
 
     }
 }

@@ -109,7 +109,6 @@ public class SampleController implements Initializable {
 
         }
         double DiffSpaceX = puntoX2 - puntoX1;
-        double DiffSpaceY = puntoY2 - puntoY1;
         Arc semicirculo= new Arc();
         Line conector1 = new Line();
         Line conector2 = new Line();
@@ -122,7 +121,7 @@ public class SampleController implements Initializable {
             semicirculo.setStartAngle(0);
             semicirculo.setLength(180);
             semicirculo.setType(ArcType.ROUND);
-            semicirculo.setFill(Color.RED);
+            semicirculo.setFill(Color.WHITE);
             semicirculo.setStroke(Color.BLACK);
 
 
@@ -196,7 +195,6 @@ public class SampleController implements Initializable {
         Historial.add(3);
     }
 
-
     private void ClickCirculo(Circle circle) {
         int Columna = (((int) circle.getCenterX()) - 30) / 30;
         int Fila;
@@ -264,7 +262,7 @@ public class SampleController implements Initializable {
     @FXML
     public void Cables() {
         Line cable1;
-        int op = 0, op2 = 0, carga = 0;
+        int fila = 0, columna = 0, carga = 0;
         if (registro[0][0] != 33 && registro[0][0] != 34 && registro[1][0] != 33 && registro[1][0] != 34) {
 
             cable1 = new Line(
@@ -290,8 +288,8 @@ public class SampleController implements Initializable {
                         ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
 
                 );
-                op = registro[1][0];
-                op2 = registro[1][1];
+                fila = registro[1][0];
+                columna = registro[1][1];
 
                 carga = 1;
 
@@ -305,8 +303,8 @@ public class SampleController implements Initializable {
                         ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY()
 
                 );
-                op = registro[0][0];
-                op2 = registro[0][1];
+                fila = registro[0][0];
+                columna = registro[0][1];
 
                 carga = 1;
 
@@ -320,8 +318,8 @@ public class SampleController implements Initializable {
                         ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
 
                 );
-                op = registro[1][0];
-                op2 = registro[1][1];
+                fila = registro[1][0];
+                columna = registro[1][1];
 
                 carga = -1;
 
@@ -336,30 +334,32 @@ public class SampleController implements Initializable {
 
                 );
 
-                op = registro[0][0];
-                op2 = registro[0][1];
+                fila = registro[0][0];
+                columna = registro[0][1];
 
                 carga = -1;
             }
-            op -=1;
-            op2 -=1;
+            fila -=1;
+            columna -=1;
 
-            if (op == 1 || op == 2 || op == 13 || op == 14) {
-                CargasBuses(op2, carga);
+            if (fila == 1 || fila == 2 || fila == 13 || fila == 14) {
+                CargasBuses(columna, carga);
             }
 
             else{
-                CargarMedio(op2, carga);
+                CargarMedio(columna, carga);
             }
 
-            Protoboard2.CambiarCargaBus(op2, op, carga);
+            Protoboard2.CambiarCargaBus(fila, columna, carga);
+            //Protoboard2.setCableDBateria();
         }
 
         cable1.setStroke(Color.BLACK);
         cable1.setStrokeWidth(3);
 
-        Protoboard2.EstadoHoyito(op,op2);
+        Protoboard2.EstadoHoyito(fila,columna);
         AnchorPane.getChildren().add(cable1);
+
         Historial.add(1);
 
     }
@@ -405,7 +405,18 @@ public class SampleController implements Initializable {
     }
 
     public void reset(){
-        
+        for (int i = AnchorPane.getChildren().size(); i > lastMod; i--) {
+            AnchorPane.getChildren().removeLast();
+        }
+        colocarHoyitos();
+    }
+    public void colocarHoyitos(){
+
+
+        for (int i = 2; i < ArCircles.length; i++){
+            AnchorPane.getChildren().addAll(ArCircles[i]);
+        }
+
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -653,7 +664,6 @@ public class SampleController implements Initializable {
             AuxSpace = 0;
         }
         System.out.println(lastInt);
-        System.out.println(AnchorPane.getChildren().get(lastInt-1).getClass().getTypeName());
         lastInt = AnchorPane.getChildren().size();
 
     }
