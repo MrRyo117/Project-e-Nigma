@@ -3,6 +3,7 @@ package com.example.projectenigma;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -19,6 +20,8 @@ public class SampleController implements Initializable {
     @FXML
     private AnchorPane AnchorPane;
 
+    @FXML
+    private Button Boton_encendido;
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
 
@@ -87,6 +90,17 @@ public class SampleController implements Initializable {
                     break;
             }
         }
+    }
+
+    public void Cambio_estado_bateria(){
+        if (Boton_encendido.getText().equals("Apagar")){
+            Boton_encendido.setText("Encender");
+            Boton_encendido.setTextFill(Color.GREEN);
+        }else{
+            Boton_encendido.setText("Apagar");
+            Boton_encendido.setTextFill(Color.RED);
+        }
+
     }
 
     public void DibujoLed(){
@@ -232,7 +246,7 @@ public class SampleController implements Initializable {
         } else {
 
             if (registro[0][0] != 33 && registro[0][0] != 34) {
-                //calculo para encontrar el punto dentro de la matriz de la protoboard
+                //calculo para encontrar el punto dentro de la matriz del protoboard
                 int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
 
                 if ( ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ){
@@ -270,7 +284,9 @@ public class SampleController implements Initializable {
     @FXML
     public void Cables() {
         Line cable1;
+        // los valores 33 y 34 son de la bateria
 
+        //Cableado dentro del protoboard
         if (registro[0][0] != 33 && registro[0][0] != 34 && registro[1][0] != 33 && registro[1][0] != 34) {
 
             cable1 = new Line(
@@ -282,7 +298,7 @@ public class SampleController implements Initializable {
 
             );
 
-        } else {
+        } else {  //Cableado del protoboard a la bateria
 
             int op, carga;
 
@@ -298,6 +314,7 @@ public class SampleController implements Initializable {
                 );
 
                 op = registro[1][1];
+
                 carga = 1;
 
             } else if (registro[1][0] == 34) {
@@ -349,7 +366,7 @@ public class SampleController implements Initializable {
             }
 
             else{
-                CargarMedio(op, carga);
+                CargarPistas(op, carga);
             }
 
             Protoboard2.CambiarCargaBus(op-1, 1, carga);
@@ -385,7 +402,7 @@ public class SampleController implements Initializable {
 
     }
 
-    public void CargarMedio(int op, int carga){
+    public void CargarPistas(int op, int carga){
 
         Color color = null;
 
@@ -402,13 +419,14 @@ public class SampleController implements Initializable {
             ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
             ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
         }
+
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        Protoboard2.CrearProtoboard(Protoboard2.protoboard.length,Protoboard2.protoboard[0].length);
+        Protoboard2.CrearProtoboard(tamano_filas,tamano_columnas);
 
         //Creacion del rectangulo
         Rectangle Rectangulo = new Rectangle();
@@ -649,7 +667,7 @@ public class SampleController implements Initializable {
             AuxSpace = 0;
         }
 
-        lastInt = AnchorPane.getChildren().size();
+        lastInt = AnchorPane.getChildren().size(); // Tamano del anchorpane, cantidad de cosas que es 514 (DEBE ESTAR AL FINAL, PUES SI ESTA EN EL PRINCIPIO, NO HAY NADA; ENTONCES EL PROGRAMA SE MUERE)
     }
 }
 
