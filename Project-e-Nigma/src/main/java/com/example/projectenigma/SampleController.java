@@ -276,7 +276,7 @@ public class SampleController implements Initializable {
     @FXML
     public void Cables() {
         Line cable1;
-        int fila = 0, columna = 0, carga = 0;
+        int fila = 0, columna = 0, carga;
         // los valores 33 y 34 son de la bateria
 
         //Cableado dentro del protoboard
@@ -305,10 +305,8 @@ public class SampleController implements Initializable {
                         ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
 
                 );
-                fila = registro[1][0];
-                columna = registro[1][1];
-
-                op = registro[1][1];
+                columna = registro[1][0];
+                fila = registro[1][1];
 
                 carga = 1;
 
@@ -322,8 +320,8 @@ public class SampleController implements Initializable {
                         ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY()
 
                 );
-                fila = registro[0][0];
-                columna = registro[0][1];
+                columna = registro[0][0];
+                fila = registro[0][1];
 
                 carga = 1;
 
@@ -337,8 +335,8 @@ public class SampleController implements Initializable {
                         ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
 
                 );
-                fila = registro[1][0];
-                columna = registro[1][1];
+                columna = registro[1][0];
+                fila = registro[1][1];
 
                 carga = -1;
 
@@ -353,20 +351,21 @@ public class SampleController implements Initializable {
 
                 );
 
-                fila = registro[0][0];
-                columna = registro[0][1];
+                columna = registro[0][0];
+                fila = registro[0][1];
 
                 carga = -1;
             }
             fila -=1;
             columna -=1;
+            System.out.println(columna+ "-columna");
+            if (fila == 0 || fila == 1 || fila == 12 || fila == 13) {
 
-            if (fila == 1 || fila == 2 || fila == 13 || fila == 14) {
-                CargasBuses(columna, carga);
+                CargasBuses(fila, carga);
             }
 
             else{
-                CargarPistas(op, carga);
+                CargarPistas(columna, carga);
             }
 
             Protoboard2.CambiarCargaBus(fila, columna, carga);
@@ -383,7 +382,7 @@ public class SampleController implements Initializable {
 
     }
 
-    public void CargasBuses(int op, int carga){
+    public void CargasBuses(int fila, int carga){
 
         Color color = null;
 
@@ -395,7 +394,7 @@ public class SampleController implements Initializable {
 
         for (int i = 0; i < 30; i++){
 
-            int diff = lastInt - (14*i) - (14-op) ;
+            int diff = lastInt - (14*i) - (14-fila) ;
 
             ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
             ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
@@ -404,7 +403,7 @@ public class SampleController implements Initializable {
 
     }
 
-    public void CargarPistas(int op, int carga){
+    public void CargarPistas(int columna, int carga){
 
         Color color = null;
 
@@ -414,9 +413,9 @@ public class SampleController implements Initializable {
             color = Color.RED;
         }
 
-        for (int i = 0; i < 30; i++){
+        for (int i = 0; i < 10; i++){
 
-            int diff = lastInt - (14*i) - (14-op) ;
+            int diff = lastInt - (2+i) - ((30-columna)-0 * 14);
 
             ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
             ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
