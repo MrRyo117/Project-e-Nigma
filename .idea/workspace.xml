@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a02d0501-a13d-43d4-92f6-99d372ed9b6b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Chip.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Insertables.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Cable.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Cable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Protoboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Protoboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -92,7 +101,8 @@
       <workItem from="1726177290857" duration="1240000" />
       <workItem from="1726689965587" duration="11233000" />
       <workItem from="1726770069599" duration="5614000" />
-      <workItem from="1727459717441" duration="10483000" />
+      <workItem from="1727459717441" duration="10662000" />
+      <workItem from="1727899836553" duration="4170000" />
     </task>
     <servers />
   </component>

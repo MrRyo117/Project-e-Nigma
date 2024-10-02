@@ -15,5 +15,6 @@
    <Button mnemonicParsing="false" onAction="#DibujoLed" text="Led" />
    <Button mnemonicParsing="false" onAction="#DibujoSwitch" text="Switch" />
    <Button mnemonicParsing="false" onAction="#Borrar_pieza" text="Borrar" />
+   <Button mnemonicParsing="false" text="Chip" />
 
 </VBox>
