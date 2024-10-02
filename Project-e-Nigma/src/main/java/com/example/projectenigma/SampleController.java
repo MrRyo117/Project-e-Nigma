@@ -23,7 +23,7 @@ public class SampleController implements Initializable {
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
 
-    private int[][] registro = new int[2][2];
+    private int[][] registro = new int[4][4];
 
     public int tamano_filas = Protoboard2.protoboard.length;
     public int tamano_columnas = Protoboard2.protoboard[0].length;
@@ -410,12 +410,18 @@ public class SampleController implements Initializable {
         }
         colocarHoyitos();
     }
+
     public void colocarHoyitos(){
 
 
         for (int i = 2; i < ArCircles.length; i++){
             AnchorPane.getChildren().addAll(ArCircles[i]);
         }
+
+    }
+
+    @FXML
+    public void DibujoChip(){
 
     }
     @Override
