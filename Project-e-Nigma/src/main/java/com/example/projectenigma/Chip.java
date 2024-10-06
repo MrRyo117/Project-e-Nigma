@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Chip implements Insertables{
 
+    public Chip() {
+    }
 
     @Override
     public void getCarga(int carga) {
