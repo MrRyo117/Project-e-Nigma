@@ -487,6 +487,63 @@ public class SampleController implements Initializable {
         label13.setFont(Font.font(50));
         AnchorPane.getChildren().addAll(label13);
 
+        //Dibujo del motor (provicional)
+        Rectangle superficie = new Rectangle();
+        superficie.setX(1150);
+        superficie.setY(450);
+        superficie.setHeight(80);
+        superficie.setWidth(100);
+        superficie.setFill(Color.rgb(43,123,228));
+
+        Circle motor_parte_der= new Circle();
+        motor_parte_der.setCenterX(1150);
+        motor_parte_der.setCenterY(490);
+        motor_parte_der.setRadius(40);
+        motor_parte_der.setScaleX(0.3);
+        motor_parte_der.setFill(Color.rgb(43,123,228));
+        motor_parte_der.setStroke(Color.rgb(0,0,0));
+
+        Circle motor_parte_izq= new Circle();
+        motor_parte_izq.setCenterX(1250);
+        motor_parte_izq.setCenterY(490);
+        motor_parte_izq.setRadius(40);
+        motor_parte_izq.setScaleX(0.1);
+        motor_parte_izq.setFill(Color.rgb(43,123,228));
+        motor_parte_izq.setStroke(Color.rgb(0,0,0));
+
+        Circle boton_en_ap= new Circle();
+        boton_en_ap.setCenterX(1200);
+        boton_en_ap.setCenterY(490);
+        boton_en_ap.setRadius(12);
+        boton_en_ap.setFill(Color.rgb(0,0,0));
+
+        Rectangle conector1 = new Rectangle();
+        conector1.setX(1100);
+        conector1.setY(480);
+        conector1.setHeight(20);
+        conector1.setWidth(50);
+        conector1.setFill(Color.rgb(171,180,191));
+
+        Circle conector_parte_der= new Circle();
+        conector_parte_der.setCenterX(1100);
+        conector_parte_der.setCenterY(490);
+        conector_parte_der.setRadius(10);
+        conector_parte_der.setScaleX(0.3);
+        conector_parte_der.setFill(Color.rgb(171,180,191));
+        conector_parte_der.setStroke(Color.rgb(0,0,0));
+
+        Circle conector_parte_izq= new Circle();
+        conector_parte_izq.setCenterX(1150);
+        conector_parte_izq.setCenterY(490);
+        conector_parte_izq.setRadius(10);
+        conector_parte_izq.setScaleX(0.1);
+        conector_parte_izq.setFill(Color.rgb(171,180,191));
+        conector_parte_izq.setStroke(Color.rgb(0,0,0));
+
+        AnchorPane.getChildren().addAll(superficie,motor_parte_izq,motor_parte_der,boton_en_ap,conector1,conector_parte_izq,conector_parte_der);
+
+
+
         //Creacion de los label
         //Signo "+" arriba izq
         Label label1 = new Label();
