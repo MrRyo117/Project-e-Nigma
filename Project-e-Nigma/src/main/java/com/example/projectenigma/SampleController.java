@@ -391,110 +391,117 @@ public class SampleController implements Initializable {
 
     @FXML
     public void Cables() {
-        Line cable1;
+        Line cable1 = null;
         int fila = 0, columna = 0, carga;
         // los valores 33 y 34 son de la bateria
 
+        System.out.println(registro[3][0]);
+        if (registro[3][0] != 0){
         //Cableado dentro del protoboard
-        if (registro[2][0] != 33 && registro[2][0] != 34 && registro[3][0] != 33 && registro[3][0] != 34) {
-
-            cable1 = new Line(
-
-                    ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX(),
-                    ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY(),
-                    ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX(),
-                    ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY()
-
-            );
-
-        } else {  //Cableado del protoboard a la bateria
-
-
-
-            if (registro[2][0] == 34) {
-
+            if (registro[2][1] != 15 && registro[3][1] != 15) {
+    
                 cable1 = new Line(
-
-                        1200,
-                        120,
+    
+                        ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX(),
+                        ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY(),
                         ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX(),
                         ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY()
-
+    
                 );
-                columna = registro[3][0];
-                fila = registro[3][1];
+    
+            } else {  //Cableado del protoboard a la bateria
 
-                carga = 1;
 
-            } else if (registro[3][0] == 34) {
+                if (registro[2][0] == 34) {
 
-                cable1 = new Line(
+                    cable1 = new Line(
 
-                        1200,
-                        120,
-                        ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX(),
-                        ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY()
+                            1200,
+                            120,
+                            ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX(),
+                            ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY()
 
-                );
-                columna = registro[2][0];
-                fila = registro[2][1];
+                    );
+                    columna = registro[3][0];
+                    fila = registro[3][1];
 
-                carga = 1;
+                    carga = 1;
 
-            } else if (registro[2][0] == 33) {
+                } else if (registro[3][0] == 34) {
 
-                cable1 = new Line(
+                    cable1 = new Line(
 
-                        1200,
-                        380,
-                        ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX(),
-                        ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY()
+                            1200,
+                            120,
+                            ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX(),
+                            ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY()
 
-                );
-                columna = registro[3][0];
-                fila = registro[3][1];
+                    );
+                    columna = registro[2][0];
+                    fila = registro[2][1];
 
-                carga = -1;
+                    carga = 1;
 
-            } else {
+                } else if (registro[2][0] == 33) {
 
-                cable1 = new Line(
+                    cable1 = new Line(
 
-                        1200,
-                        380,
-                        ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX(),
-                        ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY()
+                            1200,
+                            380,
+                            ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX(),
+                            ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY()
 
-                );
+                    );
+                    columna = registro[3][0];
+                    fila = registro[3][1];
 
-                columna = registro[2][0];
-                fila = registro[2][1];
+                    carga = -1;
 
-                carga = -1;
+                } else {
+
+                    cable1 = new Line(
+
+                            1200,
+                            380,
+                            ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX(),
+                            ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY()
+
+                    );
+
+                    columna = registro[2][0];
+                    fila = registro[2][1];
+
+                    carga = -1;
+                }
+                fila -= 1;
+                columna -= 1;
+                System.out.println(columna + "-columna");
+                if (fila == 0 || fila == 1 || fila == 12 || fila == 13) {
+
+                    CargasBuses(fila, carga);
+                } else if (fila > 1 && fila < 6){
+                    CargarPistas(columna, carga, 1);
+
+                } else if (fila > 6 && fila < 12){
+                    CargarPistas(columna, carga, 2);
+
+                }
+
+                Protoboard2.CambiarCargaBus(fila, columna, carga);
+                //Protoboard2.setCableDBateria();
             }
-            fila -=1;
-            columna -=1;
-            System.out.println(columna+ "-columna");
-            if (fila == 0 || fila == 1 || fila == 12 || fila == 13) {
+            cable1.setStroke(Color.BLACK);
+            cable1.setStrokeWidth(3);
 
-                CargasBuses(fila, carga);
-            }
+            Protoboard2.EstadoHoyito(fila,columna);
+            AnchorPane.getChildren().add(cable1);
 
-            else{
-                CargarPistas(columna, carga);
-            }
-
-            Protoboard2.CambiarCargaBus(fila, columna, carga);
-            //Protoboard2.setCableDBateria();
+            Historial.add(1);
+        }else {
+            System.out.println(" Primero seleccione 4 elementos");
         }
 
-        cable1.setStroke(Color.BLACK);
-        cable1.setStrokeWidth(3);
 
-        Protoboard2.EstadoHoyito(fila,columna);
-        AnchorPane.getChildren().add(cable1);
-
-        Historial.add(1);
 
     }
 
@@ -519,7 +526,7 @@ public class SampleController implements Initializable {
 
     }
 
-    public void CargarPistas(int columna, int carga){
+    public void CargarPistas(int columna, int carga, int op){
 
         Color color = null;
 
@@ -529,13 +536,26 @@ public class SampleController implements Initializable {
             color = Color.RED;
         }
 
-        for (int i = 0; i < 10; i++){
+        if (op == 2){
+            for (int i = 0; i < 5; i++){
 
-            int diff = lastInt - (2+i) - ( ( 30 - columna ) - 0 * 14 );
+                int diff = (lastInt - (i) - ( 14 * (29 - columna)) -3 );
+                System.out.println("Columna -> "+ columna);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+                System.out.println(" Here 1");
+            }
+        }else {
+            for (int i = 5; i < 10; i++){
 
-            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
-            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+                int diff = (lastInt - (i) - ( 14 * (29 - columna)) -3 );
+                System.out.println("Columna -> "+ columna);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+                System.out.println(" Here 2");
+            }
         }
+
 
     }
 
