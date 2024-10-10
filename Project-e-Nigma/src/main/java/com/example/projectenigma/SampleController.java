@@ -132,10 +132,10 @@ public class SampleController implements Initializable {
 
     public void DibujoLed(){
 
-        double puntoX1 = ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterX();
-        double puntoY1 = ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY();
-        double puntoX2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX();
-        double puntoY2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY();
+        double puntoX1 = ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX();
+        double puntoY1 = ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY();
+        double puntoX2 = ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX();
+        double puntoY2 = ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY();
 
         if (puntoX1 > puntoX2){
             double aux = puntoX1;
@@ -249,6 +249,7 @@ public class SampleController implements Initializable {
         }
 
         Fila += 1;
+
         int diff;
         if (registro[0][0] == 0) {
 
@@ -268,8 +269,6 @@ public class SampleController implements Initializable {
             System.out.println(registro[1][1] + " fila -> 1");
 
             diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
-
-
 
         }else if (registro[2][0] == 0) {
 
@@ -299,18 +298,21 @@ public class SampleController implements Initializable {
 
             registro[3][0] = Columna;
             registro[3][1] = Fila;
-
+            /*
             System.out.println(registro[3][0] + " columna -> 3");
             System.out.println(registro[3][1] + " fila -> 3");
-            System.out.println("____________________");
+            System.out.println("____________________");*/
+
             if (registro[1][1] != 15){
                 diff = lastInt-1 - ( 14-registro[1][1] ) - ( 14 * (30-registro[1][0] ) );
 
                 ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
                 ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+
             }else if(registro[1][0] == 33){
                 ((Rectangle) AnchorPane.getChildren().get(1) ).setStroke(Color.CHOCOLATE);
                 ((Rectangle) AnchorPane.getChildren().get(1) ).setStrokeWidth(3);
+
             }else if (registro[1][0] == 34){
                 ((Rectangle) AnchorPane.getChildren().get(2) ).setStroke(Color.CHOCOLATE);
                 ((Rectangle) AnchorPane.getChildren().get(2) ).setStrokeWidth(3);
