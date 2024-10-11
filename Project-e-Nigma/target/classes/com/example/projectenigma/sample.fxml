@@ -26,10 +26,18 @@
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button mnemonicParsing="false" onAction="#DibujoChip" text="Chip" />
-         <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#Cambio_estado_bateria" text="Apagar" textFill="RED">
+         <Button mnemonicParsing="false" onAction="#DibujoChip" text="Chip">
             <HBox.margin>
                <Insets right="5.0" />
+            </HBox.margin></Button>
+         <Button mnemonicParsing="false" text="Resistencia">
+            <HBox.margin>
+               <Insets right="5.0" />
+            </HBox.margin>
+         </Button>
+         <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#Cambio_estado_bateria" text="Apagar" textFill="RED">
+            <HBox.margin>
+               <Insets />
             </HBox.margin></Button>
          <Button mnemonicParsing="false" onAction="#Borrar_pieza" text="Borrar">
             <HBox.margin>
