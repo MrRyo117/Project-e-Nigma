@@ -22,6 +22,7 @@ public class SampleController implements Initializable {
 
     @FXML
     private Button Boton_encendido;
+
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
     private ArrayList<Chip> chips = new ArrayList<>();
@@ -147,7 +148,9 @@ public class SampleController implements Initializable {
             puntoY2 = aux;
 
         }
+
         double DiffSpaceX = puntoX2 - puntoX1;
+
         Arc semicirculo= new Arc();
         Line conector1 = new Line();
         Line conector2 = new Line();
@@ -188,13 +191,57 @@ public class SampleController implements Initializable {
         AnchorPane.getChildren().add(led);
         Historial.add(2);
     }
+    @FXML
+    public void DibujoResistencia(){
+        Resistencia resistencia = new Resistencia();
+        double puntoX1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX();
+        double puntoY1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY();
+        double puntoX2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX();
+        double puntoY2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY();
 
+        if (puntoX1 > puntoX2){
+            double aux = puntoX1;
+            puntoX1 = puntoX2;
+            puntoX2 = aux;
+
+            aux = puntoY1;
+            puntoY1 = puntoY2;
+            puntoY2 = aux;
+
+        }
+        double DiffSpaceX = puntoX2 - puntoX1;
+
+        if (puntoY1 == puntoY2 && puntoX1+60 == puntoX2 ){
+            Rectangle resistenciaD = new Rectangle(
+                    puntoX1+10,
+                    puntoY1-5,
+                    40,
+                    7
+            );
+            Line patitas = new Line(
+              puntoX1,
+              puntoY1,
+              puntoX2,
+              puntoY2
+            );
+            patitas.setStroke(Color.BLACK);
+            resistenciaD.setFill(Color.BURLYWOOD);
+            resistenciaD.setStroke(Color.BLACK);
+            AnchorPane.getChildren().add(patitas);
+            AnchorPane.getChildren().add(resistenciaD);
+        }
+
+
+
+    }
     @FXML
     public void DibujoChip(){
         if ((registro[0][1] == 7 || registro[0][1] == 8) && (registro[1][1] == 7 || registro[1][1] == 8)  && (registro[2][1] == 7 || registro[2][1] == 8) && (registro[3][1] == 7 || registro[3][1] == 8)){
             Chip chip= new Chip();
+
             int coordY = registro[0][0];
             int coordX = registro[0][1];
+
             System.out.println(coordY);
             if (coordY > registro[1][0]){
                 coordY = registro[1][0];
@@ -685,8 +732,6 @@ public class SampleController implements Initializable {
         }
 
     }
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

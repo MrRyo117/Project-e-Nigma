@@ -30,7 +30,7 @@
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button mnemonicParsing="false" text="Resistencia">
+         <Button mnemonicParsing="false" onAction="#DibujoResistencia" text="Resistencia">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin>
