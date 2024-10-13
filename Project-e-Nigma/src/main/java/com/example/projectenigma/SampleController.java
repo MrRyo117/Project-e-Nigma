@@ -192,46 +192,83 @@ public class SampleController implements Initializable {
     @FXML
     public void DibujoSwitch() {
 
-        Rectangle base = new Rectangle();
-        base.setWidth(60);
-        base.setHeight(60);
-        base.setX(1280);
-        base.setY(500);
+       double punto_X1=ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterX();
+       double punto_Y1=ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterY();
+       double punto_X2=ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX();
+       double punto_Y2=ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY();
+       double punto_X3=ArCircles[registro[2][0]+1][registro[2][1]+1].getCenterX();
+       double punto_Y3=ArCircles[registro[2][0]+1][registro[2][1]+1].getCenterY();
+       double punto_X4=ArCircles[registro[3][0]+1][registro[3][1]+1].getCenterX();
+       double punto_Y4=ArCircles[registro[3][0]+1][registro[3][1]+1].getCenterY();
+
+
+       if(punto_X1>punto_X2){
+           double aux=punto_X1;
+           punto_X1=punto_X2;
+           punto_X2=aux;
+
+           aux=punto_Y1;
+           punto_Y1=punto_Y2;
+           punto_Y2=aux;
+       }
+       if(punto_X3>punto_X4){
+           double aux =punto_X3;
+           punto_X3=punto_X4;
+           punto_X4=aux;
+
+           aux= punto_Y3;
+           punto_Y3=punto_Y4;
+           punto_Y4=aux;
+       }
+
+       double rectX,rectY,Ancho,Alto;
+
+       if(punto_X1<punto_X3){
+           rectX= punto_X1-10;
+       }else{
+           rectX= punto_X3-10;
+       }
+       if (punto_Y1<punto_Y3){
+           rectY=punto_Y1-10;
+       }else{
+           rectY=punto_Y3-10;
+       }
+        if (punto_X2 > punto_X1) {
+            Ancho=(punto_X2-punto_X1)+20;
+        }else{
+            Ancho=(punto_X1-punto_X2)+20;
+        }
+        if(punto_Y4>punto_Y1){
+            Alto=(punto_Y4-punto_Y1)+20;
+        }else{
+            Alto=(punto_Y1-punto_Y4)+20;
+        }
+
+        Rectangle base= new Rectangle();
+        base.setX(rectX);
+        base.setY(rectY);
+        base.setWidth(Ancho);
+        base.setHeight(Alto);
         base.setFill(Color.GRAY);
         base.setStroke(Color.BLACK);
 
-        Circle circulo_arriba_der = new Circle();
-        circulo_arriba_der.setCenterX(1335);
-        circulo_arriba_der.setCenterY(506);
-        circulo_arriba_der.setRadius(5);
-
-        Circle circulo_abajo_der = new Circle();
-        circulo_abajo_der.setCenterX(1335);
-        circulo_abajo_der.setCenterY(555);
-        circulo_abajo_der.setRadius(5);
-
-        Circle circulo_arriba_izq = new Circle();
-        circulo_arriba_izq.setCenterX(1285);
-        circulo_arriba_izq.setCenterY(506);
-        circulo_arriba_izq.setRadius(5);
-        circulo_arriba_izq.setFill(Color.BLACK);
-
-        Circle circulo_abajo_izq = new Circle();
-        circulo_abajo_izq.setCenterX(1285);
-        circulo_abajo_izq.setCenterY(555);
-        circulo_abajo_izq.setRadius(5);
-        circulo_abajo_izq.setFill(Color.BLACK);
-
-        Circle circulo_Centro = new Circle();
-        circulo_Centro.setCenterX(1310);
-        circulo_Centro.setCenterY(530);
-        circulo_Centro.setRadius(15);
+        Circle circulo_Arriba_der= new Circle(punto_X2,punto_Y2,5);
+        circulo_Arriba_der.setFill(Color.BLACK);
+        Circle circulo_Abajo_der= new Circle(punto_X4,punto_Y4,5);
+        circulo_Abajo_der.setFill(Color.BLACK);
+        Circle circulo_Arriba_izq= new Circle(punto_X3,punto_Y3,5);
+        circulo_Arriba_izq.setFill(Color.BLACK);
+        Circle circulo_Abajo_izq= new Circle(punto_X1,punto_Y1,5);
+        circulo_Abajo_izq.setFill(Color.BLACK);
+        Circle circulo_Centro= new Circle((punto_X2+punto_X1)/2,(punto_Y1+punto_Y3)/2,15);
         circulo_Centro.setFill(Color.BLACK);
 
-        Group dib_switch = new Group();
-        dib_switch.getChildren().addAll(base, circulo_Centro, circulo_arriba_der, circulo_abajo_der, circulo_abajo_izq, circulo_arriba_izq);
-        AnchorPane.getChildren().add(dib_switch);
+        Group Dibujo_Switch= new Group();
+        Dibujo_Switch.getChildren().addAll(base,circulo_Arriba_der,circulo_Abajo_der,circulo_Arriba_izq,circulo_Abajo_izq,circulo_Centro);
+
+        AnchorPane.getChildren().add(Dibujo_Switch);
         Historial.add(3);
+
     }
 
     private void ClickCirculo(Circle circle) {
