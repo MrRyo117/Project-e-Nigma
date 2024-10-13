@@ -5,11 +5,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.AnchorPane;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Protoboard {
 
     //Atributos
-    Hoyito[][] protoboard = new Hoyito[32][16];
+    //[Fila][Comulmna]
+    Hoyito[][] protoboard = new Hoyito[14][30];
+    ArrayList<Cable> cables = new ArrayList<>();
 
     //Metodos
 
@@ -39,8 +42,8 @@ public class Protoboard {
 
         }
         //cambia el estado del hoyito cual esta conectado con un cable
-        Hoyito temp = new Hoyito(0,1,true);
-        protoboard[fila][columna] = temp;
+        protoboard[fila][columna].setEstado(true);
+
     }
 
     public void CambiarCArgaPistas(int fila, String columna){
@@ -57,8 +60,12 @@ public class Protoboard {
 
     }
 
-    public void EstadoHoyito(int Columna, int Fila){
-        System.out.println("Fila:"+ Fila + " Columna:"+ Columna );
+    public void setCableDBateria(int carga, int fila, int columna){
+        Cable cable = new Cable(0, carga, fila, columna);
+        cables.add(cable);
+    }
+    public void EstadoHoyito(int Fila, int Columna){
+        System.out.println("Fila:"+ (Fila+1) + " Columna:"+ (Columna+1) );
         System.out.println("Contenido:");
         System.out.println("Volt : "+ protoboard[Fila][Columna].getVolt());
         System.out.println("Carga : "+ protoboard[Fila][Columna].getCarga());
