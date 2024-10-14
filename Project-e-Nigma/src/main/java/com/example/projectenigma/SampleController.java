@@ -1,11 +1,15 @@
 package com.example.projectenigma;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
@@ -22,6 +26,8 @@ public class SampleController implements Initializable {
 
     @FXML
     private Button Boton_encendido;
+    @FXML
+    private Button Boton_borrar;
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
     private ArrayList<Chip> chips = new ArrayList<>();
@@ -101,7 +107,9 @@ public class SampleController implements Initializable {
     }
 
     public void Borrar_pieza() {
-        if ((AnchorPane.getChildren().size() % 514) != 0) {
+        // el valor de 521 es la cantidad de cosas que hay en el anchorpane en el momento de la ejecucion,
+        // este debe ser modificado cada vez que se coloque algo nuevo en el anchorpane.
+        if ((AnchorPane.getChildren().size() % 521) != 0) {
             switch (Historial.getLast()) {
                 case 1: // Cables
                     AnchorPane.getChildren().removeLast();
@@ -117,6 +125,13 @@ public class SampleController implements Initializable {
                     break;
             }
         }
+        //en proceso,
+        /*if ((AnchorPane.getChildren().size() % 521) == 0){
+            Boton_borrar.setDisable(true);
+        }
+        if ((AnchorPane.getChildren().size() % 521) != 0) {
+            Boton_borrar.setDisable(false);
+        }*/
     }
 
     public void Cambio_estado_bateria(){
@@ -626,6 +641,7 @@ public class SampleController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         Protoboard2.CrearProtoboard(tamano_filas,tamano_columnas);
+        GridPane grid = new GridPane();
 
         //Creacion del rectangulo
         Rectangle Rectangulo = new Rectangle();
@@ -635,7 +651,12 @@ public class SampleController implements Initializable {
         Rectangulo.setY(-10);
         Rectangulo.setFill(Color.LIGHTGRAY);
         Rectangulo.setStroke(Color.BLACK);
-        AnchorPane.getChildren().addAll(Rectangulo);
+        Rectangulo.widthProperty().bind(AnchorPane.widthProperty());
+        Rectangulo.heightProperty().bind(AnchorPane.heightProperty());
+        AnchorPane.getChildren().add(Rectangulo);
+
+
+
 
         //creacion dibujo bateria
         Rectangle bateria = new Rectangle();
@@ -643,17 +664,23 @@ public class SampleController implements Initializable {
         bateria.setHeight(180);
         bateria.setX(1100);
         bateria.setY(170);
+        /*bateria.widthProperty().bind(Rectangulo.widthProperty());
+        bateria.heightProperty().bind(Rectangulo.heightProperty());*/
         bateria.setFill(Color.BLACK);
         bateria.setStroke(Color.BLACK);
         bateria.setRotate(90);
         bateria.setOnMouseClicked(event -> capturaBateria(33, bateria));
-        AnchorPane.getChildren().addAll(bateria);
+        AnchorPane.getChildren().add(bateria);
+
+
 
         Rectangle bateria2 = new Rectangle();
         bateria2.setWidth(180);
         bateria2.setHeight(130);
         bateria2.setX(1145);
         bateria2.setY(120);
+        /*bateria2.widthProperty().bind(AnchorPane.widthProperty());
+        bateria2.heightProperty().bind(AnchorPane.heightProperty());*/
         bateria2.setFill(Color.GOLD);
         bateria2.setStroke(Color.BLACK);
         bateria2.setOnMouseClicked(event -> capturaBateria(34, bateria2));
@@ -926,6 +953,7 @@ public class SampleController implements Initializable {
         }
 
         lastInt = AnchorPane.getChildren().size(); // Tamano del anchorpane, cantidad de cosas que es 514 (DEBE ESTAR AL FINAL, PUES SI ESTA EN EL PRINCIPIO, NO HAY NADA; ENTONCES EL PROGRAMA SE MUERE)
+        System.out.println(AnchorPane.getChildren().size());
     }
 }
 
