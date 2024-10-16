@@ -22,6 +22,7 @@ public class SampleController implements Initializable {
 
     @FXML
     private Button Boton_encendido;
+
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
     private ArrayList<Chip> chips = new ArrayList<>();
@@ -133,10 +134,10 @@ public class SampleController implements Initializable {
 
     public void DibujoLed(){
 
-        double puntoX1 = ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX();
-        double puntoY1 = ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY();
-        double puntoX2 = ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX();
-        double puntoY2 = ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY();
+        double puntoX1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX();
+        double puntoY1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY();
+        double puntoX2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX();
+        double puntoY2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY();
 
         if (puntoX1 > puntoX2){
             double aux = puntoX1;
@@ -148,7 +149,9 @@ public class SampleController implements Initializable {
             puntoY2 = aux;
 
         }
+
         double DiffSpaceX = puntoX2 - puntoX1;
+
         Arc semicirculo= new Arc();
         Line conector1 = new Line();
         Line conector2 = new Line();
@@ -186,6 +189,159 @@ public class SampleController implements Initializable {
         led.getChildren().addAll(semicirculo, conector2, conector1);
         AnchorPane.getChildren().add(led);
         Historial.add(2);
+    }
+    @FXML
+    public void DibujoResistencia(){
+        Resistencia resistencia = new Resistencia();
+        double puntoX1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX();
+        double puntoY1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY();
+        double puntoX2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX();
+        double puntoY2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY();
+
+        if (puntoX1 > puntoX2){
+            double aux = puntoX1;
+            puntoX1 = puntoX2;
+            puntoX2 = aux;
+
+            aux = puntoY1;
+            puntoY1 = puntoY2;
+            puntoY2 = aux;
+
+        }
+        double DiffSpaceX = puntoX2 - puntoX1;
+
+        if (puntoY1 == puntoY2 && puntoX1+60 == puntoX2 ){
+            Rectangle resistenciaD = new Rectangle(
+                    puntoX1+10,
+                    puntoY1-5,
+                    40,
+                    7
+            );
+            Line patitas = new Line(
+              puntoX1,
+              puntoY1,
+              puntoX2,
+              puntoY2
+            );
+            patitas.setStroke(Color.BLACK);
+            resistenciaD.setFill(Color.BURLYWOOD);
+            resistenciaD.setStroke(Color.BLACK);
+            AnchorPane.getChildren().add(patitas);
+            AnchorPane.getChildren().add(resistenciaD);
+        }
+
+
+
+    }
+    @FXML
+    public void DibujoChip(){
+        if ((registro[0][1] == 7 || registro[0][1] == 8) && (registro[1][1] == 7 || registro[1][1] == 8)  && (registro[2][1] == 7 || registro[2][1] == 8) && (registro[3][1] == 7 || registro[3][1] == 8)){
+            Chip chip= new Chip();
+
+            int coordY = registro[0][0];
+            int coordX = registro[0][1];
+
+            System.out.println(coordY);
+            if (coordY > registro[1][0]){
+                coordY = registro[1][0];
+                coordX = registro[1][1];
+            }else if (coordY > registro[2][0]){
+                coordY = registro[2][0];
+                coordX = registro[2][1];
+            }
+
+            if (coordY == registro[0][0] && coordX != registro[0][1]){
+
+                if (coordX > registro[0][1]){
+                    coordX = registro[0][1];
+                }
+
+            }else if (coordY == registro[1][0] && coordX != registro[1][1]){
+
+                if (coordX > registro[1][1]){
+                    coordX = registro[1][1];
+                }
+
+            }else if (coordY == registro[2][0] && coordX != registro[2][1]){
+
+                if (coordX > registro[2][1]){
+                    coordX = registro[2][1];
+                }
+            }else if (coordY == registro[3][0] && coordX != registro[3][1]){
+
+                if (coordX > registro[3][1]){
+                    coordX = registro[3][1];
+                }
+            }
+
+            double diffX = -1;
+            double diffY = -1;
+
+            for(int i = 0 ; i <= 3 ; i++){
+
+                if (coordX == registro[i][1] && coordY != registro[i][0]){
+
+                    diffX = ArCircles[registro[i][0]][registro[i][1]].getCenterX() - ArCircles[coordY][coordX].getCenterX();
+                }
+
+                if (coordY == registro[i][0] && coordX != registro[i][1]){
+
+                    diffY = ArCircles[registro[i][0]-1][registro[i][1]-1].getCenterY() - ArCircles[coordY-1][coordX-1].getCenterY();
+
+                }
+            }
+
+
+            System.out.println("Columna Superior Izquierda: " +coordY);
+            System.out.println("Fila superior Izquierda: " + coordX);
+
+            Rectangle cuerpoChip = new Rectangle(
+                    ArCircles[coordY-1][coordX-1].getCenterX(),
+                    ArCircles[coordY-1][coordX-1].getCenterY()+5,
+                    diffX,
+                    diffY-10
+            );
+
+            cuerpoChip.setFill(Color.BLACK);
+            cuerpoChip.setStroke(Color.BLACK);
+            AnchorPane.getChildren().add(cuerpoChip);
+
+            for(int i = 0; (i*30) <= diffX; i++){
+                Line patitaSup = new Line(
+                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                        ArCircles[coordY-1][coordX-1].getCenterY(),
+                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                        ArCircles[coordY-1][coordX-1].getCenterY()+5
+
+                );
+
+
+                Line patitaInf = new Line(
+                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                        ArCircles[coordY-1][coordX-1].getCenterY()+diffY,
+                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                        ArCircles[coordY-1][coordX-1].getCenterY()-5+diffY
+
+                );
+                patitaSup.setStrokeWidth(2);
+                patitaInf.setStrokeWidth(2);
+
+                patitaSup.setStroke(Color.GRAY);
+                patitaInf.setStroke(Color.GRAY);
+
+                AnchorPane.getChildren().add(patitaSup);
+                AnchorPane.getChildren().add(patitaInf);
+            }
+
+
+
+
+        }
+        else {
+            System.out.println("No ingresado dentro de los parametros");
+        }
+
+
     }
 
     @FXML
@@ -438,10 +594,11 @@ public class SampleController implements Initializable {
     
                 cable1 = new Line(
     
-                        ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX(),
-                        ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY(),
-                        ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX(),
-                        ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY()
+                        ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
+                        ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY(),
+                        ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                        ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
+    
                 );
     
             } else {  //Cableado del protoboard a la bateria
@@ -453,8 +610,8 @@ public class SampleController implements Initializable {
 
                             1200,
                             120,
-                            ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX(),
-                            ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY()
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
 
                     );
                     columna = registro[3][0];
@@ -468,8 +625,8 @@ public class SampleController implements Initializable {
 
                             1200,
                             120,
-                            ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX(),
-                            ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY()
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY()
 
                     );
                     columna = registro[2][0];
@@ -483,8 +640,8 @@ public class SampleController implements Initializable {
 
                             1200,
                             380,
-                            ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterX(),
-                            ArCircles[registro[3][0] + 1][registro[3][1] + 1].getCenterY()
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
 
                     );
                     columna = registro[3][0];
@@ -498,8 +655,8 @@ public class SampleController implements Initializable {
 
                             1200,
                             380,
-                            ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterX(),
-                            ArCircles[registro[2][0] + 1][registro[2][1] + 1].getCenterY()
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY()
 
                     );
 
@@ -603,12 +760,6 @@ public class SampleController implements Initializable {
         for (int i = 2; i < ArCircles.length; i++){
             AnchorPane.getChildren().addAll(ArCircles[i]);
         }
-    }
-
-    @FXML
-    public void DibujoChip(){
-        Chip chip= new Chip();
-
     }
 
     @Override
@@ -831,19 +982,19 @@ public class SampleController implements Initializable {
         lastMod = AnchorPane.getChildren().size();
         //Creacion del protoboard
         int AuxSpace = 0;
-        for (int i = 2; i < 32; i++) {
+        for (int i = 0; i < 30; i++) {
 
-            for (int j = 2; j < 16; j++) {
+            for (int j = 0; j < 14; j++) {
 
                 Circle circle = new Circle(i, j, 7);
 
                 //espacios extra
-                if (j == 4 || j == 9 || j == 14) {
+                if (j == 2 || j == 7 || j == 12) {
                     AuxSpace += 20;
                 }
 
-                circle.setCenterX(i * 30);
-                circle.setCenterY(j * 30 + AuxSpace);
+                circle.setCenterX((i+2) * 30);
+                circle.setCenterY((j+2) * 30 + AuxSpace);
                 circle.setStroke(Color.BLACK);
                 circle.setFill(Color.WHITE);
                 circle.setOnMouseClicked(event -> ClickCirculo(circle));
