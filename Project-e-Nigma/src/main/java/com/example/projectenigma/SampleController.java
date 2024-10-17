@@ -242,7 +242,6 @@ public class SampleController implements Initializable {
             int coordY = registro[0][0];
             int coordX = registro[0][1];
 
-            System.out.println(coordY);
             if (coordY > registro[1][0]){
                 coordY = registro[1][0];
                 coordX = registro[1][1];
@@ -292,10 +291,6 @@ public class SampleController implements Initializable {
                 }
             }
 
-
-            System.out.println("Columna Superior Izquierda: " +coordY);
-            System.out.println("Fila superior Izquierda: " + coordX);
-
             Rectangle cuerpoChip = new Rectangle(
                     ArCircles[coordY-1][coordX-1].getCenterX(),
                     ArCircles[coordY-1][coordX-1].getCenterY()+5,
@@ -324,6 +319,18 @@ public class SampleController implements Initializable {
                         ArCircles[coordY-1][coordX-1].getCenterY()-5+diffY
 
                 );
+                if (i < 3) {
+                    int diff = lastInt-1 - ( 14-coordX+1 ) - ( 14 * (30-coordY-i ) );
+
+                    if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE ){
+                        CargarPistas(coordY+i-1, 1, 2);
+                    } else if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
+                        CargarPistas(coordY+i-1, -1, 2);
+                    }
+
+                }
+
+
                 patitaSup.setStrokeWidth(2);
                 patitaInf.setStrokeWidth(2);
 
@@ -333,6 +340,8 @@ public class SampleController implements Initializable {
                 AnchorPane.getChildren().add(patitaSup);
                 AnchorPane.getChildren().add(patitaInf);
             }
+
+
 
 
 
@@ -412,27 +421,15 @@ public class SampleController implements Initializable {
             registro[0][0] = Columna;
             registro[0][1] = Fila;
 
-            System.out.println(registro[0][0] + " columna -> 0");
-            System.out.println(registro[0][1] + " fila -> 0");
-
-
         } else if (registro[1][0] == 0) {
 
             registro[1][0] = Columna;
             registro[1][1] = Fila;
 
-            System.out.println(registro[1][0] + " columna -> 1");
-            System.out.println(registro[1][1] + " fila -> 1");
-
-            diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
-
         }else if (registro[2][0] == 0) {
 
             registro[2][0] = Columna;
             registro[2][1] = Fila;
-
-            System.out.println(registro[2][0] + " columna -> 2");
-            System.out.println(registro[2][1] + " fila -> 2");
 
             if (registro[0][1] != 15){
                 diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
@@ -454,10 +451,6 @@ public class SampleController implements Initializable {
 
             registro[3][0] = Columna;
             registro[3][1] = Fila;
-            /*
-            System.out.println(registro[3][0] + " columna -> 3");
-            System.out.println(registro[3][1] + " fila -> 3");
-            System.out.println("____________________");*/
 
             if (registro[1][1] != 15){
                 diff = lastInt-1 - ( 14-registro[1][1] ) - ( 14 * (30-registro[1][0] ) );
@@ -477,69 +470,57 @@ public class SampleController implements Initializable {
 
 
         }else {
-            System.out.println( " Here ");
-            for (int i = 0; i <= 3; i++){
-                System.out.println(registro[i][0] + " columna -> " + i);
-                System.out.println(registro[i][1] + " fila -> " + i);
-            }
             if (registro[0][1] != 15) {
-                System.out.println("\n Here 2");
                 //calculo para encontrar el punto dentro de la matriz del protoboard
-                diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
+                diff = lastInt - 1 - (14 - registro[0][1]) - (14 * (30 - registro[0][0]));
 
-                if ( ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ){
+                if (((Circle) AnchorPane.getChildren().get(diff)).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff)).getStroke() != Color.RED) {
 
-                    ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.BLACK);
-                    ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(1);
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
                 }
 
             }
 
-            if(registro[2][0] == 33){
-                ((Rectangle) AnchorPane.getChildren().get(1) ).setStroke(Color.CHOCOLATE);
-                ((Rectangle) AnchorPane.getChildren().get(1) ).setStrokeWidth(3);
-            }else if (registro[2][0] == 34){
-                ((Rectangle) AnchorPane.getChildren().get(2) ).setStroke(Color.CHOCOLATE);
-                ((Rectangle) AnchorPane.getChildren().get(2) ).setStrokeWidth(3);
+            if (registro[2][0] == 33) {
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStrokeWidth(3);
+            } else if (registro[2][0] == 34) {
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(3);
             }
 
-            if(registro[0][0] == 33){
-                ((Rectangle) AnchorPane.getChildren().get(1) ).setStroke(Color.BLACK);
-                ((Rectangle) AnchorPane.getChildren().get(1) ).setStrokeWidth(1);
-            }else if (registro[0][0] == 34){
-                ((Rectangle) AnchorPane.getChildren().get(2) ).setStroke(Color.BLACK);
-                ((Rectangle) AnchorPane.getChildren().get(2) ).setStrokeWidth(1);
+            if (registro[0][0] == 33) {
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStroke(Color.BLACK);
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStrokeWidth(1);
+            } else if (registro[0][0] == 34) {
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.BLACK);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(1);
             }
 
 
-            for (int i = 0; i < 3; i++){
+            for (int i = 0; i < 3; i++) {
 
-                registro[i][0] = registro[i+1][0];
-                registro[i][1] = registro[i+1][1];
+                registro[i][0] = registro[i + 1][0];
+                registro[i][1] = registro[i + 1][1];
             }
 
             registro[3][0] = Columna;
             registro[3][1] = Fila;
 
-            for (int i = 0; i <= 3; i++){
-                System.out.println(registro[i][0] + " columna -> " + i);
-                System.out.println(registro[i][1] + " fila -> " + i);
-            }
+            for (int i = 0; i <= 1; i++) {
 
-            for (int i = 0; i <=  1;i++){
+                if (registro[i][1] != 15) {
 
-                if (registro[i][1] != 15){
+                    diff = lastInt - 1 - (14 - registro[i][1]) - (14 * (30 - registro[i][0]));
 
-                    diff = lastInt-1 - ( 14-registro[i][1] ) - ( 14 * (30-registro[i][0] ) );
-
-                    ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
-                    ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.CHOCOLATE);
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(3);
                 }
 
             }
 
         }
-
         circle.setStroke(Color.GREEN);
         circle.setStrokeWidth(3);
 
@@ -566,6 +547,8 @@ public class SampleController implements Initializable {
                         ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
     
                 );
+
+                System.out.println(ArCircles[registro[2][0] - 1][registro[2][1] - 1].getStroke().toString());
     
             } else {  //Cableado del protoboard a la bateria
 
@@ -637,7 +620,7 @@ public class SampleController implements Initializable {
                 if (fila == 0 || fila == 1 || fila == 12 || fila == 13) {
 
                     CargasBuses(fila, carga);
-                } else if (fila > 1 && fila < 6){
+                } else if (fila > 1 && fila <= 6){
                     CargarPistas(columna, carga, 1);
 
                 } else if (fila > 6 && fila < 12){
@@ -698,19 +681,18 @@ public class SampleController implements Initializable {
             for (int i = 0; i < 5; i++){
 
                 int diff = (lastInt - (i) - ( 14 * (29 - columna)) -3 );
-                System.out.println("Columna -> "+ columna);
                 ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
                 ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
-                System.out.println(" Here 1");
+
             }
         }else {
             for (int i = 5; i < 10; i++){
 
                 int diff = (lastInt - (i) - ( 14 * (29 - columna)) -3 );
-                System.out.println("Columna -> "+ columna);
+
                 ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
                 ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
-                System.out.println(" Here 2");
+
             }
         }
 
