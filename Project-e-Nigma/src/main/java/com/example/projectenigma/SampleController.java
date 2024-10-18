@@ -210,9 +210,32 @@ public class SampleController implements Initializable {
             conector2.setStroke(Color.BLACK);
             conector2.setStrokeWidth(3);
         }
-
-
-
+        /*
+        int diff = lastInt-1 - ( 14-registro[2][1] ) - ( 14 * (30-registro[2][0] ) );
+        int diff2 = lastInt-1 - ( 14-registro[3][1] ) - ( 14 * (30-registro[3][0] ) );
+        int carga  = 0;
+        Color colorDiff1 = (Color) ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke();
+        Color colorDiff2 = (Color) ( (Circle) AnchorPane.getChildren().get(diff2) ).getStroke();
+        if ((colorDiff1 != Color.GREEN || colorDiff2 != Color.GREEN) && ((colorDiff1 == Color.BLUE && colorDiff2 != Color.RED) || (colorDiff1 == Color.RED && colorDiff2 != Color.BLUE))) {
+            if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE){
+                carga = -1;
+            }
+            if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED){
+                carga = 1;
+            }
+            if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
+                if (registro[3][1]-1 == 0 || registro[3][1]-1 == 1 || registro[3][1]-1 == 12 || registro[3][1]-1 == 13) {
+                    CargasBuses(registro[3][1]-1, carga);
+                } else if (registro[3][1]-1 > 1 && registro[3][1]-1 <= 6){
+                    CargarPistas(registro[3][0]-1, carga, 1);
+                } else if (registro[3][1]-1 > 6 && registro[3][1]-1 < 12){
+                    CargarPistas(registro[3][0]-1, carga, 2);
+                }
+            }
+        }else if(!(colorDiff1 == Color.GREEN || colorDiff2 == Color.GREEN)){
+            pararTodo();
+        }
+        */
         Group led = new Group();
 
         led.getChildren().addAll(semicirculo, conector2, conector1);
@@ -580,7 +603,8 @@ public class SampleController implements Initializable {
         if (registro[3][0] != 0){
         //Cableado dentro del protoboard
             if (registro[2][1] != 15 && registro[3][1] != 15) {
-    
+                fila = registro[3][1]-1;
+                columna = registro[3][0]-1;
                 cable1 = new Line(
     
                         ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
@@ -592,8 +616,19 @@ public class SampleController implements Initializable {
 
                 int diff = lastInt-1 - ( 14-registro[2][1] ) - ( 14 * (30-registro[2][0] ) );
                 int diff2 = lastInt-1 - ( 14-registro[3][1] ) - ( 14 * (30-registro[3][0] ) );
+
                 Color colorDiff1 = (Color) ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke();
+                if (colorDiff1 == Color.GREEN){
+                    int aux = diff;
+                    diff = diff2;
+                    diff2 = aux;
+                    colorDiff1 = (Color) ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke();
+                    fila = registro[2][1]-1;
+                    columna = registro[2][0]-1;
+
+                }
                 Color colorDiff2 = (Color) ( (Circle) AnchorPane.getChildren().get(diff2) ).getStroke();
+                //Pasar cargas cuando interactue un cable con hoyitos con cargas
 
                 if ((colorDiff1 != Color.GREEN || colorDiff2 != Color.GREEN) && ((colorDiff1 == Color.BLUE && colorDiff2 != Color.RED) || (colorDiff1 == Color.RED && colorDiff2 != Color.BLUE))) {
                     if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE){
@@ -603,25 +638,17 @@ public class SampleController implements Initializable {
                         carga = 1;
                     }
                     if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
-                        if (registro[3][1]-1 == 0 || registro[3][1]-1 == 1 || registro[3][1]-1 == 12 || registro[3][1]-1 == 13) {
-                            CargasBuses(registro[3][1]-1, carga);
-                        } else if (registro[3][1]-1 > 1 && registro[3][1]-1 <= 6){
-                            CargarPistas(registro[3][0]-1, carga, 1);
-                        } else if (registro[3][1]-1 > 6 && registro[3][1]-1 < 12){
-                            CargarPistas(registro[3][0]-1, carga, 2);
+                        if (fila == 0 || fila == 1 || fila == 12 || fila == 13) {
+                            CargasBuses(fila, carga);
+                        } else if (fila > 1 && fila <= 6){
+                            CargarPistas(columna, carga, 1);
+                        } else if (fila > 6 && fila < 12){
+                            CargarPistas(columna, carga, 2);
                         }
                     }
-                }else if((colorDiff1 == Color.GREEN || colorDiff2 == Color.GREEN)){
-
-                }else{
+                }else if(!(colorDiff1 == Color.GREEN || colorDiff2 == Color.GREEN)){
                     pararTodo();
                 }
-                
-
-
-
-
-
             } else {  //Cableado del protoboard a la bateria
 
 
@@ -805,7 +832,7 @@ public class SampleController implements Initializable {
         btnChip.setDisable(true);
         btnSwitch.setDisable(true);
         Boton_encendido.setDisable(true);
-        System.out.println("Corto en corto");
+        System.out.println("-----> Corto en corto <------");
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
