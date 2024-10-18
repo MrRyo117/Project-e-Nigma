@@ -220,6 +220,7 @@ public class SampleController implements Initializable {
     @FXML
     public void DibujoResistencia(){
         Resistencia resistencia = new Resistencia();
+        boolean negativoIzq = false;
         double puntoX1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX();
         double puntoY1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY();
         double puntoX2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX();
@@ -233,6 +234,7 @@ public class SampleController implements Initializable {
             aux = puntoY1;
             puntoY1 = puntoY2;
             puntoY2 = aux;
+            negativoIzq = true;
 
         }
 
@@ -241,7 +243,7 @@ public class SampleController implements Initializable {
                     puntoX1+10,
                     puntoY1-5,
                     40,
-                    7
+                    12
             );
             Line patitas = new Line(
               puntoX1,
@@ -254,6 +256,38 @@ public class SampleController implements Initializable {
             resistenciaD.setStroke(Color.BLACK);
             AnchorPane.getChildren().add(patitas);
             AnchorPane.getChildren().add(resistenciaD);
+            Line cruz = new Line(
+                    puntoX1+40,
+                    puntoY1,
+                    puntoX1+45,
+                    puntoY1
+            );
+            cruz.setStrokeWidth(2);
+            Line cruz2 = new Line(
+                    puntoX1+42.5,
+                    puntoY1-2.5,
+                    puntoX1+42.5,
+                    puntoY1+2.5
+            );
+
+            Line resta = new Line(
+                    puntoX1+15,
+                    puntoY1,
+                    puntoX1+20,
+                    puntoY1
+            );
+
+            if (negativoIzq){
+                cruz2.setStartX(puntoX1+17.5);
+                cruz2.setEndX(puntoX1+17.5);
+
+            }
+
+            AnchorPane.getChildren().add(cruz);
+            AnchorPane.getChildren().add(cruz2);
+
+            AnchorPane.getChildren().add(resta);
+
         }
 
         Cargar();
