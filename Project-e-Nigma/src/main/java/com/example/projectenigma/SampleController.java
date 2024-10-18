@@ -19,9 +19,27 @@ public class SampleController implements Initializable {
 
     @FXML
     private AnchorPane AnchorPane;
+    
+    @FXML
+    private Button btnLed;
+
+    @FXML
+    private Button btnCable;
+
+    @FXML
+    private Button btnSwitch;
+
+    @FXML
+    private Button btnChip;
+
+    @FXML
+    private Button btnResistencia;
 
     @FXML
     private Button Boton_encendido;
+
+    @FXML
+    private Button btnBorrar;
 
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
@@ -482,7 +500,7 @@ public class SampleController implements Initializable {
 
 
         }else {
-            System.out.println(registro[0][1]);
+
             if (registro[0][1] != 15) {
                 //calculo para encontrar el punto dentro de la matriz del protoboard
                 diff = lastInt - 1 - (14 - registro[0][1]) - (14 * (30 - registro[0][0]));
@@ -534,7 +552,7 @@ public class SampleController implements Initializable {
                     diff = lastInt - 1 - (14 - registro[i][1]) - (14 * (30 - registro[i][0]));
                     if (((Circle) AnchorPane.getChildren().get(diff)).getStroke() != Color.BLUE  && ((Circle) AnchorPane.getChildren().get(diff)).getStroke() != Color.RED){
                         ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.CHOCOLATE);
-                        System.out.println("Ohayo");
+
                     }
 
                     ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(3);
@@ -559,7 +577,6 @@ public class SampleController implements Initializable {
         int fila = 0, columna = 0, carga = 0;
         // los valores 33 y 34 son de la bateria
 
-        System.out.println(registro[3][0]);
         if (registro[3][0] != 0){
         //Cableado dentro del protoboard
             if (registro[2][1] != 15 && registro[3][1] != 15) {
@@ -575,28 +592,35 @@ public class SampleController implements Initializable {
 
                 int diff = lastInt-1 - ( 14-registro[2][1] ) - ( 14 * (30-registro[2][0] ) );
                 int diff2 = lastInt-1 - ( 14-registro[3][1] ) - ( 14 * (30-registro[3][0] ) );
-                System.out.println(((Circle) AnchorPane.getChildren().get(diff) ).getStroke());
-                System.out.println(Color.BLUE);
-                if ( (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED )&&(((Circle) AnchorPane.getChildren().get(diff2) ).getStroke() == ((Circle) AnchorPane.getChildren().get(diff) ).getStroke())){
-                    System.out.println("Alright");
-                }
-                if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE){
-                    carga = -1;
-                }
-                if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED){
-                    carga = 1;
-                }
+                Color colorDiff1 = (Color) ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke();
+                Color colorDiff2 = (Color) ( (Circle) AnchorPane.getChildren().get(diff2) ).getStroke();
 
-
-                if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
-                    if (registro[3][1]-1 == 0 || registro[3][1]-1 == 1 || registro[3][1]-1 == 12 || registro[3][1]-1 == 13) {
-                        CargasBuses(registro[3][1]-1, carga);
-                    } else if (registro[3][1]-1 > 1 && registro[3][1]-1 <= 6){
-                        CargarPistas(registro[3][0]-1, carga, 1);
-                    } else if (registro[3][1]-1 > 6 && registro[3][1]-1 < 12){
-                        CargarPistas(registro[3][0]-1, carga, 2);
+                if ((colorDiff1 != Color.GREEN || colorDiff2 != Color.GREEN) && ((colorDiff1 == Color.BLUE && colorDiff2 != Color.RED) || (colorDiff1 == Color.RED && colorDiff2 != Color.BLUE))) {
+                    if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE){
+                        carga = -1;
                     }
+                    if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED){
+                        carga = 1;
+                    }
+                    if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
+                        if (registro[3][1]-1 == 0 || registro[3][1]-1 == 1 || registro[3][1]-1 == 12 || registro[3][1]-1 == 13) {
+                            CargasBuses(registro[3][1]-1, carga);
+                        } else if (registro[3][1]-1 > 1 && registro[3][1]-1 <= 6){
+                            CargarPistas(registro[3][0]-1, carga, 1);
+                        } else if (registro[3][1]-1 > 6 && registro[3][1]-1 < 12){
+                            CargarPistas(registro[3][0]-1, carga, 2);
+                        }
+                    }
+                }else if((colorDiff1 == Color.GREEN || colorDiff2 == Color.GREEN)){
+
+                }else{
+                    pararTodo();
                 }
+                
+
+
+
+
 
             } else {  //Cableado del protoboard a la bateria
 
@@ -743,22 +767,46 @@ public class SampleController implements Initializable {
 
     }
 
+    @FXML
     public void reset(){
 
         for (int i = AnchorPane.getChildren().size(); i > lastMod; i--) {
             AnchorPane.getChildren().removeLast();
         }
+        btnLed.setDisable(false);
+
+        btnCable.setDisable(false);
+        btnResistencia.setDisable(false);
+        btnBorrar.setDisable(false);
+        btnChip.setDisable(false);
+        btnSwitch.setDisable(false);
+        Boton_encendido.setDisable(false);
+
         colocarHoyitos();
     }
 
     public void colocarHoyitos(){
 
-        for (int i = 2; i < ArCircles.length; i++){
-            AnchorPane.getChildren().addAll(ArCircles[i]);
+        for (int i = 0; i < ArCircles.length-2; i++){
+            for ( int j = 0; j < ArCircles[i].length-2; j++){
+                System.out.println(" AAaa");
+                AnchorPane.getChildren().addAll(ArCircles[i][j]);
+            }
+
         }
 
     }
 
+    public void pararTodo(){
+        btnLed.setDisable(true);
+        btnCable.setDisable(true);
+        btnResistencia.setDisable(true);
+        btnBorrar.setDisable(true);
+        btnChip.setDisable(true);
+        btnSwitch.setDisable(true);
+        Boton_encendido.setDisable(true);
+        System.out.println("Corto en corto");
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

@@ -14,23 +14,23 @@
    <AnchorPane fx:id="AnchorPane" minWidth="-Infinity" prefHeight="578.0" prefWidth="1266.0" />
    <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1266.0">
       <children>
-         <Button cache="true" mnemonicParsing="false" onAction="#DibujoLed" text="Led">
+         <Button fx:id="btnLed" cache="true" mnemonicParsing="false" onAction="#DibujoLed" text="Led">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button mnemonicParsing="false" onAction="#Cables" text="Cable">
+         <Button fx:id="btnCable" mnemonicParsing="false" onAction="#Cables" text="Cable">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button mnemonicParsing="false" onAction="#DibujoSwitch" text="Switch">
+         <Button fx:id="btnSwitch" mnemonicParsing="false" onAction="#DibujoSwitch" text="Switch">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button mnemonicParsing="false" onAction="#DibujoChip" text="Chip">
+         <Button fx:id="btnChip" mnemonicParsing="false" onAction="#DibujoChip" text="Chip">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button mnemonicParsing="false" onAction="#DibujoResistencia" text="Resistencia">
+         <Button fx:id="btnResistencia" mnemonicParsing="false" onAction="#DibujoResistencia" text="Resistencia">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin>
@@ -39,11 +39,12 @@
             <HBox.margin>
                <Insets />
             </HBox.margin></Button>
-         <Button mnemonicParsing="false" onAction="#Borrar_pieza" text="Borrar">
+         <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#Borrar_pieza" text="Borrar">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
       </children>
    </HBox>
+   <Button mnemonicParsing="false" onAction="#reset" text="Reset" />
 
 </VBox>
