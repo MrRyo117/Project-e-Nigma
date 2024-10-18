@@ -256,6 +256,7 @@ public class SampleController implements Initializable {
             AnchorPane.getChildren().add(resistenciaD);
         }
 
+        Cargar();
 
 
     }
@@ -820,13 +821,13 @@ public class SampleController implements Initializable {
     }
 
     public void pararTodo(){
-        btnLed.setDisable(true);
-        btnCable.setDisable(true);
-        btnResistencia.setDisable(true);
-        btnBorrar.setDisable(true);
-        btnChip.setDisable(true);
-        btnSwitch.setDisable(true);
-        Boton_encendido.setDisable(true);
+        //btnLed.setDisable(true);
+        //btnCable.setDisable(true);
+        //btnResistencia.setDisable(true);
+        //btnBorrar.setDisable(true);
+        //btnChip.setDisable(true);
+        //btnSwitch.setDisable(true);
+        //Boton_encendido.setDisable(true);
         System.out.println("-----> Corto en corto <------");
     }
     @Override
