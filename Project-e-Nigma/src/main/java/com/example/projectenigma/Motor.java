@@ -8,16 +8,18 @@ import javafx.scene.shape.Line;
 
 public class Motor {
     private Rectangle superficie;
-    private boolean motorEncendido;
     private Circle boton_en_ap;
     private Circle circulo_der;
     private Circle circulo_izq;
-    private AnchorPane anchorPane;
+    private boolean motorEncendido;
+    private SampleController controller;
 
-    public Motor(AnchorPane anchorPane) {
-        this.anchorPane=anchorPane;
 
-        superficie = new Rectangle();
+    public Motor(AnchorPane anchorPane,SampleController controller) {
+
+        motorEncendido=false;
+
+        superficie = new Rectangle(150,50,100,200);
         superficie.setX(1150);
         superficie.setY(450);
         superficie.setHeight(80);
@@ -46,32 +48,23 @@ public class Motor {
         circulo_izq.setFill(Color.rgb(43,123,228));
         circulo_izq.setStroke(Color.rgb(0,0,0));
 
-        motorEncendido=false;
-
-        boton_en_ap.setOnMouseClicked(mouseEvent -> Encender_Apagar());
-
         anchorPane.getChildren().addAll(superficie,boton_en_ap,circulo_der,circulo_izq);
 
+        superficie.setOnMouseClicked(mouseEvent -> {Encender_Apagar();controller.CapturarMotor(1,boton_en_ap);
+                }
+        );
     }
-
     private void Encender_Apagar(){
-        if(motorEncendido){
-            boton_en_ap.setFill(Color.rgb(224,60,28));
-        }else{
-            boton_en_ap.setFill(Color.rgb(60,224,28));
-        }
         motorEncendido=!motorEncendido;
+
+        if(motorEncendido){
+            boton_en_ap.setFill(Color.rgb(60,224,28));
+        }else{
+            boton_en_ap.setFill(Color.rgb(224,60,28));
+        }
+
     }
 
-    public void Cables_motor(){
-        Line cable=new Line(superficie.getX()+ superficie.getWidth()/2,
-        superficie.getY()+superficie.getHeight()/2,circulo_der.getCenterX(),circulo_der.getCenterY());
-
-        cable.setStroke(Color.BLACK);
-        cable.setStrokeWidth(3);
-
-        anchorPane.getChildren().add(cable);
-    }
     public Rectangle getSuperficie(){
         return superficie;
     }
@@ -84,4 +77,20 @@ public class Motor {
     public Circle getCirculo_izq(){
         return circulo_izq;
     }
+
+    private boolean Conexion(){
+        return true;
+    }
+
+    public Circle getConector1(){
+        return circulo_der;
+    }
+    public Circle getConector2(){
+        return circulo_izq;
+    }
+    public boolean Encendido(){
+        return motorEncendido;
+    }
+
+
 }

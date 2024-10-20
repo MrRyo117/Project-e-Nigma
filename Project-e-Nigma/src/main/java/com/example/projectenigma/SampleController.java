@@ -149,14 +149,48 @@ public class SampleController implements Initializable {
         }
     }
 
-    public void Cambio_estado_bateria(){
-        if (Boton_encendido.getText().equals("Apagar")){
-            Boton_encendido.setText("Encender");
-            Boton_encendido.setTextFill(Color.GREEN);
+    public void CapturarMotor(int op , Circle motor){
+        if (registro[0][0]==0){
+            registro[0][0]=op;
+            registro[0][1]=15;
+        }else if(registro[1][0]==0){
+            registro[2][0]=op;
+            registro[2][1]=15;
+        }else if(registro[2][0]==0){
+            registro[2][0]=op;
+            registro[2][1]=15;
+            int diff =lastInt-1-(14-registro[0][1])-14*(30-registro[0][0]);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+        }else if(registro[3][0]==0){
+            registro[3][0]=op;
+            registro[3][1]=15;
+            int diff =lastInt-1-(14-registro[1][1])-14*(30-registro[1][0]);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
         }else{
-            Boton_encendido.setText("Apagar");
-            Boton_encendido.setTextFill(Color.RED);
+            int diff =lastInt-1-(14-registro[0][1])-14*(30-registro[0][0]);
+            if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
+                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            }
+            diff = lastInt-1 - ( 14-registro[2][1] ) - ( 14 * (30-registro[2][0] ) );
+            if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
+
+                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.CHOCOLATE);
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(3);
+            }else {
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            }
+            for(int j=0;j<3;j++){
+                registro[j][0]=registro[j+1][0];
+                registro[j][1]=registro[j+1][1];
+            }
+            registro[3][0]=op;
+            registro[3][1]=15;
         }
+        motor.setStroke(Color.GREEN);
+        motor.setStrokeWidth(4);
 
     }
 
@@ -402,11 +436,6 @@ public class SampleController implements Initializable {
                 AnchorPane.getChildren().add(patitaInf);
             }
 
-
-
-
-
-
         }
         else {
             System.out.println("No ingresado dentro de los parametros");
@@ -529,6 +558,7 @@ public class SampleController implements Initializable {
             registro[2][0] = Columna;
             registro[2][1] = Fila;
 
+
             if (registro[0][1] != 15 ) {
 
                 diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
@@ -567,8 +597,6 @@ public class SampleController implements Initializable {
                 ((Rectangle) AnchorPane.getChildren().get(2) ).setStrokeWidth(3);
             }
 
-
-
         }else {
 
             if (registro[0][1] != 15) {
@@ -583,8 +611,6 @@ public class SampleController implements Initializable {
                     }else {
                         ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(2);
                     }
-
-
                 }
 
             }
@@ -615,6 +641,8 @@ public class SampleController implements Initializable {
             registro[3][0] = Columna;
             registro[3][1] = Fila;
 
+
+
             for (int i = 0; i <= 1; i++) {
 
                 if (registro[i][1] != 15) {
@@ -637,7 +665,6 @@ public class SampleController implements Initializable {
         circle.setStrokeWidth(3);
 
 
-
     }
 
     @FXML
@@ -649,22 +676,19 @@ public class SampleController implements Initializable {
         if (registro[3][0] != 0){
         //Cableado dentro del protoboard
             if (registro[2][1] != 15 && registro[3][1] != 15) {
-
                 cable1 = new Line(
     
                         ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
                         ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY(),
                         ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
                         ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
-    
                 );
                 Cargar();
 
             } else {  //Cableado del protoboard a la bateria
 
 
-                if (registro[2][0] == 34) {
-
+                if (registro[2][0] == 34) { //Conexion Bateria (Parte Positiva)
                     cable1 = new Line(
 
                             1200,
@@ -678,8 +702,7 @@ public class SampleController implements Initializable {
 
                     carga = 1;
 
-                } else if (registro[3][0] == 34) {
-
+                } else if (registro[3][0] == 34) { // Conexion Bateria (Parte Negativa)
                     cable1 = new Line(
 
                             1200,
@@ -694,7 +717,6 @@ public class SampleController implements Initializable {
                     carga = 1;
 
                 } else if (registro[2][0] == 33) {
-
                     cable1 = new Line(
 
                             1200,
@@ -708,8 +730,7 @@ public class SampleController implements Initializable {
 
                     carga = -1;
 
-                } else {
-
+                } else if(registro[3][0]==33){
                     cable1 = new Line(
 
                             1200,
@@ -723,6 +744,27 @@ public class SampleController implements Initializable {
                     fila = registro[2][1];
 
                     carga = -1;
+                }else if(registro[2][0]==35){  //Conexion positiva(Motor)
+                    cable1=new Line(
+                            500,
+                            225,
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
+                    );
+                    columna=registro[3][0];
+                    fila=registro[3][1];
+                    carga=1;
+
+                } else if (registro[3][0]==35) {  //Conexion negativa(Motor)
+                    cable1 = new Line(
+                            500,
+                            225,
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY()
+                    );
+                    columna = registro[2][0];
+                    fila = registro[2][1];
+                    carga = 1;
                 }
                 fila -= 1;
                 columna -= 1;
@@ -899,7 +941,7 @@ public class SampleController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         Protoboard2.CrearProtoboard(tamano_filas,tamano_columnas);
-        motor=new Motor(AnchorPane);
+        motor=new Motor(AnchorPane,this);
 
         //Creacion del rectangulo
         Rectangle Rectangulo = new Rectangle();
