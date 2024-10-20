@@ -9,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
-import org.controlsfx.control.PrefixSelectionChoiceBox;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,13 +19,34 @@ public class SampleController implements Initializable {
 
     @FXML
     private AnchorPane AnchorPane;
+    
+    @FXML
+    private Button btnLed;
+
+    @FXML
+    private Button btnCable;
+
+    @FXML
+    private Button btnSwitch;
+
+    @FXML
+    private Button btnChip;
+
+    @FXML
+    private Button btnResistencia;
 
     @FXML
     private Button Boton_encendido;
+
+    @FXML
+    private Button btnBorrar;
+
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[32][16];
+    private ArrayList<Chip> chips = new ArrayList<>();
 
-    private int[][] registro = new int[4][4];
+    private Motor motor;
+    private int[][] registro = new int[4][2];
 
     public int tamano_filas = Protoboard2.protoboard.length;
     public int tamano_columnas = Protoboard2.protoboard[0].length;
@@ -50,25 +70,60 @@ public class SampleController implements Initializable {
         if (registro[0][0] == 0) {
 
             registro[0][0] = op;
-            registro[0][1] = 14;
-
-
-
+            registro[0][1] = 15;
         } else if (registro[1][0] == 0) {
 
             registro[1][0] = op;
-            registro[1][1] = 14;
-        } else {
+            registro[1][1] = 15;
+
+
+        } else if (registro[2][0] == 0) {
+
+            registro[2][0] = op;
+            registro[2][1] = 15;
+            int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
+
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+        }else if (registro[3][0] == 0) {
+
+            registro[3][0] = op;
+            registro[3][1] = 15;
+
+            int diff = lastInt-1 - ( 14-registro[1][1] ) - ( 14 * (30-registro[1][0] ) );
+
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+        }else {
 
             int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
 
-            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.BLACK);
-            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(1);
 
-            registro[0][0] = registro[1][0];
-            registro[0][1] = registro[1][1];
-            registro[1][0] = op;
-            registro[1][1] = 14;
+            if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
+                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            }
+
+            diff = lastInt-1 - ( 14-registro[2][1] ) - ( 14 * (30-registro[2][0] ) );
+            if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
+
+                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.CHOCOLATE);
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(3);
+            }else {
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            }
+
+
+
+
+            for (int i = 0; i < 3; i++){
+
+                registro[i][0] = registro[i+1][0];
+                registro[i][1] = registro[i+1][1];
+            }
+
+            registro[3][0] = op;
+            registro[3][1] = 15;
 
         }
         rectangle.setStroke(Color.GREEN);
@@ -94,23 +149,57 @@ public class SampleController implements Initializable {
         }
     }
 
-    public void Cambio_estado_bateria(){
-        if (Boton_encendido.getText().equals("Apagar")){
-            Boton_encendido.setText("Encender");
-            Boton_encendido.setTextFill(Color.GREEN);
+    public void CapturarMotor(int op , Circle motor){
+        if (registro[0][0]==0){
+            registro[0][0]=op;
+            registro[0][1]=15;
+        }else if(registro[1][0]==0){
+            registro[2][0]=op;
+            registro[2][1]=15;
+        }else if(registro[2][0]==0){
+            registro[2][0]=op;
+            registro[2][1]=15;
+            int diff =lastInt-1-(14-registro[0][1])-14*(30-registro[0][0]);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+        }else if(registro[3][0]==0){
+            registro[3][0]=op;
+            registro[3][1]=15;
+            int diff =lastInt-1-(14-registro[1][1])-14*(30-registro[1][0]);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
         }else{
-            Boton_encendido.setText("Apagar");
-            Boton_encendido.setTextFill(Color.RED);
+            int diff =lastInt-1-(14-registro[0][1])-14*(30-registro[0][0]);
+            if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
+                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            }
+            diff = lastInt-1 - ( 14-registro[2][1] ) - ( 14 * (30-registro[2][0] ) );
+            if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
+
+                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.CHOCOLATE);
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(3);
+            }else {
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            }
+            for(int j=0;j<3;j++){
+                registro[j][0]=registro[j+1][0];
+                registro[j][1]=registro[j+1][1];
+            }
+            registro[3][0]=op;
+            registro[3][1]=15;
         }
+        motor.setStroke(Color.GREEN);
+        motor.setStrokeWidth(4);
 
     }
 
     public void DibujoLed(){
 
-        double puntoX1 = ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterX();
-        double puntoY1 = ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY();
-        double puntoX2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX();
-        double puntoY2 = ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY();
+        double puntoX1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX();
+        double puntoY1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY();
+        double puntoX2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX();
+        double puntoY2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY();
 
         if (puntoX1 > puntoX2){
             double aux = puntoX1;
@@ -122,7 +211,9 @@ public class SampleController implements Initializable {
             puntoY2 = aux;
 
         }
+
         double DiffSpaceX = puntoX2 - puntoX1;
+
         Arc semicirculo= new Arc();
         Line conector1 = new Line();
         Line conector2 = new Line();
@@ -154,59 +245,285 @@ public class SampleController implements Initializable {
             conector2.setStroke(Color.BLACK);
             conector2.setStrokeWidth(3);
         }
-
-
-
+        Cargar();
         Group led = new Group();
 
         led.getChildren().addAll(semicirculo, conector2, conector1);
         AnchorPane.getChildren().add(led);
         Historial.add(2);
     }
+    @FXML
+    public void DibujoResistencia(){
+        Resistencia resistencia = new Resistencia();
+        boolean negativoIzq = false;
+        double puntoX1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX();
+        double puntoY1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY();
+        double puntoX2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX();
+        double puntoY2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY();
+
+        if (puntoX1 > puntoX2){
+            double aux = puntoX1;
+            puntoX1 = puntoX2;
+            puntoX2 = aux;
+
+            aux = puntoY1;
+            puntoY1 = puntoY2;
+            puntoY2 = aux;
+            negativoIzq = true;
+
+        }
+
+        if (puntoY1 == puntoY2 && puntoX1+60 == puntoX2 ){
+            Rectangle resistenciaD = new Rectangle(
+                    puntoX1+10,
+                    puntoY1-5,
+                    40,
+                    12
+            );
+            Line patitas = new Line(
+              puntoX1,
+              puntoY1,
+              puntoX2,
+              puntoY2
+            );
+            patitas.setStroke(Color.BLACK);
+            resistenciaD.setFill(Color.BURLYWOOD);
+            resistenciaD.setStroke(Color.BLACK);
+            AnchorPane.getChildren().add(patitas);
+            AnchorPane.getChildren().add(resistenciaD);
+            Line cruz = new Line(
+                    puntoX1+40,
+                    puntoY1,
+                    puntoX1+45,
+                    puntoY1
+            );
+            cruz.setStrokeWidth(2);
+            Line cruz2 = new Line(
+                    puntoX1+42.5,
+                    puntoY1-2.5,
+                    puntoX1+42.5,
+                    puntoY1+2.5
+            );
+
+            Line resta = new Line(
+                    puntoX1+15,
+                    puntoY1,
+                    puntoX1+20,
+                    puntoY1
+            );
+
+            if (negativoIzq){
+                cruz2.setStartX(puntoX1+17.5);
+                cruz2.setEndX(puntoX1+17.5);
+
+            }
+
+            AnchorPane.getChildren().add(cruz);
+            AnchorPane.getChildren().add(cruz2);
+
+            AnchorPane.getChildren().add(resta);
+
+        }
+
+        Cargar();
+
+
+    }
+    @FXML
+    public void DibujoChip(){
+        if ((registro[0][1] == 7 || registro[0][1] == 8) && (registro[1][1] == 7 || registro[1][1] == 8)  && (registro[2][1] == 7 || registro[2][1] == 8) && (registro[3][1] == 7 || registro[3][1] == 8)){
+            Chip chip= new Chip();
+
+            int coordY = registro[0][0];
+            int coordX = registro[0][1];
+
+            if (coordY > registro[1][0]){
+                coordY = registro[1][0];
+                coordX = registro[1][1];
+            }else if (coordY > registro[2][0]){
+                coordY = registro[2][0];
+                coordX = registro[2][1];
+            }
+
+            if (coordY == registro[0][0] && coordX != registro[0][1]){
+
+                if (coordX > registro[0][1]){
+                    coordX = registro[0][1];
+                }
+
+            }else if (coordY == registro[1][0] && coordX != registro[1][1]){
+
+                if (coordX > registro[1][1]){
+                    coordX = registro[1][1];
+                }
+
+            }else if (coordY == registro[2][0] && coordX != registro[2][1]){
+
+                if (coordX > registro[2][1]){
+                    coordX = registro[2][1];
+                }
+            }else if (coordY == registro[3][0] && coordX != registro[3][1]){
+
+                if (coordX > registro[3][1]){
+                    coordX = registro[3][1];
+                }
+            }
+
+            double diffX = -1;
+            double diffY = -1;
+
+            for(int i = 0 ; i <= 3 ; i++){
+
+                if (coordX == registro[i][1] && coordY != registro[i][0]){
+
+                    diffX = ArCircles[registro[i][0]][registro[i][1]].getCenterX() - ArCircles[coordY][coordX].getCenterX();
+                }
+
+                if (coordY == registro[i][0] && coordX != registro[i][1]){
+
+                    diffY = ArCircles[registro[i][0]-1][registro[i][1]-1].getCenterY() - ArCircles[coordY-1][coordX-1].getCenterY();
+
+                }
+            }
+
+            Rectangle cuerpoChip = new Rectangle(
+                    ArCircles[coordY-1][coordX-1].getCenterX(),
+                    ArCircles[coordY-1][coordX-1].getCenterY()+5,
+                    diffX,
+                    diffY-10
+            );
+
+            cuerpoChip.setFill(Color.BLACK);
+            cuerpoChip.setStroke(Color.BLACK);
+            AnchorPane.getChildren().add(cuerpoChip);
+
+            for(int i = 0; (i*30) <= diffX; i++){
+                Line patitaSup = new Line(
+                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                        ArCircles[coordY-1][coordX-1].getCenterY(),
+                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                        ArCircles[coordY-1][coordX-1].getCenterY()+5
+
+                );
+
+
+                Line patitaInf = new Line(
+                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                        ArCircles[coordY-1][coordX-1].getCenterY()+diffY,
+                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                        ArCircles[coordY-1][coordX-1].getCenterY()-5+diffY
+
+                );
+                if (i < 3) {
+                    int diff = lastInt-1 - ( 14-coordX+1 ) - ( 14 * (30-coordY-i ) );
+
+                    if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE ){
+                        CargarPistas(coordY+i-1, 1, 2);
+                    } else if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
+                        CargarPistas(coordY+i-1, -1, 2);
+                    }
+
+                }
+
+
+                patitaSup.setStrokeWidth(2);
+                patitaInf.setStrokeWidth(2);
+
+                patitaSup.setStroke(Color.GRAY);
+                patitaInf.setStroke(Color.GRAY);
+
+                AnchorPane.getChildren().add(patitaSup);
+                AnchorPane.getChildren().add(patitaInf);
+            }
+
+        }
+        else {
+            System.out.println("No ingresado dentro de los parametros");
+        }
+
+
+    }
 
     @FXML
     public void DibujoSwitch() {
 
-        Rectangle base = new Rectangle();
-        base.setWidth(60);
-        base.setHeight(60);
-        base.setX(1280);
-        base.setY(500);
+       double punto_X1=ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterX();
+       double punto_Y1=ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterY();
+       double punto_X2=ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX();
+       double punto_Y2=ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY();
+       double punto_X3=ArCircles[registro[2][0]+1][registro[2][1]+1].getCenterX();
+       double punto_Y3=ArCircles[registro[2][0]+1][registro[2][1]+1].getCenterY();
+       double punto_X4=ArCircles[registro[3][0]+1][registro[3][1]+1].getCenterX();
+       double punto_Y4=ArCircles[registro[3][0]+1][registro[3][1]+1].getCenterY();
+
+
+       if(punto_X1>punto_X2){
+           double aux=punto_X1;
+           punto_X1=punto_X2;
+           punto_X2=aux;
+
+           aux=punto_Y1;
+           punto_Y1=punto_Y2;
+           punto_Y2=aux;
+       }
+       if(punto_X3>punto_X4){
+           double aux =punto_X3;
+           punto_X3=punto_X4;
+           punto_X4=aux;
+
+           aux= punto_Y3;
+           punto_Y3=punto_Y4;
+           punto_Y4=aux;
+       }
+
+       double rectX,rectY,Ancho,Alto;
+
+       if(punto_X1<punto_X3){
+           rectX= punto_X1-10;
+       }else{
+           rectX= punto_X3-10;
+       }
+       if (punto_Y1<punto_Y3){
+           rectY=punto_Y1-10;
+       }else{
+           rectY=punto_Y3-10;
+       }
+        if (punto_X2 > punto_X1) {
+            Ancho=(punto_X2-punto_X1)+20;
+        }else{
+            Ancho=(punto_X1-punto_X2)+20;
+        }
+        if(punto_Y4>punto_Y1){
+            Alto=(punto_Y4-punto_Y1)+20;
+        }else{
+            Alto=(punto_Y1-punto_Y4)+20;
+        }
+
+        Rectangle base= new Rectangle();
+        base.setX(rectX);
+        base.setY(rectY);
+        base.setWidth(Ancho);
+        base.setHeight(Alto);
         base.setFill(Color.GRAY);
         base.setStroke(Color.BLACK);
 
-        Circle circulo_arriba_der = new Circle();
-        circulo_arriba_der.setCenterX(1335);
-        circulo_arriba_der.setCenterY(506);
-        circulo_arriba_der.setRadius(5);
-
-        Circle circulo_abajo_der = new Circle();
-        circulo_abajo_der.setCenterX(1335);
-        circulo_abajo_der.setCenterY(555);
-        circulo_abajo_der.setRadius(5);
-
-        Circle circulo_arriba_izq = new Circle();
-        circulo_arriba_izq.setCenterX(1285);
-        circulo_arriba_izq.setCenterY(506);
-        circulo_arriba_izq.setRadius(5);
-        circulo_arriba_izq.setFill(Color.BLACK);
-
-        Circle circulo_abajo_izq = new Circle();
-        circulo_abajo_izq.setCenterX(1285);
-        circulo_abajo_izq.setCenterY(555);
-        circulo_abajo_izq.setRadius(5);
-        circulo_abajo_izq.setFill(Color.BLACK);
-
-        Circle circulo_Centro = new Circle();
-        circulo_Centro.setCenterX(1310);
-        circulo_Centro.setCenterY(530);
-        circulo_Centro.setRadius(15);
+        Circle circulo_Arriba_der= new Circle(punto_X2,punto_Y2,5);
+        circulo_Arriba_der.setFill(Color.BLACK);
+        Circle circulo_Abajo_der= new Circle(punto_X4,punto_Y4,5);
+        circulo_Abajo_der.setFill(Color.BLACK);
+        Circle circulo_Arriba_izq= new Circle(punto_X3,punto_Y3,5);
+        circulo_Arriba_izq.setFill(Color.BLACK);
+        Circle circulo_Abajo_izq= new Circle(punto_X1,punto_Y1,5);
+        circulo_Abajo_izq.setFill(Color.BLACK);
+        Circle circulo_Centro= new Circle((punto_X2+punto_X1)/2,(punto_Y1+punto_Y3)/2,15);
         circulo_Centro.setFill(Color.BLACK);
 
-        Group dib_switch = new Group();
-        dib_switch.getChildren().addAll(base, circulo_Centro, circulo_arriba_der, circulo_abajo_der, circulo_abajo_izq, circulo_arriba_izq);
-        AnchorPane.getChildren().add(dib_switch);
+        Group Dibujo_Switch= new Group();
+        Dibujo_Switch.getChildren().addAll(base,circulo_Arriba_der,circulo_Abajo_der,circulo_Arriba_izq,circulo_Abajo_izq,circulo_Centro);
+
+        AnchorPane.getChildren().add(Dibujo_Switch);
         Historial.add(3);
+
     }
 
     private void ClickCirculo(Circle circle) {
@@ -225,6 +542,7 @@ public class SampleController implements Initializable {
 
         Fila += 1;
 
+        int diff;
         if (registro[0][0] == 0) {
 
             registro[0][0] = Columna;
@@ -235,150 +553,295 @@ public class SampleController implements Initializable {
             registro[1][0] = Columna;
             registro[1][1] = Fila;
 
-        } else {
+        }else if (registro[2][0] == 0) {
 
-            if (registro[0][0] != 33 && registro[0][0] != 34) {
+            registro[2][0] = Columna;
+            registro[2][1] = Fila;
+
+
+            if (registro[0][1] != 15 ) {
+
+                diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
+
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+            }
+            else if(registro[0][0] == 33){
+                ((Rectangle) AnchorPane.getChildren().get(1) ).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(1) ).setStrokeWidth(3);
+            }else if (registro[0][0] == 34){
+                ((Rectangle) AnchorPane.getChildren().get(2) ).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(2) ).setStrokeWidth(3);
+            }
+
+
+
+        } else if (registro[3][0] == 0) {
+
+            registro[3][0] = Columna;
+            registro[3][1] = Fila;
+
+            if (registro[1][1] != 15){
+                diff = lastInt-1 - ( 14-registro[1][1] ) - ( 14 * (30-registro[1][0] ) );
+
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+
+            }else if(registro[1][0] == 33){
+
+                ((Rectangle) AnchorPane.getChildren().get(1) ).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(1) ).setStrokeWidth(3);
+
+            }else if (registro[1][0] == 34){
+                ((Rectangle) AnchorPane.getChildren().get(2) ).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(2) ).setStrokeWidth(3);
+            }
+
+        }else {
+
+            if (registro[0][1] != 15) {
                 //calculo para encontrar el punto dentro de la matriz del protoboard
-                int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
+                diff = lastInt - 1 - (14 - registro[0][1]) - (14 * (30 - registro[0][0]));
+                Color colorDiff = (Color) ((Circle) AnchorPane.getChildren().get(diff)).getStroke();
 
-                if ( ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ){
-
-                    ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.BLACK);
-                    ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(1);
+                if (((Circle) AnchorPane.getChildren().get(diff)).getStrokeWidth() == 3) {
+                    if (colorDiff == Color.CHOCOLATE || colorDiff == Color.GREEN){
+                        ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
+                        ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+                    }else {
+                        ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(2);
+                    }
                 }
-
-            } else {
-                int op;
-
-                if(registro[0][0] == 33){
-                    op = 1;
-                }else {
-                    op = 2;
-                }
-
-                ((Rectangle) AnchorPane.getChildren().get(op) ).setStroke(Color.BLACK);
-                ((Rectangle) AnchorPane.getChildren().get(op) ).setStrokeWidth(1);
 
             }
 
-            registro[0][0] = registro[1][0];
-            registro[0][1] = registro[1][1];
+            if (registro[2][0] == 33) {
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStrokeWidth(3);
+            } else if (registro[2][0] == 34) {
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(3);
+            }
 
-            registro[1][0] = Columna;
-            registro[1][1] = Fila;
+            if (registro[0][0] == 33) {
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStroke(Color.BLACK);
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStrokeWidth(1);
+            } else if (registro[0][0] == 34) {
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.BLACK);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(1);
+            }
 
+
+            for (int i = 0; i < 3; i++) {
+
+                registro[i][0] = registro[i + 1][0];
+                registro[i][1] = registro[i + 1][1];
+            }
+
+            registro[3][0] = Columna;
+            registro[3][1] = Fila;
+
+
+
+            for (int i = 0; i <= 1; i++) {
+
+                if (registro[i][1] != 15) {
+
+                    diff = lastInt - 1 - (14 - registro[i][1]) - (14 * (30 - registro[i][0]));
+                    Color colorDiff = (Color) ((Circle) AnchorPane.getChildren().get(diff)).getStroke();
+                    if (colorDiff != Color.BLUE  && colorDiff != Color.RED && colorDiff != Color.BROWN){
+                        ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.CHOCOLATE);
+
+                    }
+
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(3);
+                }
+            }
+        }
+        if (circle.getStroke() != Color.BLUE && circle.getStroke() != Color.RED && circle.getStroke() != Color.BROWN){
+            circle.setStroke(Color.GREEN);
         }
 
-        circle.setStroke(Color.GREEN);
         circle.setStrokeWidth(3);
+
+
     }
 
     @FXML
     public void Cables() {
-        Line cable1;
-        int fila = 0, columna = 0, carga;
+        Line cable1 = null;
+        int fila = 0, columna = 0, carga = 0;
         // los valores 33 y 34 son de la bateria
 
+        if (registro[3][0] != 0){
         //Cableado dentro del protoboard
-        if (registro[0][0] != 33 && registro[0][0] != 34 && registro[1][0] != 33 && registro[1][0] != 34) {
-
-            cable1 = new Line(
-
-                    ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterX(),
-                    ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY(),
-                    ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX(),
-                    ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
-
-            );
-
-        } else {  //Cableado del protoboard a la bateria
-
-
-
-            if (registro[0][0] == 34) {
-
+            if (registro[2][1] != 15 && registro[3][1] != 15) {
                 cable1 = new Line(
-
-                        1200,
-                        120,
-                        ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX(),
-                        ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
-
+    
+                        ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
+                        ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY(),
+                        ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                        ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
                 );
-                columna = registro[1][0];
-                fila = registro[1][1];
+                Cargar();
 
-                carga = 1;
+            } else {  //Cableado del protoboard a la bateria
 
-            } else if (registro[1][0] == 34) {
 
-                cable1 = new Line(
+                if (registro[2][0] == 34) { //Conexion Bateria (Parte Positiva)
+                    cable1 = new Line(
 
-                        1200,
-                        120,
-                        ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterX(),
-                        ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY()
+                            1200,
+                            120,
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
 
-                );
-                columna = registro[0][0];
-                fila = registro[0][1];
+                    );
+                    columna = registro[3][0];
+                    fila = registro[3][1];
 
-                carga = 1;
+                    carga = 1;
 
-            } else if (registro[0][0] == 33) {
+                } else if (registro[3][0] == 34) { // Conexion Bateria (Parte Negativa)
+                    cable1 = new Line(
 
-                cable1 = new Line(
+                            1200,
+                            120,
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY()
 
-                        1200,
-                        380,
-                        ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterX(),
-                        ArCircles[registro[1][0] + 1][registro[1][1] + 1].getCenterY()
+                    );
+                    columna = registro[2][0];
+                    fila = registro[2][1];
 
-                );
-                columna = registro[1][0];
-                fila = registro[1][1];
+                    carga = 1;
 
-                carga = -1;
+                } else if (registro[2][0] == 33) {
+                    cable1 = new Line(
 
-            } else {
+                            1200,
+                            380,
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
 
-                cable1 = new Line(
+                    );
+                    columna = registro[3][0];
+                    fila = registro[3][1];
 
-                        1200,
-                        380,
-                        ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterX(),
-                        ArCircles[registro[0][0] + 1][registro[0][1] + 1].getCenterY()
+                    carga = -1;
 
-                );
+                } else if(registro[3][0]==33){
+                    cable1 = new Line(
 
-                columna = registro[0][0];
-                fila = registro[0][1];
+                            1200,
+                            380,
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY()
 
-                carga = -1;
+                    );
+
+                    columna = registro[2][0];
+                    fila = registro[2][1];
+
+                    carga = -1;
+                }else if(registro[2][0]==35){  //Conexion positiva(Motor)
+                    cable1=new Line(
+                            500,
+                            225,
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY()
+                    );
+                    columna=registro[3][0];
+                    fila=registro[3][1];
+                    carga=1;
+
+                } else if (registro[3][0]==35) {  //Conexion negativa(Motor)
+                    cable1 = new Line(
+                            500,
+                            225,
+                            ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX(),
+                            ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY()
+                    );
+                    columna = registro[2][0];
+                    fila = registro[2][1];
+                    carga = 1;
+                }
+                fila -= 1;
+                columna -= 1;
+                if (fila == 0 || fila == 1 || fila == 12 || fila == 13) {
+                    CargasBuses(fila, carga);
+                } else if (fila > 1 && fila <= 6){
+                    CargarPistas(columna, carga, 1);
+                } else if (fila > 6 && fila < 12){
+                    CargarPistas(columna, carga, 2);
+                }
+
+                Protoboard2.CambiarCargaBus(fila, columna, carga);
+                //Protoboard2.setCableDBateria();
             }
-            fila -=1;
-            columna -=1;
-            System.out.println(columna+ "-columna");
-            if (fila == 0 || fila == 1 || fila == 12 || fila == 13) {
+            cable1.setStroke(Color.BLACK);
+            cable1.setStrokeWidth(3);
 
-                CargasBuses(fila, carga);
-            }
+            Protoboard2.EstadoHoyito(fila,columna);
+            AnchorPane.getChildren().add(cable1);
 
-            else{
-                CargarPistas(columna, carga);
-            }
-
-            Protoboard2.CambiarCargaBus(fila, columna, carga);
-            //Protoboard2.setCableDBateria();
+            Historial.add(1);
+        }else {
+            System.out.println(" Primero seleccione 4 elementos");
         }
 
-        cable1.setStroke(Color.BLACK);
-        cable1.setStrokeWidth(3);
 
-        Protoboard2.EstadoHoyito(fila,columna);
-        AnchorPane.getChildren().add(cable1);
 
-        Historial.add(1);
+    }
+
+    public void Cargar(){
+        int fila = registro[3][1]-1;
+        int columna = registro[3][0]-1;
+        int carga = 0;
+        int diff = lastInt-1 - ( 14-registro[2][1] ) - ( 14 * (30-registro[2][0] ) );
+        int diff2 = lastInt-1 - ( 14-registro[3][1] ) - ( 14 * (30-registro[3][0] ) );
+
+
+        Color colorDiff1 = (Color) ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke();
+        if (colorDiff1 == Color.GREEN){
+            int aux = diff;
+            diff = diff2;
+            diff2 = aux;
+            colorDiff1 = (Color) ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke();
+            fila = registro[2][1]-1;
+            columna = registro[2][0]-1;
+
+        }
+        Color colorDiff2 = (Color) ( (Circle) AnchorPane.getChildren().get(diff2) ).getStroke();
+        if ((colorDiff1 != Color.GREEN || colorDiff2 != Color.GREEN) && ((colorDiff1 == Color.BLUE && colorDiff2 != Color.RED) || (colorDiff1 == Color.RED && colorDiff2 != Color.BLUE))) {
+            if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE){
+                carga = -1;
+            }
+            if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED){
+                carga = 1;
+            }
+            if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
+                if (fila == 0 || fila == 1 || fila == 12 || fila == 13) {
+                    CargasBuses(fila, carga);
+                } else if (fila > 1 && fila <= 6){
+                    CargarPistas(columna, carga, 1);
+                } else if (fila > 6 && fila < 12){
+                    CargarPistas(columna, carga, 2);
+                }
+            }
+        }else if(!(colorDiff1 == Color.GREEN || colorDiff2 == Color.GREEN)){
+            if(((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
+                if (fila == 0 || fila == 1 || fila == 12 || fila == 13) {
+                    CargasBuses(fila, 3);
+                } else if (fila > 1 && fila <= 6){
+                    CargarPistas(columna, 23, 1);
+                } else if (fila > 6 && fila < 12){
+                    CargarPistas(columna, 3, 2);
+                }
+            }
+            pararTodo();
+        }
+
 
     }
 
@@ -390,6 +853,8 @@ public class SampleController implements Initializable {
             color = Color.BLUE;
         }else if (carga == 1){
             color = Color.RED;
+        }else {
+            color = Color.BROWN;
         }
 
         for (int i = 0; i < 30; i++){
@@ -397,13 +862,11 @@ public class SampleController implements Initializable {
             int diff = lastInt - (14*i) - (14-fila) ;
 
             ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
-            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(2);
         }
-
-
     }
 
-    public void CargarPistas(int columna, int carga){
+    public void CargarPistas(int columna, int carga, int op){
 
         Color color = null;
 
@@ -411,42 +874,74 @@ public class SampleController implements Initializable {
             color = Color.BLUE;
         }else if (carga == 1){
             color = Color.RED;
+        }else {
+            color = Color.BROWN;
         }
 
-        for (int i = 0; i < 10; i++){
+        if (op == 2){
+            for (int i = 0; i < 5; i++){
 
-            int diff = lastInt - (2+i) - ((30-columna)-0 * 14);
+                int diff = (lastInt - (i) - ( 14 * (29 - columna)) -3 );
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(2);
 
-            ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
-            ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
+            }
+        }else {
+            for (int i = 5; i < 10; i++){
+
+                int diff = (lastInt - (i) - ( 14 * (29 - columna)) -3 );
+
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(color);
+                ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(2);
+
+            }
         }
-
     }
 
+    @FXML
     public void reset(){
+
         for (int i = AnchorPane.getChildren().size(); i > lastMod; i--) {
             AnchorPane.getChildren().removeLast();
         }
+        btnLed.setDisable(false);
+
+        btnCable.setDisable(false);
+        btnResistencia.setDisable(false);
+        btnBorrar.setDisable(false);
+        btnChip.setDisable(false);
+        btnSwitch.setDisable(false);
+        Boton_encendido.setDisable(false);
+
         colocarHoyitos();
     }
 
     public void colocarHoyitos(){
 
+        for (int i = 0; i < ArCircles.length-2; i++){
+            for ( int j = 0; j < ArCircles[i].length-2; j++){
+                System.out.println(" AAaa");
+                AnchorPane.getChildren().addAll(ArCircles[i][j]);
+            }
 
-        for (int i = 2; i < ArCircles.length; i++){
-            AnchorPane.getChildren().addAll(ArCircles[i]);
         }
-
     }
 
-    @FXML
-    public void DibujoChip(){
-
+    public void pararTodo(){
+        //btnLed.setDisable(true);
+        //btnCable.setDisable(true);
+        //btnResistencia.setDisable(true);
+        //btnBorrar.setDisable(true);
+        //btnChip.setDisable(true);
+        //btnSwitch.setDisable(true);
+        //Boton_encendido.setDisable(true);
+        System.out.println("-----> Corto en corto <------");
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         Protoboard2.CrearProtoboard(tamano_filas,tamano_columnas);
+        motor=new Motor(AnchorPane,this);
 
         //Creacion del rectangulo
         Rectangle Rectangulo = new Rectangle();
@@ -486,6 +981,7 @@ public class SampleController implements Initializable {
         label13.setText("9v");
         label13.setFont(Font.font(50));
         AnchorPane.getChildren().addAll(label13);
+
 
         //Creacion de los label
         //Signo "+" arriba izq
@@ -644,7 +1140,6 @@ public class SampleController implements Initializable {
             label11.setFont(Font.font(15));
             label11.setRotate(-90);
             AnchorPane.getChildren().addAll(label11);
-
         }
 
         //creacion de los numeros parte inferior
@@ -662,19 +1157,19 @@ public class SampleController implements Initializable {
         lastMod = AnchorPane.getChildren().size();
         //Creacion del protoboard
         int AuxSpace = 0;
-        for (int i = 2; i < 32; i++) {
+        for (int i = 0; i < 30; i++) {
 
-            for (int j = 2; j < 16; j++) {
+            for (int j = 0; j < 14; j++) {
 
                 Circle circle = new Circle(i, j, 7);
 
                 //espacios extra
-                if (j == 4 || j == 9 || j == 14) {
+                if (j == 2 || j == 7 || j == 12) {
                     AuxSpace += 20;
                 }
 
-                circle.setCenterX(i * 30);
-                circle.setCenterY(j * 30 + AuxSpace);
+                circle.setCenterX((i+2) * 30);
+                circle.setCenterY((j+2) * 30 + AuxSpace);
                 circle.setStroke(Color.BLACK);
                 circle.setFill(Color.WHITE);
                 circle.setOnMouseClicked(event -> ClickCirculo(circle));
@@ -682,8 +1177,6 @@ public class SampleController implements Initializable {
                 ArCircles[i][j] = circle;
 
                 AnchorPane.getChildren().add(ArCircles[i][j]);
-
-
             }
 
             AuxSpace = 0;

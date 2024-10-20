@@ -2,18 +2,14 @@ package com.example.projectenigma;
 
 import java.util.ArrayList;
 
-public class Chip implements Insertables{
-
-    public Chip() {
-    }
-
+public class Resistencia implements Insertables{
+    int ValorResistencia;
     @Override
     public void getCarga(int carga) {
 
     }
 
     @Override
-
     public ArrayList<Integer> CoordColumna() {
         return null;
     }
