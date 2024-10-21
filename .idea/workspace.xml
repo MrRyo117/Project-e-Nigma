@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a02d0501-a13d-43d4-92f6-99d372ed9b6b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Motor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/Motor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/resources/com/example/projectenigma/sample.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -34,7 +37,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/MrRyo117/Project-e-Nigma.git&quot;,
-    &quot;accountId&quot;: &quot;521b8963-4451-47d2-97a0-d249d92e1477&quot;
+    &quot;accountId&quot;: &quot;3920b771-cc79-4f8c-9728-5b58c3d9be35&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -46,21 +49,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HelloApplication.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Pablo",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Martin3&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;build.tools&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.example.projectenigma.HelloApplication" />
       <module name="Project-e-Nigma" />
       <extension name="coverage">
@@ -79,14 +85,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -101,6 +99,15 @@
       <workItem from="1726770069599" duration="5614000" />
       <workItem from="1727459717441" duration="10662000" />
       <workItem from="1727899836553" duration="4170000" />
+      <workItem from="1727986572056" duration="2469000" />
+      <workItem from="1728001533407" duration="14000" />
+      <workItem from="1728181092903" duration="14935000" />
+      <workItem from="1728500038100" duration="10876000" />
+      <workItem from="1728594708903" duration="1248000" />
+      <workItem from="1728673335594" duration="3081000" />
+      <workItem from="1728676478634" duration="10470000" />
+      <workItem from="1729190090237" duration="14470000" />
+      <workItem from="1729266925685" duration="12483000" />
     </task>
     <servers />
   </component>
