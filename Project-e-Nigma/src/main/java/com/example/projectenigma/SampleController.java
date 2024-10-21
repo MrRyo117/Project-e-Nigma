@@ -941,7 +941,7 @@ public class SampleController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         Protoboard2.CrearProtoboard(tamano_filas,tamano_columnas);
-        motor=new Motor(AnchorPane,this);
+
 
         //Creacion del rectangulo
         Rectangle Rectangulo = new Rectangle();
@@ -964,6 +964,7 @@ public class SampleController implements Initializable {
         bateria.setRotate(90);
         bateria.setOnMouseClicked(event -> capturaBateria(33, bateria));
         AnchorPane.getChildren().addAll(bateria);
+        System.out.println(AnchorPane.getChildren().size());
 
         Rectangle bateria2 = new Rectangle();
         bateria2.setWidth(180);
@@ -974,7 +975,7 @@ public class SampleController implements Initializable {
         bateria2.setStroke(Color.BLACK);
         bateria2.setOnMouseClicked(event -> capturaBateria(34, bateria2));
         AnchorPane.getChildren().addAll(bateria2);
-
+        motor=new Motor(AnchorPane,this);
         Label label13 = new Label();
         label13.setLayoutX(1200);
         label13.setLayoutY(150);
