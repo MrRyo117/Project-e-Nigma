@@ -84,7 +84,6 @@ public class SampleController implements Initializable {
 
             registro[2][0] = op;
             registro[2][1] = 15;
-            //int diff = lastInt-1 - ( 14-registro[0][1] ) - ( 14 * (30-registro[0][0] ) );
             int diff = ubicador(registro[0][1],registro[0][0]);
             ((Circle) AnchorPane.getChildren().get(diff) ).setStroke(Color.CHOCOLATE);
             ((Circle) AnchorPane.getChildren().get(diff) ).setStrokeWidth(3);
@@ -101,20 +100,40 @@ public class SampleController implements Initializable {
 
 
             int diff = ubicador(registro[0][1],registro[0][0]);
+            if (registro[0][1] != 15){
+                if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
 
-            if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
-                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
-                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+                }
+            } else if (registro[0][0] == 33){
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStrokeWidth(3);
+            }else if (registro[0][0] == 34){
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(3);
             }
 
             diff = ubicador(registro[2][1],registro[2][0]);
-            if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
+            System.out.println("HERE");
 
-                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.CHOCOLATE);
-                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(3);
-            }else {
-                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            if (registro[2][1] != 15){
+                if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED) {
+
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.CHOCOLATE);
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(3);
+                }else {
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+                }
+            } else if (registro[2][0] == 33){
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStrokeWidth(3);
+            }else if (registro[2][0] == 34){
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(3);
             }
+
+
 
 
 
@@ -934,6 +953,7 @@ public class SampleController implements Initializable {
         bateria.setRotate(90);
         bateria.setOnMouseClicked(event -> capturaBateria(33, bateria));
         AnchorPane.getChildren().addAll(bateria);
+        System.out.println(AnchorPane.getChildren().size());
 
         Rectangle bateria2 = new Rectangle();
         bateria2.setWidth(180);
@@ -943,6 +963,7 @@ public class SampleController implements Initializable {
         bateria2.setFill(Color.GOLD);
         bateria2.setStroke(Color.BLACK);
         bateria2.setOnMouseClicked(event -> capturaBateria(34, bateria2));
+
         AnchorPane.getChildren().addAll(bateria2);
 
         Label label13 = new Label();
