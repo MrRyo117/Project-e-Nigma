@@ -962,7 +962,7 @@ public class SampleController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         Protoboard2.CrearProtoboard(tamano_filas,tamano_columnas);
-        motor=new Motor(AnchorPane);
+
 
         //Creacion del rectangulo
         Rectangle Rectangulo = new Rectangle();
@@ -1078,7 +1078,7 @@ public class SampleController implements Initializable {
         label8.setTextFill(Color.BLACK);
         label8.setFont(Font.font(30));
         AnchorPane.getChildren().addAll(label8);
-
+        motor=new Motor(AnchorPane);
         int correcion_posy = 0, salto = 0; //valores para corregir la disposicion visual de las letras
 
         //creacion del abcedario parte izquierda
