@@ -1039,7 +1039,7 @@ public class SampleController implements Initializable {
         bateria2.setOnMouseClicked(event -> capturaBateria(34, bateria2));
 
         AnchorPane.getChildren().addAll(bateria2);
-        motor=new Motor(AnchorPane,this);
+        motor=new Motor(AnchorPane);
         Label label13 = new Label();
         label13.setLayoutX(1200);
         label13.setLayoutY(150);

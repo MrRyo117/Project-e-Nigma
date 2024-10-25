@@ -15,7 +15,7 @@ public class Motor {
     private SampleController controller;
 
 
-    public Motor(AnchorPane anchorPane,SampleController controller) {
+    public Motor(AnchorPane anchorPane) {
 
         motorEncendido=false;
 
