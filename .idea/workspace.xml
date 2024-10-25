@@ -54,13 +54,21 @@
   &quot;keyToString&quot;: {
     &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+<<<<<<< Updated upstream
     &quot;git-widget-placeholder&quot;: &quot;Pablo&quot;,
+=======
+    &quot;git-widget-placeholder&quot;: &quot;Pruebas&quot;,
+>>>>>>> Stashed changes
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+<<<<<<< Updated upstream
     &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+=======
+    &quot;settings.editor.selected.configurable&quot;: &quot;build.tools&quot;,
+>>>>>>> Stashed changes
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -117,9 +125,13 @@
       <workItem from="1728676478634" duration="10470000" />
       <workItem from="1729190090237" duration="14470000" />
       <workItem from="1729266925685" duration="12483000" />
+<<<<<<< Updated upstream
       <workItem from="1729480892810" duration="170000" />
       <workItem from="1729709528373" duration="596000" />
       <workItem from="1729795412281" duration="17753000" />
+=======
+      <workItem from="1729878743112" duration="697000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
