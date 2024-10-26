@@ -134,11 +134,6 @@ public class SampleController implements Initializable {
                 ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(3);
             }
 
-
-
-
-
-
             for (int i = 0; i < 3; i++){
 
                 registro[i][0] = registro[i+1][0];
@@ -323,8 +318,6 @@ public class SampleController implements Initializable {
             resistenciaD.setFill(Color.BURLYWOOD);
             resistenciaD.setStroke(Color.BLACK);
 
-
-
             Line cruz = new Line(
                     puntoX1+40,
                     puntoY1,
@@ -453,7 +446,6 @@ public class SampleController implements Initializable {
 
                 );
 
-
                 Line patitaInf = new Line(
                         ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
                         ArCircles[coordY-1][coordX-1].getCenterY()+diffY,
@@ -495,18 +487,17 @@ public class SampleController implements Initializable {
     @FXML
     public void DibujoSwitch() {
 
-       double punto_X1=ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterX();
-       double punto_Y1=ArCircles[registro[0][0]+1][registro[0][1]+1].getCenterY();
-       double punto_X2=ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterX();
-       double punto_Y2=ArCircles[registro[1][0]+1][registro[1][1]+1].getCenterY();
-       double punto_X3=ArCircles[registro[2][0]+1][registro[2][1]+1].getCenterX();
-       double punto_Y3=ArCircles[registro[2][0]+1][registro[2][1]+1].getCenterY();
-       double punto_X4=ArCircles[registro[3][0]+1][registro[3][1]+1].getCenterX();
-       double punto_Y4=ArCircles[registro[3][0]+1][registro[3][1]+1].getCenterY();
-
+       double punto_X1=ArCircles[registro[0][0]-1][registro[0][1]-1].getCenterX();
+       double punto_Y1=ArCircles[registro[0][0]-1][registro[0][1]-1].getCenterY();
+       double punto_X2=ArCircles[registro[1][0]-1][registro[1][1]-1].getCenterX();
+       double punto_Y2=ArCircles[registro[1][0]-1][registro[1][1]-1].getCenterY();
+       double punto_X3=ArCircles[registro[2][0]-1][registro[2][1]-1].getCenterX();
+       double punto_Y3=ArCircles[registro[2][0]-1][registro[2][1]-1].getCenterY();
+       double punto_X4=ArCircles[registro[3][0]-1][registro[3][1]-1].getCenterX();
+       double punto_Y4=ArCircles[registro[3][0]-1][registro[3][1]-1].getCenterY();
 
        if(punto_X1>punto_X2){
-           double aux=punto_X1;
+           double aux = punto_X1;
            punto_X1=punto_X2;
            punto_X2=aux;
 
@@ -514,63 +505,64 @@ public class SampleController implements Initializable {
            punto_Y1=punto_Y2;
            punto_Y2=aux;
        }
+
        if(punto_X3>punto_X4){
-           double aux =punto_X3;
+           double aux = punto_X3;
            punto_X3=punto_X4;
            punto_X4=aux;
 
-           aux= punto_Y3;
+           aux=punto_Y3;
            punto_Y3=punto_Y4;
            punto_Y4=aux;
-       }
-
-       double rectX,rectY,Ancho,Alto;
-
-       if(punto_X1<punto_X3){
-           rectX= punto_X1-10;
-       }else{
-           rectX= punto_X3-10;
-       }
-       if (punto_Y1<punto_Y3){
-           rectY=punto_Y1-10;
-       }else{
-           rectY=punto_Y3-10;
-       }
-        if (punto_X2 > punto_X1) {
-            Ancho=(punto_X2-punto_X1)+20;
-        }else{
-            Ancho=(punto_X1-punto_X2)+20;
-        }
-        if(punto_Y4>punto_Y1){
-            Alto=(punto_Y4-punto_Y1)+20;
-        }else{
-            Alto=(punto_Y1-punto_Y4)+20;
         }
 
-        Rectangle base= new Rectangle();
-        base.setX(rectX);
-        base.setY(rectY);
-        base.setWidth(Ancho);
-        base.setHeight(Alto);
-        base.setFill(Color.GRAY);
-        base.setStroke(Color.BLACK);
+       double minX = punto_X1;
+       if(punto_X3<minX){
+           minX=punto_X3;
+        }
 
-        Circle circulo_Arriba_der= new Circle(punto_X2,punto_Y2,5);
-        circulo_Arriba_der.setFill(Color.BLACK);
-        Circle circulo_Abajo_der= new Circle(punto_X4,punto_Y4,5);
-        circulo_Abajo_der.setFill(Color.BLACK);
-        Circle circulo_Arriba_izq= new Circle(punto_X3,punto_Y3,5);
-        circulo_Arriba_izq.setFill(Color.BLACK);
-        Circle circulo_Abajo_izq= new Circle(punto_X1,punto_Y1,5);
-        circulo_Abajo_izq.setFill(Color.BLACK);
-        Circle circulo_Centro= new Circle((punto_X2+punto_X1)/2,(punto_Y1+punto_Y3)/2,15);
-        circulo_Centro.setFill(Color.BLACK);
+       double maxX=punto_X2;
+       if(punto_X4>maxX){
+           maxX=punto_X4;
+       }
 
-        Group Dibujo_Switch= new Group();
-        Dibujo_Switch.getChildren().addAll(base,circulo_Arriba_der,circulo_Abajo_der,circulo_Arriba_izq,circulo_Abajo_izq,circulo_Centro);
+       double minY=punto_Y1;
+       if(punto_Y3<minY){
+           minY=punto_Y3;
+       }
 
-        AnchorPane.getChildren().add(Dibujo_Switch);
-        Historial.add(3);
+       double maxY=punto_Y2;
+       if(punto_Y4>maxY){
+           maxY=punto_Y4;
+       }
+
+       double ancho=maxX-minX;
+       double alto=maxY-minY;
+
+       Rectangle base= new Rectangle(minX,minY,ancho,alto);
+       base.setFill(Color.LIGHTGRAY);
+       base.setStroke(Color.BLACK);
+
+       double centroX=(minX+maxX)/2;
+       double centroY=(minY+maxY)/2;
+
+
+       Circle circulo_Arriba_der= new Circle(punto_X1,punto_Y1,5);
+       circulo_Arriba_der.setFill(Color.BLACK);
+       Circle circulo_Abajo_der= new Circle(punto_X2,punto_Y2,5);
+       circulo_Abajo_der.setFill(Color.BLACK);
+       Circle circulo_Arriba_izq= new Circle(punto_X3,punto_Y3,5);
+       circulo_Arriba_izq.setFill(Color.BLACK);
+       Circle circulo_Abajo_izq= new Circle(punto_X4,punto_Y4,5);
+       circulo_Abajo_izq.setFill(Color.BLACK);
+       Circle circulo_Centro= new Circle(centroX,centroY,15);
+       circulo_Centro.setFill(Color.BLACK);
+
+       Group Dibujo_Switch= new Group();
+       Dibujo_Switch.getChildren().addAll(base,circulo_Arriba_der,circulo_Abajo_der,circulo_Arriba_izq,circulo_Abajo_izq,circulo_Centro);
+
+       AnchorPane.getChildren().add(Dibujo_Switch);
+       Historial.add(3);
 
     }
 
@@ -837,8 +829,6 @@ public class SampleController implements Initializable {
         }else {
             System.out.println(" Primero seleccione 4 elementos");
         }
-
-
 
     }
 
