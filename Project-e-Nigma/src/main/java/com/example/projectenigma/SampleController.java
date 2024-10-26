@@ -58,7 +58,7 @@ public class SampleController implements Initializable {
     public int lastInt;
     public int lastMod;
 
-    public ArrayList<Integer> Historial = new ArrayList<Integer>(); //cada numero representa una pieza: 1 cable, 2 led, 3 switch
+    public ArrayList<Integer> Historial = new ArrayList<Integer>(); //cada numero representa una pieza: 1 cable, 2 led, 3 switch, 4 resistencia, 5 chip
 
     //Recurso a utilizar (Futuro)
     private int[][] Cargas = new int[32][16];
@@ -154,18 +154,35 @@ public class SampleController implements Initializable {
     }
 
     public void Borrar_pieza() {
-        if ((AnchorPane.getChildren().size() % 514) != 0) {
+        if ((AnchorPane.getChildren().size() % 522) != 0) {
             switch (Historial.getLast()) {
                 case 1: // Cables
+                    System.out.println("Cable eliminado");
                     AnchorPane.getChildren().removeLast();
                     Historial.removeLast();
                     break;
                 case 2: // Led
+                    System.out.println("Led eliminado");
                     AnchorPane.getChildren().removeLast();
                     Historial.removeLast();
                     break;
                 case 3: // Switch
+                    System.out.println("Switch eliminado");
                     AnchorPane.getChildren().removeLast();
+                    Historial.removeLast();
+                    break;
+                case 4: // Resistencia
+                    System.out.println("Resistencia eliminada (jej)");
+                    for (int i= 0; i < 5; i ++){
+                        AnchorPane.getChildren().removeLast();
+                    }
+                    Historial.removeLast();
+                    break;
+                case 5: // Chip
+                    System.out.println("Chip eliminado");
+                    for (int i= 0; i < 9; i ++){
+                        AnchorPane.getChildren().removeLast();
+                    }
                     Historial.removeLast();
                     break;
             }
@@ -358,6 +375,7 @@ public class SampleController implements Initializable {
             AnchorPane.getChildren().add(cruz2);
 
             AnchorPane.getChildren().add(resta);
+            Historial.add(4);
 
         }
 
@@ -482,6 +500,7 @@ public class SampleController implements Initializable {
 
                 AnchorPane.getChildren().add(patitaSup);
                 AnchorPane.getChildren().add(patitaInf);
+                Historial.add(5);
             }
 
         }
@@ -840,6 +859,9 @@ public class SampleController implements Initializable {
 
 
 
+    }
+    public void cantidad_objetos(){
+        System.out.println("Cantidad de elementos en pantalla: "+AnchorPane.getChildren().size());
     }
 
     public void Cargar( ){
