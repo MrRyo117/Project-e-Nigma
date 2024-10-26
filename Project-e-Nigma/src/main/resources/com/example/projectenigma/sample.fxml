@@ -1,4 +1,4 @@
-S<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -37,7 +37,7 @@ S<?xml version="1.0" encoding="UTF-8"?>
             </HBox.margin>
          </Button>
          <TextField fx:id="ohm" onAction="#DibujoResistencia" prefHeight="25.0" prefWidth="29.0" text="Ω" />
-         <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#Cambio_estado_bateria" text="Apagar" textFill="RED">
+         <Button fx:id="Boton_encendido" mnemonicParsing="false" text="Apagar" textFill="RED">
             <HBox.margin>
                <Insets />
             </HBox.margin></Button>
