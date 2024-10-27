@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
+import javafx.scene.Node;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -153,6 +154,7 @@ public class SampleController implements Initializable {
         rectangle.setStrokeWidth(4);
     }
 
+    //ya no sirve
     public void Borrar_pieza() {
         if ((AnchorPane.getChildren().size() % 522) != 0) {
             switch (Historial.getLast()) {
@@ -172,7 +174,7 @@ public class SampleController implements Initializable {
                     Historial.removeLast();
                     break;
                 case 4: // Resistencia
-                    System.out.println("Resistencia eliminada (jej)");
+                    System.out.println("Resistencia eliminada");
                     for (int i= 0; i < 5; i ++){
                         AnchorPane.getChildren().removeLast();
                     }
@@ -187,6 +189,10 @@ public class SampleController implements Initializable {
                     break;
             }
         }
+    }
+
+    public void Borrar_pieza_v2(int indice){
+        AnchorPane.getChildren().remove(indice);
     }
 
     public void CapturarMotor(int op , Circle motor){
@@ -291,6 +297,14 @@ public class SampleController implements Initializable {
         led.getChildren().addAll(semicirculo, conector2, conector1);
         AnchorPane.getChildren().add(led);
         Historial.add(2);
+
+        // cada vez que se haga click en un led, se borra independiente del orden colocado
+        led.setOnMouseClicked((event) -> {
+            Node presionado = (Node) event.getSource();
+            int indice = AnchorPane.getChildren().indexOf(presionado);
+           Borrar_pieza_v2(indice);
+        });
+
     }
     @FXML
     public void DibujoResistencia(){
@@ -369,14 +383,25 @@ public class SampleController implements Initializable {
 
             }
 
-            AnchorPane.getChildren().add(patitas);
-            AnchorPane.getChildren().add(resistenciaD);
-            AnchorPane.getChildren().add(cruz);
-            AnchorPane.getChildren().add(cruz2);
+            Group Agrupar_Dibujo_Resistencia = new Group();
 
-            AnchorPane.getChildren().add(resta);
+
+            Agrupar_Dibujo_Resistencia.getChildren().add(patitas);
+            Agrupar_Dibujo_Resistencia.getChildren().add(resistenciaD);
+            Agrupar_Dibujo_Resistencia.getChildren().add(cruz);
+            Agrupar_Dibujo_Resistencia.getChildren().add(cruz2);
+
+            Agrupar_Dibujo_Resistencia.getChildren().add(resta);
+
+            AnchorPane.getChildren().add(Agrupar_Dibujo_Resistencia);
             Historial.add(4);
 
+            // cada vez que se haga click en un Agrupar_Dibujo_Resistencia, se borra independiente del orden colocado
+            Agrupar_Dibujo_Resistencia.setOnMouseClicked((event) -> {
+                Node presionado = (Node) event.getSource();
+                int indice = AnchorPane.getChildren().indexOf(presionado);
+                Borrar_pieza_v2(indice);
+            });
         }
 
         int diff = ubicador(registro[2][1], registro[2][0]);
@@ -389,9 +414,7 @@ public class SampleController implements Initializable {
             System.out.println("Instalado correctamente");
             //Cargar();
         }
-
-
-
+        
 
     }
     @FXML
@@ -450,6 +473,8 @@ public class SampleController implements Initializable {
 
                 }
             }
+            //Agrupar_Dibujo_Chip se encarga de encapsular todas las figuras que conforman el chip en un solo objeto.
+            Group Agrupar_Dibujo_Chip = new Group();
 
             Rectangle cuerpoChip = new Rectangle(
                     ArCircles[coordY-1][coordX-1].getCenterX(),
@@ -460,7 +485,8 @@ public class SampleController implements Initializable {
 
             cuerpoChip.setFill(Color.BLACK);
             cuerpoChip.setStroke(Color.BLACK);
-            AnchorPane.getChildren().add(cuerpoChip);
+
+            Agrupar_Dibujo_Chip.getChildren().add(cuerpoChip);
 
             for(int i = 0; (i*30) <= diffX; i++){
                 Line patitaSup = new Line(
@@ -471,7 +497,6 @@ public class SampleController implements Initializable {
 
                 );
 
-
                 Line patitaInf = new Line(
                         ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
                         ArCircles[coordY-1][coordX-1].getCenterY()+diffY,
@@ -479,6 +504,7 @@ public class SampleController implements Initializable {
                         ArCircles[coordY-1][coordX-1].getCenterY()-5+diffY
 
                 );
+
                 if (i < 3) {
 
                     int diff = ubicador(coordX-1, coordY+i);
@@ -498,11 +524,21 @@ public class SampleController implements Initializable {
                 patitaSup.setStroke(Color.GRAY);
                 patitaInf.setStroke(Color.GRAY);
 
-                AnchorPane.getChildren().add(patitaSup);
-                AnchorPane.getChildren().add(patitaInf);
-                Historial.add(5);
-            }
 
+                Agrupar_Dibujo_Chip.getChildren().add(patitaInf);
+                Agrupar_Dibujo_Chip.getChildren().add(patitaSup);
+
+
+                Historial.add(5);
+
+            }
+            // cada vez que se haga click en un Agrupar_Dibujo_Chip, se borra independiente del orden colocado
+            AnchorPane.getChildren().add(Agrupar_Dibujo_Chip);
+            Agrupar_Dibujo_Chip.setOnMouseClicked((event) -> {
+                Node presionado = (Node) event.getSource();
+                int indice = AnchorPane.getChildren().indexOf(presionado);
+                Borrar_pieza_v2(indice);
+            });
         }
         else {
             System.out.println("No ingresado dentro de los parametros");
@@ -590,6 +626,13 @@ public class SampleController implements Initializable {
 
         AnchorPane.getChildren().add(Dibujo_Switch);
         Historial.add(3);
+
+        // cada vez que se haga click en un Dibujo_Switch, se borra independiente del orden colocado
+        Dibujo_Switch.setOnMouseClicked((event) -> {
+            Node presionado = (Node) event.getSource();
+            int indice = AnchorPane.getChildren().indexOf(presionado);
+            Borrar_pieza_v2(indice);
+        });
 
     }
 
@@ -853,6 +896,13 @@ public class SampleController implements Initializable {
             AnchorPane.getChildren().add(cable1);
 
             Historial.add(1);
+
+            // cada vez que se haga click en un cable1, se borra independiente del orden colocado
+            cable1.setOnMouseClicked((event) -> {
+                Node presionado = (Node) event.getSource();
+                int indice = AnchorPane.getChildren().indexOf(presionado);
+                Borrar_pieza_v2(indice);
+            });
         }else {
             System.out.println(" Primero seleccione 4 elementos");
         }

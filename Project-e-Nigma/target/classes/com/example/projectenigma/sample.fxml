@@ -37,11 +37,11 @@
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></TextField>
-         <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#Borrar_pieza" text="Borrar">
+         <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#Borrar_pieza" text="Borrar" visible="false">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED">
+         <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED" visible="false">
             <HBox.margin>
                <Insets />
             </HBox.margin></Button>
