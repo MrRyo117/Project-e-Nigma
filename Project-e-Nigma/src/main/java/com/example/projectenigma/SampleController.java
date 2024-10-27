@@ -16,6 +16,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static javafx.scene.paint.Color.BLACK;
+
 
 public class SampleController implements Initializable {
 
@@ -104,7 +106,7 @@ public class SampleController implements Initializable {
             int diff = ubicador(registro[0][1],registro[0][0]);
             if (registro[0][1] != 15){
                 if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
-                    ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
+                    ((Circle) AnchorPane.getChildren().get(diff)).setStroke(BLACK);
                     ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
 
                 }
@@ -154,6 +156,12 @@ public class SampleController implements Initializable {
         rectangle.setStrokeWidth(4);
     }
 
+
+
+    public void Borrar_pieza_v2(int indice){
+        AnchorPane.getChildren().remove(indice);
+    }
+
     //ya no sirve
     public void Borrar_pieza() {
         if ((AnchorPane.getChildren().size() % 522) != 0) {
@@ -191,10 +199,6 @@ public class SampleController implements Initializable {
         }
     }
 
-    public void Borrar_pieza_v2(int indice){
-        AnchorPane.getChildren().remove(indice);
-    }
-
     public void CapturarMotor(int op , Circle motor){
         if (registro[0][0]==0){
             registro[0][0]=op;
@@ -217,7 +221,7 @@ public class SampleController implements Initializable {
         }else{
             int diff =lastInt-1-(14-registro[0][1])-14*(30-registro[0][0]);
             if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
-                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
+                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(BLACK);
                 ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
             }
             diff = lastInt-1 - ( 14-registro[2][1] ) - ( 14 * (30-registro[2][0] ) );
@@ -273,14 +277,14 @@ public class SampleController implements Initializable {
             semicirculo.setLength(180);
             semicirculo.setType(ArcType.ROUND);
             semicirculo.setFill(Color.WHITE);
-            semicirculo.setStroke(Color.BLACK);
+            semicirculo.setStroke(BLACK);
 
 
             conector1.setStartX(puntoX1);
             conector1.setStartY(puntoY1);
             conector1.setEndX(puntoX1+7);
             conector1.setEndY(puntoY1 - 10);
-            conector1.setStroke(Color.BLACK);
+            conector1.setStroke(BLACK);
             conector1.setStrokeWidth(3);
 
 
@@ -288,7 +292,7 @@ public class SampleController implements Initializable {
             conector2.setStartY(puntoY2);
             conector2.setEndX(puntoX2-7);
             conector2.setEndY(puntoY2 - 10);
-            conector2.setStroke(Color.BLACK);
+            conector2.setStroke(BLACK);
             conector2.setStrokeWidth(3);
         }
         Cargar();
@@ -304,7 +308,6 @@ public class SampleController implements Initializable {
             int indice = AnchorPane.getChildren().indexOf(presionado);
            Borrar_pieza_v2(indice);
         });
-
     }
     @FXML
     public void DibujoResistencia(){
@@ -350,9 +353,9 @@ public class SampleController implements Initializable {
               puntoY2
             );
 
-            patitas.setStroke(Color.BLACK);
+            patitas.setStroke(BLACK);
             resistenciaD.setFill(Color.BURLYWOOD);
-            resistenciaD.setStroke(Color.BLACK);
+            resistenciaD.setStroke(BLACK);
 
 
 
@@ -383,6 +386,7 @@ public class SampleController implements Initializable {
 
             }
 
+            //Agrupa todos los elementos graficos que componen la resistencia en uno, para que sea mas facil su manejo
             Group Agrupar_Dibujo_Resistencia = new Group();
 
 
@@ -412,9 +416,9 @@ public class SampleController implements Initializable {
         System.out.println(negativoP1);
         if (((negativoP1 && (color == Color.BLUE)) || color2 == Color.RED )){
             System.out.println("Instalado correctamente");
-            //Cargar();
+            Cargar();
         }
-        
+
 
     }
     @FXML
@@ -483,8 +487,8 @@ public class SampleController implements Initializable {
                     diffY-10
             );
 
-            cuerpoChip.setFill(Color.BLACK);
-            cuerpoChip.setStroke(Color.BLACK);
+            cuerpoChip.setFill(BLACK);
+            cuerpoChip.setStroke(BLACK);
 
             Agrupar_Dibujo_Chip.getChildren().add(cuerpoChip);
 
@@ -608,18 +612,18 @@ public class SampleController implements Initializable {
         base.setWidth(Ancho);
         base.setHeight(Alto);
         base.setFill(Color.GRAY);
-        base.setStroke(Color.BLACK);
+        base.setStroke(BLACK);
 
         Circle circulo_Arriba_der= new Circle(punto_X2,punto_Y2,5);
-        circulo_Arriba_der.setFill(Color.BLACK);
+        circulo_Arriba_der.setFill(BLACK);
         Circle circulo_Abajo_der= new Circle(punto_X4,punto_Y4,5);
-        circulo_Abajo_der.setFill(Color.BLACK);
+        circulo_Abajo_der.setFill(BLACK);
         Circle circulo_Arriba_izq= new Circle(punto_X3,punto_Y3,5);
-        circulo_Arriba_izq.setFill(Color.BLACK);
+        circulo_Arriba_izq.setFill(BLACK);
         Circle circulo_Abajo_izq= new Circle(punto_X1,punto_Y1,5);
-        circulo_Abajo_izq.setFill(Color.BLACK);
+        circulo_Abajo_izq.setFill(BLACK);
         Circle circulo_Centro= new Circle((punto_X2+punto_X1)/2,(punto_Y1+punto_Y3)/2,15);
-        circulo_Centro.setFill(Color.BLACK);
+        circulo_Centro.setFill(BLACK);
 
         Group Dibujo_Switch= new Group();
         Dibujo_Switch.getChildren().addAll(base,circulo_Arriba_der,circulo_Abajo_der,circulo_Arriba_izq,circulo_Abajo_izq,circulo_Centro);
@@ -716,7 +720,7 @@ public class SampleController implements Initializable {
 
                 if (((Circle) AnchorPane.getChildren().get(diff)).getStrokeWidth() == 3) {
                     if (colorDiff == Color.CHOCOLATE || colorDiff == Color.GREEN){
-                        ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
+                        ((Circle) AnchorPane.getChildren().get(diff)).setStroke(BLACK);
                         ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
                     }else {
                         ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(2);
@@ -734,10 +738,10 @@ public class SampleController implements Initializable {
             }
 
             if (registro[0][0] == 33) {
-                ((Rectangle) AnchorPane.getChildren().get(1)).setStroke(Color.BLACK);
+                ((Rectangle) AnchorPane.getChildren().get(1)).setStroke(BLACK);
                 ((Rectangle) AnchorPane.getChildren().get(1)).setStrokeWidth(1);
             } else if (registro[0][0] == 34) {
-                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.BLACK);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(BLACK);
                 ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(1);
             }
 
@@ -889,7 +893,7 @@ public class SampleController implements Initializable {
                 Protoboard2.CambiarCargaBus(fila, columna, carga);
                 //Protoboard2.setCableDBateria();
             }
-            cable1.setStroke(Color.BLACK);
+            cable1.setStroke(BLACK);
             cable1.setStrokeWidth(3);
 
             Protoboard2.EstadoHoyito(fila,columna);
@@ -1046,13 +1050,13 @@ public class SampleController implements Initializable {
     }
 
     public void colocarHoyitos(){
-
         for (int i = 0; i < ArCircles.length-2; i++){
             for ( int j = 0; j < ArCircles[i].length-2; j++){
-                System.out.println(" AAaa");
+                /*System.out.print("aaAA");*/
+                ArCircles[i][j].setStroke(BLACK);
+                ArCircles[i][j].setStrokeWidth(1);
                 AnchorPane.getChildren().addAll(ArCircles[i][j]);
             }
-
         }
     }
 
@@ -1085,7 +1089,7 @@ public class SampleController implements Initializable {
         Rectangulo.setX(-30);
         Rectangulo.setY(-10);
         Rectangulo.setFill(Color.LIGHTGRAY);
-        Rectangulo.setStroke(Color.BLACK);
+        Rectangulo.setStroke(BLACK);
         AnchorPane.getChildren().addAll(Rectangulo);
 
         //creacion dibujo bateria
@@ -1094,8 +1098,8 @@ public class SampleController implements Initializable {
         bateria.setHeight(180);
         bateria.setX(1100);
         bateria.setY(170);
-        bateria.setFill(Color.BLACK);
-        bateria.setStroke(Color.BLACK);
+        bateria.setFill(BLACK);
+        bateria.setStroke(BLACK);
         bateria.setRotate(90);
         bateria.setOnMouseClicked(event -> capturaBateria(33, bateria));
         AnchorPane.getChildren().addAll(bateria);
@@ -1107,7 +1111,7 @@ public class SampleController implements Initializable {
         bateria2.setX(1145);
         bateria2.setY(120);
         bateria2.setFill(Color.GOLD);
-        bateria2.setStroke(Color.BLACK);
+        bateria2.setStroke(BLACK);
         bateria2.setOnMouseClicked(event -> capturaBateria(34, bateria2));
 
         AnchorPane.getChildren().addAll(bateria2);
@@ -1135,7 +1139,7 @@ public class SampleController implements Initializable {
         label2.setLayoutX(25);
         label2.setLayoutY(65);
         label2.setText("-");
-        label2.setTextFill(Color.BLACK);
+        label2.setTextFill(BLACK);
         label2.setFont(Font.font(30));
         AnchorPane.getChildren().addAll(label2);
 
@@ -1153,7 +1157,7 @@ public class SampleController implements Initializable {
         label4.setLayoutX(25);
         label4.setLayoutY(488);
         label4.setText("-");
-        label4.setTextFill(Color.BLACK);
+        label4.setTextFill(BLACK);
         label4.setFont(Font.font(30));
         AnchorPane.getChildren().addAll(label4);
 
@@ -1171,7 +1175,7 @@ public class SampleController implements Initializable {
         label6.setLayoutX(950);
         label6.setLayoutY(70);
         label6.setText("-");
-        label6.setTextFill(Color.BLACK);
+        label6.setTextFill(BLACK);
         label6.setFont(Font.font(30));
         AnchorPane.getChildren().addAll(label6);
 
@@ -1189,7 +1193,7 @@ public class SampleController implements Initializable {
         label8.setLayoutX(950);
         label8.setLayoutY(488);
         label8.setText("-");
-        label8.setTextFill(Color.BLACK);
+        label8.setTextFill(BLACK);
         label8.setFont(Font.font(30));
         AnchorPane.getChildren().addAll(label8);
         motor=new Motor(AnchorPane);
@@ -1203,7 +1207,7 @@ public class SampleController implements Initializable {
                 label9.setLayoutX(25);
                 label9.setLayoutY(418 - (letter - 'a') * 30);
                 label9.setText(String.valueOf(' '));
-                label9.setTextFill(Color.BLACK);
+                label9.setTextFill(BLACK);
                 label9.setFont(Font.font(15));
                 AnchorPane.getChildren().addAll(label9);
 
@@ -1212,7 +1216,7 @@ public class SampleController implements Initializable {
                 label9_5.setLayoutX(25);
                 label9_5.setLayoutY(429 - (letter - 'a' + 1) * 30);
                 label9_5.setText(String.valueOf(letter));
-                label9_5.setTextFill(Color.BLACK);
+                label9_5.setTextFill(BLACK);
                 label9_5.setFont(Font.font(15));
                 AnchorPane.getChildren().addAll(label9_5);
 
@@ -1224,7 +1228,7 @@ public class SampleController implements Initializable {
                 label9.setLayoutX(25);
                 label9.setLayoutY((418 + correcion_posy) - (letter - 'a' + salto) * 30);
                 label9.setText(String.valueOf(letter));
-                label9.setTextFill(Color.BLACK);
+                label9.setTextFill(BLACK);
                 label9.setFont(Font.font(15));
                 AnchorPane.getChildren().addAll(label9);
             }
@@ -1241,7 +1245,7 @@ public class SampleController implements Initializable {
                 label10.setLayoutX(950);
                 label10.setLayoutY(418 - (letter - 'a') * 30);
                 label10.setText(String.valueOf(' '));
-                label10.setTextFill(Color.BLACK);
+                label10.setTextFill(BLACK);
                 label10.setFont(Font.font(15));
                 AnchorPane.getChildren().addAll(label10);
 
@@ -1250,7 +1254,7 @@ public class SampleController implements Initializable {
                 label10_5.setLayoutX(950);
                 label10_5.setLayoutY(429 - (letter - 'a' + 1) * 30);
                 label10_5.setText(String.valueOf(letter));
-                label10_5.setTextFill(Color.BLACK);
+                label10_5.setTextFill(BLACK);
                 label10_5.setFont(Font.font(15));
                 AnchorPane.getChildren().addAll(label10_5);
 
@@ -1262,7 +1266,7 @@ public class SampleController implements Initializable {
                 label10.setLayoutX(950);
                 label10.setLayoutY((418 + correcion_posy) - (letter - 'a' + salto) * 30);
                 label10.setText(String.valueOf(letter));
-                label10.setTextFill(Color.BLACK);
+                label10.setTextFill(BLACK);
                 label10.setFont(Font.font(15));
                 AnchorPane.getChildren().addAll(label10);
             }
@@ -1273,7 +1277,7 @@ public class SampleController implements Initializable {
             label11.setLayoutX(25 + (i * 30));
             label11.setLayoutY(110);
             label11.setText(String.valueOf(i));
-            label11.setTextFill(Color.BLACK);
+            label11.setTextFill(BLACK);
             label11.setFont(Font.font(15));
             label11.setRotate(-90);
             AnchorPane.getChildren().addAll(label11);
@@ -1285,7 +1289,7 @@ public class SampleController implements Initializable {
             label12.setLayoutX(25 + (i * 30));
             label12.setLayoutY(440);
             label12.setText(String.valueOf(i));
-            label12.setTextFill(Color.BLACK);
+            label12.setTextFill(BLACK);
             label12.setFont(Font.font(15));
             label12.setRotate(-90);
             AnchorPane.getChildren().addAll(label12);
@@ -1307,7 +1311,7 @@ public class SampleController implements Initializable {
 
                 circle.setCenterX((i+2) * 30);
                 circle.setCenterY((j+2) * 30 + AuxSpace);
-                circle.setStroke(Color.BLACK);
+                circle.setStroke(BLACK);
                 circle.setFill(Color.WHITE);
                 circle.setOnMouseClicked(event -> ClickCirculo(circle));
 
