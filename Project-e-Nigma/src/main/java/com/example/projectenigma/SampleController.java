@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -304,9 +305,11 @@ public class SampleController implements Initializable {
 
         // cada vez que se haga click en un led, se borra independiente del orden colocado
         led.setOnMouseClicked((event) -> {
-            Node presionado = (Node) event.getSource();
-            int indice = AnchorPane.getChildren().indexOf(presionado);
-           Borrar_pieza_v2(indice);
+            if (event.getButton() == MouseButton.SECONDARY){
+                Node presionado = (Node) event.getSource();
+                int indice = AnchorPane.getChildren().indexOf(presionado);
+                Borrar_pieza_v2(indice);
+            }
         });
     }
     @FXML
@@ -402,9 +405,11 @@ public class SampleController implements Initializable {
 
             // cada vez que se haga click en un Agrupar_Dibujo_Resistencia, se borra independiente del orden colocado
             Agrupar_Dibujo_Resistencia.setOnMouseClicked((event) -> {
-                Node presionado = (Node) event.getSource();
-                int indice = AnchorPane.getChildren().indexOf(presionado);
-                Borrar_pieza_v2(indice);
+                if (event.getButton() == MouseButton.SECONDARY){
+                    Node presionado = (Node) event.getSource();
+                    int indice = AnchorPane.getChildren().indexOf(presionado);
+                    Borrar_pieza_v2(indice);
+                }
             });
         }
 
@@ -539,9 +544,11 @@ public class SampleController implements Initializable {
             // cada vez que se haga click en un Agrupar_Dibujo_Chip, se borra independiente del orden colocado
             AnchorPane.getChildren().add(Agrupar_Dibujo_Chip);
             Agrupar_Dibujo_Chip.setOnMouseClicked((event) -> {
-                Node presionado = (Node) event.getSource();
-                int indice = AnchorPane.getChildren().indexOf(presionado);
-                Borrar_pieza_v2(indice);
+                if (event.getButton() == MouseButton.SECONDARY){
+                    Node presionado = (Node) event.getSource();
+                    int indice = AnchorPane.getChildren().indexOf(presionado);
+                    Borrar_pieza_v2(indice);
+                }
             });
         }
         else {
@@ -633,9 +640,11 @@ public class SampleController implements Initializable {
 
         // cada vez que se haga click en un Dibujo_Switch, se borra independiente del orden colocado
         Dibujo_Switch.setOnMouseClicked((event) -> {
-            Node presionado = (Node) event.getSource();
-            int indice = AnchorPane.getChildren().indexOf(presionado);
-            Borrar_pieza_v2(indice);
+            if (event.getButton() == MouseButton.SECONDARY){
+                Node presionado = (Node) event.getSource();
+                int indice = AnchorPane.getChildren().indexOf(presionado);
+                Borrar_pieza_v2(indice);
+            }
         });
 
     }
@@ -903,9 +912,11 @@ public class SampleController implements Initializable {
 
             // cada vez que se haga click en un cable1, se borra independiente del orden colocado
             cable1.setOnMouseClicked((event) -> {
-                Node presionado = (Node) event.getSource();
-                int indice = AnchorPane.getChildren().indexOf(presionado);
-                Borrar_pieza_v2(indice);
+                if (event.getButton() == MouseButton.SECONDARY){
+                    Node presionado = (Node) event.getSource();
+                    int indice = AnchorPane.getChildren().indexOf(presionado);
+                    Borrar_pieza_v2(indice);
+                }
             });
         }else {
             System.out.println(" Primero seleccione 4 elementos");
