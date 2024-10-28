@@ -509,7 +509,7 @@ public class SampleController implements Initializable {
 
             cuerpoChip.setFill(Color.BLACK);
             cuerpoChip.setStroke(Color.BLACK);
-            AnchorPane.getChildren().add(cuerpoChip);
+            Agrupar_Dibujo_Chip.getChildren().add(cuerpoChip);
 
             for(int i = 0; (i*30) <= diffX; i++){
                 Line patitaSup = new Line(
@@ -565,6 +565,7 @@ public class SampleController implements Initializable {
                 }
             });
         }
+
         else {
             System.out.println("No ingresado dentro de los parametros");
         }
