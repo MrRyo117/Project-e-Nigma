@@ -65,7 +65,7 @@ public class Motor {
 
     public void Cables_motor(){
         Line cable=new Line(superficie.getX()+ superficie.getWidth()/2,
-        superficie.getY()+superficie.getHeight()/2,circulo_der.getCenterX(),circulo_der.getCenterY());
+                superficie.getY()+superficie.getHeight()/2,circulo_der.getCenterX(),circulo_der.getCenterY());
 
         cable.setStroke(Color.BLACK);
         cable.setStrokeWidth(3);
