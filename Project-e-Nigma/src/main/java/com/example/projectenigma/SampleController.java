@@ -38,6 +38,14 @@ public class SampleController implements Initializable {
     private Button btnChip;
 
     @FXML
+    private Button btnChipAND;
+    @FXML
+    private Button btnChipOR;
+    @FXML
+    private Button btnChipNOT;
+
+
+    @FXML
     private Button btnResistencia;
 
     @FXML
@@ -158,43 +166,6 @@ public class SampleController implements Initializable {
 
     public void Borrar_pieza_v2(int indice){
         AnchorPane.getChildren().remove(indice);
-    }
-
-    //ya no sirve
-    public void Borrar_pieza() {
-        if ((AnchorPane.getChildren().size() % 522) != 0) {
-            switch (Historial.getLast()) {
-                case 1: // Cables
-                    System.out.println("Cable eliminado");
-                    AnchorPane.getChildren().removeLast();
-                    Historial.removeLast();
-                    break;
-                case 2: // Led
-                    System.out.println("Led eliminado");
-                    AnchorPane.getChildren().removeLast();
-                    Historial.removeLast();
-                    break;
-                case 3: // Switch
-                    System.out.println("Switch eliminado");
-                    AnchorPane.getChildren().removeLast();
-                    Historial.removeLast();
-                    break;
-                case 4: // Resistencia
-                    System.out.println("Resistencia eliminada");
-                    for (int i= 0; i < 5; i ++){
-                        AnchorPane.getChildren().removeLast();
-                    }
-                    Historial.removeLast();
-                    break;
-                case 5: // Chip
-                    System.out.println("Chip eliminado");
-                    for (int i= 0; i < 9; i ++){
-                        AnchorPane.getChildren().removeLast();
-                    }
-                    Historial.removeLast();
-                    break;
-            }
-        }
     }
 
     public void CapturarMotor(int op , Circle motor){
@@ -437,12 +408,18 @@ public class SampleController implements Initializable {
         }
 
     }
-    @FXML
-    public void DibujoChip(){
+
+    public int[] DibujoChip(){
+        int diff = 0 ;
+        int coordY = 0;
+
         if ((registro[0][1] == 7 || registro[0][1] == 8) && (registro[1][1] == 7 || registro[1][1] == 8)  && (registro[2][1] == 7 || registro[2][1] == 8) && (registro[3][1] == 7 || registro[3][1] == 8)){
+            double diffX = -1;
+            double diffY = -1;
+
             Chip chip= new Chip();
 
-            int coordY = registro[0][0];
+            coordY = registro[0][0];
             int coordX = registro[0][1];
 
             if (coordY > registro[1][0]){
@@ -477,9 +454,6 @@ public class SampleController implements Initializable {
                 }
             }
 
-            double diffX = -1;
-            double diffY = -1;
-
             for(int i = 0 ; i <= 3 ; i++){
 
                 if (coordX == registro[i][1] && coordY != registro[i][0]){
@@ -507,66 +481,88 @@ public class SampleController implements Initializable {
             cuerpoChip.setStroke(Color.BLACK);
             Agrupar_Dibujo_Chip.getChildren().add(cuerpoChip);
 
-            for(int i = 0; (i*30) <= diffX; i++){
-                Line patitaSup = new Line(
-                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
-                        ArCircles[coordY-1][coordX-1].getCenterY(),
-                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
-                        ArCircles[coordY-1][coordX-1].getCenterY()+5
 
-                );
+            if((((int) diffX/30)+1) % 3 == 1){
+                for(int i = 0; (i*30) <= diffX; i++){
+                    Line patitaSup = new Line(
+                            ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                            ArCircles[coordY-1][coordX-1].getCenterY(),
+                            ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                            ArCircles[coordY-1][coordX-1].getCenterY()+5
 
-                Line patitaInf = new Line(
-                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
-                        ArCircles[coordY-1][coordX-1].getCenterY()+diffY,
-                        ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
-                        ArCircles[coordY-1][coordX-1].getCenterY()-5+diffY
+                    );
 
-                );
+                    Line patitaInf = new Line(
+                            ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                            ArCircles[coordY-1][coordX-1].getCenterY()+diffY,
+                            ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                            ArCircles[coordY-1][coordX-1].getCenterY()-5+diffY
 
-                if (i < 3) {
+                    );
+                    // Conducta (a reemplazar)
+                    if (i < 3) {
 
-                    int diff = ubicador(coordX-1, coordY+i);
+                        diff = ubicador(coordX-1, coordY+i);
 
-                    if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE ){
-                        CargarPistas(coordY+i-1, 1, 2);
-                    } else if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
-                        CargarPistas(coordY+i-1, -1, 2);
+                        if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE ){
+                            CargarPistas(coordY+i-1, 1, 2);
+                        } else if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
+                            CargarPistas(coordY+i-1, -1, 2);
+                        }
+
                     }
 
+
+                    patitaSup.setStrokeWidth(2);
+                    patitaInf.setStrokeWidth(2);
+
+                    patitaSup.setStroke(Color.GRAY);
+                    patitaInf.setStroke(Color.GRAY);
+
+
+                    Agrupar_Dibujo_Chip.getChildren().add(patitaInf);
+                    Agrupar_Dibujo_Chip.getChildren().add(patitaSup);
+
+
+                    Historial.add(5);
+
                 }
-
-
-                patitaSup.setStrokeWidth(2);
-                patitaInf.setStrokeWidth(2);
-
-                patitaSup.setStroke(Color.GRAY);
-                patitaInf.setStroke(Color.GRAY);
-
-
-                Agrupar_Dibujo_Chip.getChildren().add(patitaInf);
-                Agrupar_Dibujo_Chip.getChildren().add(patitaSup);
-
-
-                Historial.add(5);
-
+                // cada vez que se haga click en un Agrupar_Dibujo_Chip, se borra independiente del orden colocado
+                AnchorPane.getChildren().add(Agrupar_Dibujo_Chip);
+                Agrupar_Dibujo_Chip.setOnMouseClicked((event) -> {
+                    if (event.getButton() == MouseButton.SECONDARY){
+                        Node presionado = (Node) event.getSource();
+                        int indice = AnchorPane.getChildren().indexOf(presionado);
+                        Borrar_pieza_v2(indice);
+                    }
+                });
+            } else{
+                System.out.println("Seleccionado una cantidad de hoyitos no admisibles");
             }
-            // cada vez que se haga click en un Agrupar_Dibujo_Chip, se borra independiente del orden colocado
-            AnchorPane.getChildren().add(Agrupar_Dibujo_Chip);
-            Agrupar_Dibujo_Chip.setOnMouseClicked((event) -> {
-                if (event.getButton() == MouseButton.SECONDARY){
-                    Node presionado = (Node) event.getSource();
-                    int indice = AnchorPane.getChildren().indexOf(presionado);
-                    Borrar_pieza_v2(indice);
-                }
-            });
+
         }
 
         else {
             System.out.println("No ingresado dentro de los parametros");
         }
 
+    return new int[] {diff, coordY-1} ;
+    }
 
+    @FXML
+    public void DibujoChipAND(){
+        int[] req = DibujoChip();
+        for(int i = 0; (i*30) <= req[0]; i++) {
+
+        }
+    }
+    @FXML
+    public void DibujoChipOR(){
+        DibujoChip();
+    }
+    @FXML
+    public void DibujoChipNOT(){
+        DibujoChip();
     }
 
     @FXML
