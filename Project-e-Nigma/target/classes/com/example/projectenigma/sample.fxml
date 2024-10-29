@@ -49,7 +49,7 @@
       </children>
    </HBox>
    <Button mnemonicParsing="false" onAction="#reset" text="Reset" />
-   <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#Borrar_pieza" text="Borrar" visible="false" />
+   <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#reset" text="Borrar" visible="false" />
    <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED" visible="false" />
 
 </VBox>

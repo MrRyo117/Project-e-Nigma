@@ -412,6 +412,7 @@ public class SampleController implements Initializable {
     public int[] DibujoChip(){
         int diff = 0 ;
         int coordY = 0;
+        int coordX = 0;
 
         if ((registro[0][1] == 7 || registro[0][1] == 8) && (registro[1][1] == 7 || registro[1][1] == 8)  && (registro[2][1] == 7 || registro[2][1] == 8) && (registro[3][1] == 7 || registro[3][1] == 8)){
             double diffX = -1;
@@ -420,7 +421,7 @@ public class SampleController implements Initializable {
             Chip chip= new Chip();
 
             coordY = registro[0][0];
-            int coordX = registro[0][1];
+            coordX = registro[0][1];
 
             if (coordY > registro[1][0]){
                 coordY = registro[1][0];
@@ -499,18 +500,7 @@ public class SampleController implements Initializable {
                             ArCircles[coordY-1][coordX-1].getCenterY()-5+diffY
 
                     );
-                    // Conducta (a reemplazar)
-                    if (i < 3) {
 
-                        diff = ubicador(coordX-1, coordY+i);
-
-                        if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.BLUE ){
-                            CargarPistas(coordY+i-1, 1, 2);
-                        } else if ( ( (Circle) AnchorPane.getChildren().get(diff) ).getStroke() == Color.RED ){
-                            CargarPistas(coordY+i-1, -1, 2);
-                        }
-
-                    }
 
 
                     patitaSup.setStrokeWidth(2);
@@ -546,14 +536,33 @@ public class SampleController implements Initializable {
             System.out.println("No ingresado dentro de los parametros");
         }
 
-    return new int[] {diff, coordY-1} ;
+    return new int[] {diff, coordX, coordY} ;
     }
 
     @FXML
     public void DibujoChipAND(){
-        int[] req = DibujoChip();
-        for(int i = 0; (i*30) <= req[0]; i++) {
 
+        int[] req = DibujoChip();
+
+        for(int i = 0; (i*30) <= req[0]; i=i+3) {
+
+            int diffArriba = ubicador(req[1], req[2]+i+1);
+            int diffArribaAux = ubicador(req[1], req[2]+i+2);
+
+            int diffAbajo = ubicador(req[1], req[2]+i);
+            int diffAbajoAux = ubicador(req[1], req[2]+i);
+
+            System.out.println(Color.BLUE);
+            System.out.println(( (Circle) AnchorPane.getChildren().get(diffArriba) ).getStroke());
+            System.out.println(( (Circle) AnchorPane.getChildren().get(diffArribaAux) ).getStroke());
+            //( (Circle) AnchorPane.getChildren().get(diffArriba) ).setStroke(Color.RED);
+            //( (Circle) AnchorPane.getChildren().get(diffArribaAux) ).setStroke(Color.RED);
+            if ( ( ( (Circle) AnchorPane.getChildren().get(diffArriba) ).getStroke() == Color.BLUE) &&( ( (Circle) AnchorPane.getChildren().get(diffArribaAux) ).getStroke() == Color.BLUE )){
+                CargarPistas(req[2]+i+2, -1, 1);
+                System.out.println("Chip activo");
+            } else if ( ( ( (Circle) AnchorPane.getChildren().get(diffArriba) ).getStroke() == Color.RED) &&( ( (Circle) AnchorPane.getChildren().get(diffArribaAux) ).getStroke() == Color.RED ) ){
+                CargarPistas(req[2]+i+2, 1, 1);
+            }
         }
     }
     @FXML
