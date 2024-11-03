@@ -34,8 +34,6 @@ public class SampleController implements Initializable {
     @FXML
     private Button btnSwitch;
 
-    @FXML
-    private Button btnChip;
 
     @FXML
     private Button btnChipAND;
@@ -164,7 +162,7 @@ public class SampleController implements Initializable {
 
 
 
-    public void Borrar_pieza_v2(int indice){
+    public void Borrar_pieza(int indice){
         AnchorPane.getChildren().remove(indice);
     }
 
@@ -288,7 +286,7 @@ public class SampleController implements Initializable {
                 if (event.getButton() == MouseButton.SECONDARY) {
                     Node presionado = (Node) event.getSource();
                     int indice = AnchorPane.getChildren().indexOf(presionado);
-                    Borrar_pieza_v2(indice);
+                    Borrar_pieza(indice);
                 }
             });
         }
@@ -397,7 +395,7 @@ public class SampleController implements Initializable {
                     if (event.getButton() == MouseButton.SECONDARY) {
                         Node presionado = (Node) event.getSource();
                         int indice = AnchorPane.getChildren().indexOf(presionado);
-                        Borrar_pieza_v2(indice);
+                        Borrar_pieza(indice);
                     }
                 });
             }
@@ -409,12 +407,94 @@ public class SampleController implements Initializable {
 
     }
 
+    public void DibujoSwitch8Pines(){
+        int diff = 0 ;
+        int coordY = 0;
+        int coordX = 0;
+
+        //Este if es para saber si los puntos seleccionados estan al medio del protoboard
+        if ((registro[0][1] == 7 || registro[0][1] == 8)
+                && (registro[1][1] == 7 || registro[1][1] == 8)
+                && (registro[2][1] == 7 || registro[2][1] == 8)
+                && (registro[3][1] == 7 || registro[3][1] == 8)){
+
+            double diffX = -1;
+            double diffY = -1;
+
+            coordY = registro[0][0];
+            coordX = registro[0][1];
+
+            if (coordY > registro[1][0]){
+                coordY = registro[1][0];
+                coordX = registro[1][1];
+            }else if (coordY > registro[2][0]){
+                coordY = registro[2][0];
+                coordX = registro[2][1];
+            }
+
+            if (coordY == registro[0][0] && coordX != registro[0][1]){
+
+                if (coordX > registro[0][1]){
+                    coordX = registro[0][1];
+                }
+
+            }else if (coordY == registro[1][0] && coordX != registro[1][1]){
+
+                if (coordX > registro[1][1]){
+                    coordX = registro[1][1];
+                }
+
+            }else if (coordY == registro[2][0] && coordX != registro[2][1]){
+
+                if (coordX > registro[2][1]){
+                    coordX = registro[2][1];
+                }
+            }else if (coordY == registro[3][0] && coordX != registro[3][1]){
+
+                if (coordX > registro[3][1]){
+                    coordX = registro[3][1];
+                }
+            }
+
+            for(int i = 0 ; i <= 3 ; i++){
+
+                if (coordX == registro[i][1] && coordY != registro[i][0]){
+
+                    diffX = ArCircles[registro[i][0]][registro[i][1]].getCenterX() - ArCircles[coordY][coordX].getCenterX();
+                }
+
+                if (coordY == registro[i][0] && coordX != registro[i][1]){
+
+                    diffY = ArCircles[registro[i][0]-1][registro[i][1]-1].getCenterY() - ArCircles[coordY-1][coordX-1].getCenterY();
+
+                }
+            }
+
+            //Agrupar_Dibujo_Swich8P se encarga de encapsular todas las figuras que conforman el chip en un solo objeto.
+            Group Agrupar_Dibujo_Swich8P = new Group();
+
+            Rectangle cuerpoChip = new Rectangle(
+                    ArCircles[coordY-1][coordX-1].getCenterX(),
+                    ArCircles[coordY-1][coordX-1].getCenterY()+5,
+                    diffX,
+                    diffY-10
+            );
+
+            cuerpoChip.setFill(Color.BLACK);
+            cuerpoChip.setStroke(Color.BLACK);
+            Agrupar_Dibujo_Swich8P.getChildren().add(cuerpoChip);
+        }
+    }
+
     public int[] DibujoChip(){
         int diff = 0 ;
         int coordY = 0;
         int coordX = 0;
 
-        if ((registro[0][1] == 7 || registro[0][1] == 8) && (registro[1][1] == 7 || registro[1][1] == 8)  && (registro[2][1] == 7 || registro[2][1] == 8) && (registro[3][1] == 7 || registro[3][1] == 8)){
+        if ((registro[0][1] == 7 || registro[0][1] == 8)
+                && (registro[1][1] == 7 || registro[1][1] == 8)
+                && (registro[2][1] == 7 || registro[2][1] == 8)
+                && (registro[3][1] == 7 || registro[3][1] == 8)){
             double diffX = -1;
             double diffY = -1;
 
@@ -523,7 +603,7 @@ public class SampleController implements Initializable {
                     if (event.getButton() == MouseButton.SECONDARY){
                         Node presionado = (Node) event.getSource();
                         int indice = AnchorPane.getChildren().indexOf(presionado);
-                        Borrar_pieza_v2(indice);
+                        Borrar_pieza(indice);
                     }
                 });
             } else{
@@ -538,6 +618,7 @@ public class SampleController implements Initializable {
 
     return new int[] {diff, coordX, coordY} ;
     }
+
 
     @FXML
     public void DibujoChipAND(){
@@ -573,6 +654,8 @@ public class SampleController implements Initializable {
     public void DibujoChipNOT(){
         DibujoChip();
     }
+
+
 
     @FXML
     public void DibujoSwitch() {
@@ -676,9 +759,9 @@ public class SampleController implements Initializable {
            if(Color_Columna){
                if(circulo_Centro.getFill()==Color.BLACK){
                    circulo_Centro.setFill(Color.RED);
-                   CargarPistas(19,carga,2);
+                   CargarPistas(19,carga,1);
                }else{
-                   CargarPistas(19,0,2);
+                   CargarPistas(19,0,1);
                }
            }
            System.out.println("Hola soy un circulo del centro de switch; porque me presionas maldito ");
@@ -695,7 +778,7 @@ public class SampleController implements Initializable {
             if (event.getButton() == MouseButton.SECONDARY){
                 Node presionado = (Node) event.getSource();
                 int indice = AnchorPane.getChildren().indexOf(presionado);
-                Borrar_pieza_v2(indice);
+                Borrar_pieza(indice);
             }
         });
 
@@ -1161,7 +1244,7 @@ public class SampleController implements Initializable {
                 if (event.getButton() == MouseButton.SECONDARY){
                     Node presionado = (Node) event.getSource();
                     int indice = AnchorPane.getChildren().indexOf(presionado);
-                    Borrar_pieza_v2(indice);
+                    Borrar_pieza(indice);
                 }
             });
         }else {
@@ -1288,6 +1371,7 @@ public class SampleController implements Initializable {
         }
     }
 
+
     @FXML
     public void reset(){
 
@@ -1299,7 +1383,9 @@ public class SampleController implements Initializable {
         btnCable.setDisable(false);
         btnResistencia.setDisable(false);
         btnBorrar.setDisable(false);
-        btnChip.setDisable(false);
+        btnChipAND.setDisable(false);
+        btnChipOR.setDisable(false);
+        btnChipNOT.setDisable(false);
         btnSwitch.setDisable(false);
         Boton_encendido.setDisable(false);
 
@@ -1307,15 +1393,18 @@ public class SampleController implements Initializable {
     }
 
     public void colocarHoyitos(){
-        for (int i = 0; i < ArCircles.length-2; i++){
+        //ArCircles.length-4 debe ser restado con 4 en vez de 2 o da error de que ArCircles[i][j] son nulos
+        //porque es eso asi, pues me gustaria saber
+        for (int i = 0; i < ArCircles.length-4; i++){
             for ( int j = 0; j < ArCircles[i].length-2; j++){
-                /*System.out.print("aaAA");*/
                 ArCircles[i][j].setStroke(BLACK);
                 ArCircles[i][j].setStrokeWidth(1);
-                AnchorPane.getChildren().addAll(ArCircles[i][j]);
+                AnchorPane.getChildren().add(ArCircles[i][j]);
             }
         }
     }
+
+
 
     //primero el espacio 1 seria la fila, y luego el 0 columna
     public int ubicador(int fila, int columna){
