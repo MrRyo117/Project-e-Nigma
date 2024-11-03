@@ -574,6 +574,9 @@ public class SampleController implements Initializable {
         DibujoChip();
     }
 
+
+    private boolean Cargado =false;
+
     @FXML
     public void DibujoSwitch() {
 
@@ -667,20 +670,25 @@ public class SampleController implements Initializable {
                    || colorCirculo3 == Color.RED || colorCirculo4 == Color.RED){
                Color_Columna=true;
                carga=1;
-           }
-           if(colorCirculo1== Color.BLUE || colorCirculo2==Color.BLUE
-                   || colorCirculo3==Color.BLUE || colorCirculo4==Color.BLUE){
+           } else if (colorCirculo1== Color.BLUE || colorCirculo2==Color.BLUE
+                   || colorCirculo3==Color.BLUE || colorCirculo4==Color.BLUE) {
                Color_Columna=true;
                carga=-1;
            }
            if(Color_Columna){
-               if(circulo_Centro.getFill()==Color.BLACK){
+               if(!Cargado){
                    circulo_Centro.setFill(Color.RED);
-                   CargarPistas(19,carga,2);
+                   CargarPistas(registro[0][0]-1,carga,1);
+                   CargarPistas(registro[2][0]-1,carga,1);
                }else{
-                   CargarPistas(19,0,2);
+                   circulo_Centro.setFill(BLACK);
+                   CargarPistas(registro[0][0]-1,0,1);
+                   CargarPistas(registro[2][0]-1,0,1);
                }
+
+               Cargado=!Cargado;
            }
+
            System.out.println("Hola soy un circulo del centro de switch; porque me presionas maldito ");
        });
 
