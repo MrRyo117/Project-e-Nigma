@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="666.0" prefWidth="666.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectenigma.SampleController">
+<VBox alignment="CENTER" prefHeight="666.0" prefWidth="666.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectenigma.SampleController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -18,35 +21,35 @@
             </HBox.margin></Button>
          <Button fx:id="btnCable" mnemonicParsing="false" onAction="#Cables" text="Cable">
             <HBox.margin>
-               <Insets right="5.0" />
+               <Insets left="5.0" />
             </HBox.margin></Button>
          <Button fx:id="btnSwitch" mnemonicParsing="false" onAction="#DibujoSwitch" text="Switch">
             <HBox.margin>
-               <Insets right="5.0" />
-            </HBox.margin></Button>
-         <Button fx:id="btnChip" mnemonicParsing="false" onAction="#DibujoChip" text="Chip">
-            <HBox.margin>
-               <Insets right="5.0" />
+               <Insets left="5.0" />
             </HBox.margin></Button>
          <Button fx:id="btnResistencia" mnemonicParsing="false" onAction="#DibujoResistencia" text="Resistencia">
             <HBox.margin>
-               <Insets right="5.0" />
+               <Insets left="5.0" />
             </HBox.margin>
          </Button>
-         <TextField fx:id="ohm" onAction="#DibujoResistencia" prefHeight="25.0" prefWidth="29.0" text="Ω">
-            <HBox.margin>
-               <Insets right="5.0" />
-            </HBox.margin></TextField>
-         <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#Borrar_pieza" text="Borrar" visible="false">
+         <TextField fx:id="ohm" onAction="#DibujoResistencia" prefHeight="25.0" prefWidth="26.0" text="Ω" />
+      </children>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <children>
+         <Button fx:id="btnChipAND" mnemonicParsing="false" onAction="#DibujoChipAND" text="Chip AND">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED">
+         <Button fx:id="btnChipOR" layoutX="623.0" layoutY="10.0" mnemonicParsing="false" onAction="#DibujoChipOR" text="Chip OR">
             <HBox.margin>
-               <Insets />
+               <Insets right="5.0" />
             </HBox.margin></Button>
+         <Button fx:id="btnChipNOT" layoutX="643.0" layoutY="10.0" mnemonicParsing="false" onAction="#DibujoChipNOT" text="Chip NOT" />
       </children>
    </HBox>
    <Button mnemonicParsing="false" onAction="#reset" text="Reset" />
+   <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#reset" text="Borrar" visible="false" />
+   <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED" visible="false" />
 
 </VBox>
