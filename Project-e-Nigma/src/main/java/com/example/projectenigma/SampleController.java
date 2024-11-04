@@ -17,7 +17,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static javafx.scene.paint.Color.BLACK;
 
 
 public class SampleController implements Initializable {
@@ -42,6 +41,8 @@ public class SampleController implements Initializable {
     @FXML
     private Button btnChipNOT;
 
+    @FXML
+    private Button btnSwich8P;
 
     @FXML
     private Button btnResistencia;
@@ -68,7 +69,7 @@ public class SampleController implements Initializable {
     public int lastInt;
     public int lastMod;
 
-    public ArrayList<Integer> Historial = new ArrayList<Integer>(); //cada numero representa una pieza: 1 cable, 2 led, 3 switch, 4 resistencia, 5 chip
+    public ArrayList<Integer> Historial = new ArrayList<Integer>(); //cada numero representa una pieza: 1 cable, 2 led, 3 switch, 4 resistencia, 5 chip, 6 swich8P
 
     public boolean Color_Negro=false;
 
@@ -188,7 +189,7 @@ public class SampleController implements Initializable {
         }else{
             int diff =lastInt-1-(14-registro[0][1])-14*(30-registro[0][0]);
             if (((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.BLUE && ((Circle) AnchorPane.getChildren().get(diff) ).getStroke() != Color.RED ) {
-                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(BLACK);
+                ((Circle) AnchorPane.getChildren().get(diff)).setStroke(Color.BLACK);
                 ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
             }
             diff = lastInt-1 - ( 14-registro[2][1] ) - ( 14 * (30-registro[2][0] ) );
@@ -407,12 +408,13 @@ public class SampleController implements Initializable {
 
     }
 
+    @FXML
     public void DibujoSwitch8Pines(){
         int diff = 0 ;
         int coordY = 0;
         int coordX = 0;
 
-        //Este if es para saber si los puntos seleccionados estan al medio del protoboard
+        //Este condicional es para saber si los puntos seleccionados estan al rededor del surco del protoboard
         if ((registro[0][1] == 7 || registro[0][1] == 8)
                 && (registro[1][1] == 7 || registro[1][1] == 8)
                 && (registro[2][1] == 7 || registro[2][1] == 8)
@@ -424,6 +426,9 @@ public class SampleController implements Initializable {
             coordY = registro[0][0];
             coordX = registro[0][1];
 
+            /* Condicional el cual me guarda en las variables coordY, coordX cual es el punto menor dentro del protoboard
+            Esto sirve para la creacion de la figura, pues permite que siempre se sepa cual es la esquina en donde se debe
+            empezar a dibujar*/
             if (coordY > registro[1][0]){
                 coordY = registro[1][0];
                 coordX = registro[1][1];
@@ -432,6 +437,7 @@ public class SampleController implements Initializable {
                 coordX = registro[2][1];
             }
 
+            /*Grupo de condicionales quienes comprueban que las coordenadas X correspondan con las coordenadas Y*/
             if (coordY == registro[0][0] && coordX != registro[0][1]){
 
                 if (coordX > registro[0][1]){
@@ -449,13 +455,16 @@ public class SampleController implements Initializable {
                 if (coordX > registro[2][1]){
                     coordX = registro[2][1];
                 }
+
             }else if (coordY == registro[3][0] && coordX != registro[3][1]){
 
                 if (coordX > registro[3][1]){
                     coordX = registro[3][1];
                 }
+
             }
 
+            /*Ciclo para saber el surco de las coordenadas X e Y*/
             for(int i = 0 ; i <= 3 ; i++){
 
                 if (coordX == registro[i][1] && coordY != registro[i][0]){
@@ -470,20 +479,101 @@ public class SampleController implements Initializable {
                 }
             }
 
-            //Agrupar_Dibujo_Swich8P se encarga de encapsular todas las figuras que conforman el chip en un solo objeto.
+            //Agrupar_Dibujo_Swich8P se encarga de encapsular todas las figuras que conforman el swich en un solo objeto.
             Group Agrupar_Dibujo_Swich8P = new Group();
 
-            Rectangle cuerpoChip = new Rectangle(
-                    ArCircles[coordY-1][coordX-1].getCenterX(),
+            Rectangle cuerpoSwich8P = new Rectangle(
+                    ArCircles[coordY-1][coordX-1].getCenterX()-10,
                     ArCircles[coordY-1][coordX-1].getCenterY()+5,
-                    diffX,
+                    diffX+20,
                     diffY-10
             );
 
-            cuerpoChip.setFill(Color.BLACK);
-            cuerpoChip.setStroke(Color.BLACK);
-            Agrupar_Dibujo_Swich8P.getChildren().add(cuerpoChip);
+
+            cuerpoSwich8P.setStroke(Color.BLACK);
+            cuerpoSwich8P.setStrokeWidth(2);
+            cuerpoSwich8P.setFill(Color.RED);
+
+            Agrupar_Dibujo_Swich8P.getChildren().add(cuerpoSwich8P);
+
+            if((((int) diffX/30)+1) % 7 == 1){
+                for(int i = 0; (i*30) <= diffX; i++){
+
+
+                    Line patitaSup = new Line(
+                            ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                            ArCircles[coordY-1][coordX-1].getCenterY(),
+                            ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                            ArCircles[coordY-1][coordX-1].getCenterY()+5
+
+                    );
+
+                    Line patitaInf = new Line(
+                            ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                            ArCircles[coordY-1][coordX-1].getCenterY()+diffY,
+                            ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
+                            ArCircles[coordY-1][coordX-1].getCenterY()-5+diffY
+
+                    );
+
+                    Rectangle interruptor = new Rectangle(
+                            (ArCircles[coordY-1][coordX-1].getCenterX()-5)+30*i,
+                            ArCircles[coordY-1][coordX-1].getCenterY()+18,
+                            10,
+                            diffY-37
+                    );
+
+
+
+                    interruptor.setStrokeWidth(1);
+
+                    patitaSup.setStrokeWidth(2);
+                    patitaInf.setStrokeWidth(2);
+
+                    patitaSup.setStroke(Color.GRAY);
+                    patitaInf.setStroke(Color.GRAY);
+
+                    interruptor.setStroke(Color.BLACK);
+                    interruptor.setFill(Color.WHITE);
+
+                    Agrupar_Dibujo_Swich8P.getChildren().add(patitaInf);
+                    Agrupar_Dibujo_Swich8P.getChildren().add(patitaSup);
+                    Agrupar_Dibujo_Swich8P.getChildren().add(interruptor);
+
+                    Historial.add(6);
+
+                    interruptor.setOnMouseClicked((event) -> {
+                        if (event.getButton() == MouseButton.PRIMARY){
+                            Node presionado = (Node) event.getSource();
+                            int indice = Agrupar_Dibujo_Swich8P.getChildren().indexOf(presionado);
+                            System.out.println("el Switch n° "+ (Agrupar_Dibujo_Swich8P.getChildren().size() - indice) +" esta siendo presionado" );
+                        }
+                    });
+
+                }
+                // cada vez que se haga click en un Agrupar_Dibujo_Chip, se borra independiente del orden colocado
+                AnchorPane.getChildren().add(Agrupar_Dibujo_Swich8P);
+                Agrupar_Dibujo_Swich8P.setOnMouseClicked((event) -> {
+                    if (event.getButton() == MouseButton.SECONDARY){
+                        Node presionado = (Node) event.getSource();
+                        int indice = AnchorPane.getChildren().indexOf(presionado);
+                        Borrar_pieza(indice);
+                    }
+                });
+
+
+
+
+
+
+            } else{
+                System.out.println("Seleccionado una cantidad de hoyitos no admisibles");
+            }
+
+        } else{
+            System.out.println("No ingresado dentro de los parametros");
         }
+
     }
 
     public int[] DibujoChip(){
@@ -1397,7 +1487,7 @@ public class SampleController implements Initializable {
         //porque es eso asi, pues me gustaria saber
         for (int i = 0; i < ArCircles.length-4; i++){
             for ( int j = 0; j < ArCircles[i].length-2; j++){
-                ArCircles[i][j].setStroke(BLACK);
+                ArCircles[i][j].setStroke(Color.BLACK);
                 ArCircles[i][j].setStrokeWidth(1);
                 AnchorPane.getChildren().add(ArCircles[i][j]);
             }

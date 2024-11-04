@@ -14,7 +14,7 @@
       <children>
          <Button fx:id="btnLed" cache="true" mnemonicParsing="false" onAction="#DibujoLed" text="Led">
             <HBox.margin>
-               <Insets right="5.0" />
+               <Insets />
             </HBox.margin></Button>
          <Button fx:id="btnCable" mnemonicParsing="false" onAction="#Cables" text="Cable">
             <HBox.margin>
@@ -29,7 +29,10 @@
                <Insets left="5.0" />
             </HBox.margin>
          </Button>
-         <TextField fx:id="ohm" onAction="#DibujoResistencia" prefHeight="25.0" prefWidth="26.0" text="Ω" />
+         <TextField fx:id="ohm" onAction="#DibujoResistencia" prefHeight="25.0" prefWidth="26.0" text="Ω">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin></TextField>
       </children>
    </HBox>
    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -42,11 +45,18 @@
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button fx:id="btnChipNOT" layoutX="643.0" layoutY="10.0" mnemonicParsing="false" onAction="#DibujoChipNOT" text="Chip NOT" />
+         <Button fx:id="btnChipNOT" layoutX="643.0" layoutY="10.0" mnemonicParsing="false" onAction="#DibujoChipNOT" text="Chip NOT">
+            <HBox.margin>
+               <Insets right="5.0" />
+            </HBox.margin></Button>
+         <Button fx:id="btnSwich8P" mnemonicParsing="false" onAction="#DibujoSwitch8Pines" text="Swich 8P">
+            <HBox.margin>
+               <Insets right="5.0" />
+            </HBox.margin></Button>
       </children>
    </HBox>
    <Button mnemonicParsing="false" onAction="#reset" text="Reset" />
-   <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#reset" text="Borrar" />
-   <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED" />
+   <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#reset" text="Borrar" visible="false" />
+   <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED" visible="false" />
 
 </VBox>
