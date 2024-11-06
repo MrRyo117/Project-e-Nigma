@@ -75,7 +75,7 @@ public class SampleController implements Initializable {
     public boolean Color_Negro=false;
 
     //Recurso a utilizar (Futuro)
-    private boolean[][] Cargas = new boolean[32][16];
+    private boolean[][] status_hoyitos = new boolean[32][16];
 
     //Funcion para identificar el lugar del hoyito dentreo de la matriz
     // Ademas deja registrado los ultimos 2 clickeados
@@ -220,9 +220,9 @@ public class SampleController implements Initializable {
         double puntoX2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX();
         double puntoY2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY();
 
-        if (!Cargas[registro[3][0]][registro[3][1]] && !Cargas[registro[2][0]][registro[2][1]]){
-            Cargas[registro[3][0]][registro[3][1]] = true;
-            Cargas[registro[2][0]][registro[2][1]] = true;
+        if (!status_hoyitos[registro[3][0]][registro[3][1]] && !status_hoyitos[registro[2][0]][registro[2][1]]){
+            status_hoyitos[registro[3][0]][registro[3][1]] = true;
+            status_hoyitos[registro[2][0]][registro[2][1]] = true;
             if (puntoX1 > puntoX2){
                 double aux = puntoX1;
                 puntoX1 = puntoX2;
@@ -297,9 +297,9 @@ public class SampleController implements Initializable {
     @FXML
     public void DibujoResistencia(){
         try {
-            if (!Cargas[registro[3][0]][registro[3][1]] && !Cargas[registro[2][0]][registro[2][1]]) {
-                Cargas[registro[3][0]][registro[3][1]] = true;
-                Cargas[registro[2][0]][registro[2][1]] = true;
+            if (!status_hoyitos[registro[3][0]][registro[3][1]] && !status_hoyitos[registro[2][0]][registro[2][1]]) {
+                status_hoyitos[registro[3][0]][registro[3][1]] = true;
+                status_hoyitos[registro[2][0]][registro[2][1]] = true;
                 String ohmTxt = ohm.getText();
                 int ohmInt = Integer.parseInt(ohmTxt);
                 Resistencia resistencia = new Resistencia(ohmInt);
@@ -410,12 +410,12 @@ public class SampleController implements Initializable {
     }
 
     public int[] DibujoChip(){
-        int diff = 0 ;
+        double diffX = 0 ;
         int coordY = 0;
         int coordX = 0;
 
         if ((registro[0][1] == 7 || registro[0][1] == 8) && (registro[1][1] == 7 || registro[1][1] == 8)  && (registro[2][1] == 7 || registro[2][1] == 8) && (registro[3][1] == 7 || registro[3][1] == 8)){
-            double diffX = -1;
+            diffX = -1;
             double diffY = -1;
 
             Chip chip= new Chip();
@@ -482,7 +482,7 @@ public class SampleController implements Initializable {
             cuerpoChip.setStroke(Color.BLACK);
             Agrupar_Dibujo_Chip.getChildren().add(cuerpoChip);
 
-
+            System.out.println(diffX);
             if((((int) diffX/30)+1) % 3 == 1){
                 for(int i = 0; (i*30) <= diffX; i++){
                     Line patitaSup = new Line(
@@ -536,32 +536,35 @@ public class SampleController implements Initializable {
             System.out.println("No ingresado dentro de los parametros");
         }
 
-    return new int[] {diff, coordX, coordY} ;
+    return new int[] {(int) diffX, coordX, coordY} ;
     }
 
     @FXML
     public void DibujoChipAND(){
-
         int[] req = DibujoChip();
+        System.out.println(req[0]);
+        if((( req[0]/30)+1) % 3 == 1) {
+            for (int i = 0; (i * 30) <= req[0]; i = i + 3) {
+                System.out.println();
+                int diffArriba = ubicador(req[1], req[2] + i + 1);
+                int diffArribaAux = ubicador(req[1], req[2] + i + 2);
 
-        for(int i = 0; (i*30) <= req[0]; i=i+3) {
+                int diffAbajo = ubicador(req[1]+1, req[2] + i);
+                int diffAbajoAux = ubicador(req[1]+1, req[2] + i + 1);
 
-            int diffArriba = ubicador(req[1], req[2]+i+1);
-            int diffArribaAux = ubicador(req[1], req[2]+i+2);
+                if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE) && (((Circle) AnchorPane.getChildren().get(diffArribaAux)).getStroke() == Color.BLUE)) {
+                    CargarPistas(req[2] + i + 2, -1, 1);
 
-            int diffAbajo = ubicador(req[1], req[2]+i);
-            int diffAbajoAux = ubicador(req[1], req[2]+i);
+                } else if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffArribaAux)).getStroke() == Color.RED)) {
+                    CargarPistas(req[2] + i + 2, 1, 1);
+                }
 
-            System.out.println(Color.BLUE);
-            System.out.println(( (Circle) AnchorPane.getChildren().get(diffArriba) ).getStroke());
-            System.out.println(( (Circle) AnchorPane.getChildren().get(diffArribaAux) ).getStroke());
-            //( (Circle) AnchorPane.getChildren().get(diffArriba) ).setStroke(Color.RED);
-            //( (Circle) AnchorPane.getChildren().get(diffArribaAux) ).setStroke(Color.RED);
-            if ( ( ( (Circle) AnchorPane.getChildren().get(diffArriba) ).getStroke() == Color.BLUE) &&( ( (Circle) AnchorPane.getChildren().get(diffArribaAux) ).getStroke() == Color.BLUE )){
-                CargarPistas(req[2]+i+2, -1, 1);
-                System.out.println("Chip activo");
-            } else if ( ( ( (Circle) AnchorPane.getChildren().get(diffArriba) ).getStroke() == Color.RED) &&( ( (Circle) AnchorPane.getChildren().get(diffArribaAux) ).getStroke() == Color.RED ) ){
-                CargarPistas(req[2]+i+2, 1, 1);
+                if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) && (((Circle) AnchorPane.getChildren().get(diffAbajoAux)).getStroke() == Color.BLUE)) {
+                    CargarPistas(req[2] + i + 1, -1, 2);
+                    System.out.println("Chip activo");
+                } else if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffAbajoAux)).getStroke() == Color.RED)) {
+                    CargarPistas(req[2] + i + 1, 1, 2);
+                }
             }
         }
     }
@@ -1040,9 +1043,9 @@ public class SampleController implements Initializable {
         //Cableado dentro del protoboard
 
             if (registro[2][1] != 15 && registro[3][1] != 15) {
-                if (!Cargas[registro[3][0]][registro[3][1]] && !Cargas[registro[2][0]][registro[2][1]]) {
-                    Cargas[registro[3][0]][registro[3][1]] = true;
-                    Cargas[registro[2][0]][registro[2][1]] = true;
+                if (!status_hoyitos[registro[3][0]][registro[3][1]] && !status_hoyitos[registro[2][0]][registro[2][1]]) {
+                    status_hoyitos[registro[3][0]][registro[3][1]] = true;
+                    status_hoyitos[registro[2][0]][registro[2][1]] = true;
                     cable1 = new Line(
 
                             ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
@@ -1057,7 +1060,7 @@ public class SampleController implements Initializable {
             } else {  //Cableado del protoboard a la bateria
 
 
-                if (registro[2][0] == 34 && !Cargas[registro[3][0]][registro[3][1]]) { //Conexion Bateria (Parte Positiva)
+                if (registro[2][0] == 34 && !status_hoyitos[registro[3][0]][registro[3][1]]) { //Conexion Bateria (Parte Positiva)
 
                     cable1 = new Line(
 
@@ -1071,10 +1074,10 @@ public class SampleController implements Initializable {
                     fila = registro[3][1];
 
                     carga = 1;
-                    Cargas[registro[3][0]][registro[3][1]] = true;
+                    status_hoyitos[registro[3][0]][registro[3][1]] = true;
                     alright = true;
 
-                } else if (registro[3][0] == 34 && !Cargas[registro[2][0]][registro[2][1]]) { // Conexion Bateria (Parte Negativa)
+                } else if (registro[3][0] == 34 && !status_hoyitos[registro[2][0]][registro[2][1]]) { // Conexion Bateria (Parte Negativa)
 
                     cable1 = new Line(
 
@@ -1088,10 +1091,10 @@ public class SampleController implements Initializable {
                     fila = registro[2][1];
 
                     carga = 1;
-                    Cargas[registro[2][0]][registro[2][1]] = true;
+                    status_hoyitos[registro[2][0]][registro[2][1]] = true;
                     alright = true;
 
-                } else if (registro[2][0] == 33 && !Cargas[registro[3][0]][registro[3][1]]) {
+                } else if (registro[2][0] == 33 && !status_hoyitos[registro[3][0]][registro[3][1]]) {
 
                     cable1 = new Line(
 
@@ -1105,10 +1108,10 @@ public class SampleController implements Initializable {
                     fila = registro[3][1];
 
                     carga = -1;
-                    Cargas[registro[3][0]][registro[3][1]] = true;
+                    status_hoyitos[registro[3][0]][registro[3][1]] = true;
                     alright = true;
                 } else {
-                    if (!Cargas[registro[3][0]][registro[3][1]]){
+                    if (!status_hoyitos[registro[3][0]][registro[3][1]]){
                         cable1 = new Line(
 
                                 1200,
