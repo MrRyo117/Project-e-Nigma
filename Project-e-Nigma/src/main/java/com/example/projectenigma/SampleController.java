@@ -593,7 +593,7 @@ public class SampleController implements Initializable {
 
     }
 
-    public int[] DibujoChip(){
+    public int[] DibujoChip(int tipoChip){
         double diffX = 0 ;
         int coordY = 0;
         int coordX = 0;
@@ -657,20 +657,20 @@ public class SampleController implements Initializable {
             }
             //Agrupar_Dibujo_Chip se encarga de encapsular todas las figuras que conforman el chip en un solo objeto.
             Group Agrupar_Dibujo_Chip = new Group();
+            if(((((int) diffX/30)+1) % 3 == 1 && tipoChip == 1) || ((((int) diffX) / 30 ) + 1 ) % 2 == 1 && tipoChip == 2 && diffX+1 != 0){
+                Rectangle cuerpoChip = new Rectangle(
+                        ArCircles[coordY-1][coordX-1].getCenterX(),
+                        ArCircles[coordY-1][coordX-1].getCenterY()+5,
+                        diffX,
+                        diffY-10
+                );
 
-            Rectangle cuerpoChip = new Rectangle(
-                    ArCircles[coordY-1][coordX-1].getCenterX(),
-                    ArCircles[coordY-1][coordX-1].getCenterY()+5,
-                    diffX,
-                    diffY-10
-            );
+                cuerpoChip.setFill(Color.BLACK);
+                cuerpoChip.setStroke(Color.BLACK);
+                Agrupar_Dibujo_Chip.getChildren().add(cuerpoChip);
 
-            cuerpoChip.setFill(Color.BLACK);
-            cuerpoChip.setStroke(Color.BLACK);
-            Agrupar_Dibujo_Chip.getChildren().add(cuerpoChip);
 
-            System.out.println(diffX);
-            if((((int) diffX/30)+1) % 3 == 1){
+
                 for(int i = 0; (i*30) <= diffX; i++){
                     Line patitaSup = new Line(
                             ArCircles[coordY-1][coordX-1].getCenterX()+30*i,
@@ -727,7 +727,7 @@ public class SampleController implements Initializable {
 
     @FXML
     public void DibujoChipAND(){
-        int[] req = DibujoChip();
+        int[] req = DibujoChip(1);
         if((( req[0]/30)+1) % 3 == 1) {
             for (int i = 0; (i * 30) < req[0]; i = i + 3) {
 
@@ -756,7 +756,7 @@ public class SampleController implements Initializable {
     @FXML
     public void DibujoChipOR(){
 
-        int[] req = DibujoChip();
+        int[] req = DibujoChip(1);
         if((( req[0]/30)+1) % 3 == 1) {
             for (int i = 0; (i * 30) < req[0]; i = i + 3) {
 
@@ -793,8 +793,8 @@ public class SampleController implements Initializable {
     }
     @FXML
     public void DibujoChipNOT(){
-        int[] req = DibujoChip();
-        if(req[0] % 60 == 0) {
+        int[] req = DibujoChip(2);
+        if(((( req[0]) / 30 ) + 1 ) % 2 == 1) {
             for (int i = 0; (i * 30) < req[0]; i = i + 2) {
 
                 int diffArriba = ubicador(req[1], req[2] + i + 1);
