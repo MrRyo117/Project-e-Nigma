@@ -59,6 +59,7 @@ public class SampleController implements Initializable {
     private Protoboard Protoboard2 = new Protoboard();
     private Circle[][] ArCircles = new Circle[34][16];
     private ArrayList<Chip> chips = new ArrayList<>();
+    private ArrayList<Cable> cables = new ArrayList<>();
 
 
     private int[][] registro = new int[4][2];
@@ -1222,6 +1223,19 @@ public class SampleController implements Initializable {
                 Historial.add(1);
             }
 
+            //Registro para recargar los hoyitos
+            int [] entrada1 = new int[2];
+            entrada1[0] = registro[3][0];
+            entrada1[1] = registro[3][1];
+
+            int [] entrada2 = new int[2];
+            entrada2[0] = registro[2][0];
+            entrada2[1] = registro[2][1];
+
+            Cable cable = new Cable(cable1, entrada1, entrada2, carga);
+
+            cables.add(cable);
+
             Historial.add(1);
 
             // cada vez que se haga click en un cable1, se borra independiente del orden colocado
@@ -1235,7 +1249,8 @@ public class SampleController implements Initializable {
         }else {
             System.out.println(" Primero seleccione 4 elementos");
         }
-
+        //Funcion en proceso
+        //Recargar();
     }
     public void cantidad_objetos(){
         System.out.println("Cantidad de elementos en pantalla: "+AnchorPane.getChildren().size());
@@ -1298,6 +1313,29 @@ public class SampleController implements Initializable {
             pararTodo();
         }
 
+
+    }
+
+    public void Recargar(){
+        int count = 0;
+        for (int i = 0; i < cables.size(); i++){
+
+            if(cables.get(i).getHoyitosConectados()[0][1] == 15 || cables.get(i).getHoyitosConectados()[1][1] == 15){
+
+                count++;
+                System.out.println("Hay " + count + " cable a bateria");
+
+                if (cables.get(i).getHoyitosConectados()[0][1] == 1){
+                    System.out.println("Hay un cable de bateria al primer bus -> a");
+                    CargasBuses(0, cables.get(i).getCarga());
+                }
+                else if (cables.get(i).getHoyitosConectados()[1][1] == 1){
+                    System.out.println("Hay un cable de bateria al primer bus -> b");
+                    CargasBuses(0, cables.get(i).getCarga());
+                }
+
+            }
+        }
 
     }
 
