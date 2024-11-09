@@ -3,17 +3,17 @@ package com.example.projectenigma;
 import java.util.ArrayList;
 
 public class Chip implements Insertables{
+    int Carga;
 
     public Chip() {
-    }
-
-    @Override
-    public void getCarga(int carga) {
 
     }
 
-    @Override
+    public int getCarga() {
+        return Carga;
+    }
 
+    @Override
     public ArrayList<Integer> CoordColumna() {
         return null;
     }
