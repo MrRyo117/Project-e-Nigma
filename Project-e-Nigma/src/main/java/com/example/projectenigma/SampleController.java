@@ -447,8 +447,7 @@ public class SampleController implements Initializable {
 
         //Arreglo con el cual uno puede saber cual de los 8 switches esta siendo presionado
         boolean[] Pasa_corriente = new boolean[8];
-        boolean[] Comprobacion_de_corriente = new boolean[8];
-        int[] test = new int[8];
+        int[] Memoria_estado_original = new int[8];   //Guarda el estado original con el que llega la corriente (1 para cuando  la carga venia de abajo y 2 para cuando  la carga venia de arriba)
 
         //Este condicional es para saber si los puntos seleccionados estan al rededor del surco del protoboard
         if ((registro[0][1] == 7 || registro[0][1] == 8)
@@ -561,7 +560,6 @@ public class SampleController implements Initializable {
                     );
 
 
-
                     interruptor.setStrokeWidth(1);
 
                     patitaSup.setStrokeWidth(2);
@@ -588,114 +586,56 @@ public class SampleController implements Initializable {
 
                             Node presionado = (Node) event.getSource();
                             int indice = Agrupar_Dibujo_interruptor.getChildren().indexOf(presionado);
-                            /*System.out.println("el Switch n° "+ (Agrupar_Dibujo_interruptor.getChildren().size() - indice) +" esta siendo presionado" );
-                            System.out.println("diffX : "+ finalDiffX +"\nfinalCoordY : "+ finalCoordY+"\nfinalCoordX : "+ finalCoordX);*/
-                            /*if (((diffX/30)+1)%3 == 1)*/
-
-                            /*for (int j = 0; (j * 30) < finalDiffX; j++) {
-
-                                System.out.println("el Switch n° "+ (Agrupar_Dibujo_interruptor.getChildren().size() - indice) +" esta siendo presionado" );
-                                System.out.println("diffX : "+ finalDiffX +"\nfinalCoordY : "+ finalCoordY+"\nfinalCoordX : "+ finalCoordX);
-
-
-                                int diffArriba = ubicador(finalCoordX, finalCoordY+j+1);
-                                System.out.println("diffArriba : "+diffArriba);
-
-                                if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED)){
-                                    CargarPistas(finalCoordY-1, 1, 2);
-
-                                } *//*else if () {
-
-                            }*//*
-
-                                if (!Pasa_corriente[indice]){
-                                    interruptor.setFill(Color.GRAY);
-                                }else{
-                                    interruptor.setFill(Color.WHITE);
-                                }
-                            }*/
-
-
-                            System.out.println("el Switch n° "+ indice +" esta siendo presionado" );
-                            System.out.println("diffX : "+ finalDiffX +"\nfinalCoordY : "+ finalCoordY+"\nfinalCoordX : "+ finalCoordX+"\nindice : "+indice);
 
 
                             int diffArriba = ubicador(finalCoordX, (finalCoordY+indice));
-                            System.out.println("diffArriba : "+diffArriba);
 
 
                             int diffAbajo = ubicador(finalCoordX + 1, (finalCoordY+indice));
 
 
-
+                            //Condicional que revisa: que pasa si hay corriente arriba y abajo opuestas. La respuesta es que nada porque se cierra el circuito nomas
                             if (((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE))
                                     || ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) && (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED)) ){
-                                System.out.println("no pasa na");
+                            }else {
+
+                                //Condicional que revisa: (si no hay carga arriba y no ha sido precionado) o si ya sabemos cual era el estado original
+                                if(((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLACK) && Memoria_estado_original[indice] == 0) || Memoria_estado_original[indice] == 1){
+
+                                    Memoria_estado_original[indice] = 1;
+
+                                    //Pasa la carga de abajo hacia arriba
+                                    if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) ){
+                                        CargarPistas(finalCoordY-1+indice, 1, 1);
+                                        if (Pasa_corriente[indice]){
+                                            CargarPistas(finalCoordY-1+indice, 0, 1);
+                                        }
+                                    } else if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) ){
+                                        CargarPistas(finalCoordY-1+indice, -1, 1);
+                                        if (Pasa_corriente[indice]){
+                                            CargarPistas(finalCoordY-1+indice, 0, 1);
+                                        }
+                                    }
+
+                                } else if (((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLACK) && Memoria_estado_original[indice] == 0)|| Memoria_estado_original[indice] == 2 ) {
+                                    Memoria_estado_original[indice] = 2;
+
+                                    //Pasa la carga de arriba hacia abajo
+                                    if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) ){
+                                        CargarPistas(finalCoordY-1+indice, 1, 2);
+                                        if (Pasa_corriente[indice]){
+                                            CargarPistas(finalCoordY-1+indice, 0, 2);
+                                        }
+
+                                    } else if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE) ){
+                                        CargarPistas(finalCoordY-1+indice, -1, 2);
+                                        if (Pasa_corriente[indice]){
+                                            CargarPistas(finalCoordY-1+indice, 0, 2);
+                                        }
+                                    }
+                                }
+
                             }
-
-
-
-                            //Pasa la carga de arriba hacia abajo
-                            if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) ){
-                                CargarPistas(finalCoordY-1+indice, 1, 2);
-                                test[indice] = 1;
-                                if (Pasa_corriente[indice]){
-                                    CargarPistas(finalCoordY-1+indice, 0, 2);
-                                }
-
-                            } else if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE) ){
-                                CargarPistas(finalCoordY-1+indice, -1, 2);
-                                test[indice] = 1;
-                                if (Pasa_corriente[indice]){
-                                    CargarPistas(finalCoordY-1+indice, 0, 2);
-                                }
-                            }
-
-                            if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) && test[indice] == 1){
-                                CargarPistas(finalCoordY-1+indice, 1, 2);
-                                if (Pasa_corriente[indice]){
-                                    CargarPistas(finalCoordY-1+indice, 0, 2);
-                                }
-
-                            } else if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE) && test[indice] == 1){
-                                CargarPistas(finalCoordY-1+indice, -1, 2);
-                                if (Pasa_corriente[indice]){
-                                    CargarPistas(finalCoordY-1+indice, 0, 2);
-                                }
-                            }
-
-                            //Pasa la carga de abajo hacia arriba
-                            if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) ){
-                                CargarPistas(finalCoordY-1+indice, 1, 1);
-                                Comprobacion_de_corriente[indice] = true;
-                                test[indice] = 2;
-                                if (Pasa_corriente[indice]){
-                                    CargarPistas(finalCoordY-1+indice, 0, 1);
-                                }
-                            } else if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) ){
-                                CargarPistas(finalCoordY-1+indice, -1, 1);
-                                Comprobacion_de_corriente[indice] = true;
-                                test[indice] = 2;
-                                if (Pasa_corriente[indice]){
-                                    CargarPistas(finalCoordY-1+indice, 0, 1);
-                                }
-                            }
-
-                            if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) && test[indice] == 2){
-                                CargarPistas(finalCoordY-1+indice, 1, 1);
-                                Comprobacion_de_corriente[indice] = true;
-                                if (Pasa_corriente[indice]){
-                                    CargarPistas(finalCoordY-1+indice, 0, 1);
-                                }
-                            } else if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) && test[indice] == 2){
-                                CargarPistas(finalCoordY-1+indice, -1, 1);
-                                Comprobacion_de_corriente[indice] = true;
-                                if (Pasa_corriente[indice]){
-                                    CargarPistas(finalCoordY-1+indice, 0, 1);
-                                }
-                            }
-
-
 
                             if (!Pasa_corriente[indice]){
                                 interruptor.setFill(Color.GRAY);
@@ -703,8 +643,8 @@ public class SampleController implements Initializable {
                                 interruptor.setFill(Color.WHITE);
                             }
 
-
                             Pasa_corriente[indice]=!Pasa_corriente[indice];
+
                         }
                     });
 
