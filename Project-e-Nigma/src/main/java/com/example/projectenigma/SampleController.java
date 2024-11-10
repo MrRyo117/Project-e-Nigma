@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 
@@ -309,8 +311,15 @@ public class SampleController implements Initializable {
                 }
             });
         }
-
     }
+
+    // Coloca un Tooltip que me dice que es el objeto indicado
+    public Tooltip Texto_Aparente(String texto){
+        Tooltip mensaje = new Tooltip(texto);
+        mensaje.setStyle("-fx-font-size: 12");
+        return mensaje;
+    }
+
     @FXML
     public void DibujoResistencia(){
         try {
@@ -394,6 +403,8 @@ public class SampleController implements Initializable {
                     Agrupar_Dibujo_Resistencia.getChildren().add(cruz2);
                     Agrupar_Dibujo_Resistencia.getChildren().add(resta);
 
+                    Tooltip.install(resistenciaD, Texto_Aparente("Resistencia : "+ohmTxt));
+
                     AnchorPane.getChildren().add(Agrupar_Dibujo_Resistencia);
                     Historial.add(4);
 
@@ -426,11 +437,18 @@ public class SampleController implements Initializable {
 
     }
 
+
+
     @FXML
     public void DibujoSwitch8Pines(){
-        int diff = 0 ;
+        double diffX = 0 ;
         int coordY = 0;
         int coordX = 0;
+
+        //Arreglo con el cual uno puede saber cual de los 8 switches esta siendo presionado
+        boolean[] Pasa_corriente = new boolean[8];
+        boolean[] Comprobacion_de_corriente = new boolean[8];
+        int[] test = new int[8];
 
         //Este condicional es para saber si los puntos seleccionados estan al rededor del surco del protoboard
         if ((registro[0][1] == 7 || registro[0][1] == 8)
@@ -438,7 +456,7 @@ public class SampleController implements Initializable {
                 && (registro[2][1] == 7 || registro[2][1] == 8)
                 && (registro[3][1] == 7 || registro[3][1] == 8)){
 
-            double diffX = -1;
+            diffX = -1;
             double diffY = -1;
 
             coordY = registro[0][0];
@@ -499,6 +517,7 @@ public class SampleController implements Initializable {
 
             //Agrupar_Dibujo_Swich8P se encarga de encapsular todas las figuras que conforman el swich en un solo objeto.
             Group Agrupar_Dibujo_Swich8P = new Group();
+            Group Agrupar_Dibujo_interruptor = new Group();
 
             Rectangle cuerpoSwich8P = new Rectangle(
                     ArCircles[coordY-1][coordX-1].getCenterX()-10,
@@ -556,19 +575,141 @@ public class SampleController implements Initializable {
 
                     Agrupar_Dibujo_Swich8P.getChildren().add(patitaInf);
                     Agrupar_Dibujo_Swich8P.getChildren().add(patitaSup);
-                    Agrupar_Dibujo_Swich8P.getChildren().add(interruptor);
+                    Agrupar_Dibujo_interruptor.getChildren().add(interruptor);
 
                     Historial.add(6);
 
+                    int finalCoordY = coordY;
+                    int finalCoordX = coordX;
+                    double finalDiffX = diffX;
+
                     interruptor.setOnMouseClicked((event) -> {
                         if (event.getButton() == MouseButton.PRIMARY){
+
                             Node presionado = (Node) event.getSource();
-                            int indice = Agrupar_Dibujo_Swich8P.getChildren().indexOf(presionado);
-                            System.out.println("el Switch n° "+ (Agrupar_Dibujo_Swich8P.getChildren().size() - indice) +" esta siendo presionado" );
+                            int indice = Agrupar_Dibujo_interruptor.getChildren().indexOf(presionado);
+                            /*System.out.println("el Switch n° "+ (Agrupar_Dibujo_interruptor.getChildren().size() - indice) +" esta siendo presionado" );
+                            System.out.println("diffX : "+ finalDiffX +"\nfinalCoordY : "+ finalCoordY+"\nfinalCoordX : "+ finalCoordX);*/
+                            /*if (((diffX/30)+1)%3 == 1)*/
+
+                            /*for (int j = 0; (j * 30) < finalDiffX; j++) {
+
+                                System.out.println("el Switch n° "+ (Agrupar_Dibujo_interruptor.getChildren().size() - indice) +" esta siendo presionado" );
+                                System.out.println("diffX : "+ finalDiffX +"\nfinalCoordY : "+ finalCoordY+"\nfinalCoordX : "+ finalCoordX);
+
+
+                                int diffArriba = ubicador(finalCoordX, finalCoordY+j+1);
+                                System.out.println("diffArriba : "+diffArriba);
+
+                                if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED)){
+                                    CargarPistas(finalCoordY-1, 1, 2);
+
+                                } *//*else if () {
+
+                            }*//*
+
+                                if (!Pasa_corriente[indice]){
+                                    interruptor.setFill(Color.GRAY);
+                                }else{
+                                    interruptor.setFill(Color.WHITE);
+                                }
+                            }*/
+
+
+                            System.out.println("el Switch n° "+ indice +" esta siendo presionado" );
+                            System.out.println("diffX : "+ finalDiffX +"\nfinalCoordY : "+ finalCoordY+"\nfinalCoordX : "+ finalCoordX+"\nindice : "+indice);
+
+
+                            int diffArriba = ubicador(finalCoordX, (finalCoordY+indice));
+                            System.out.println("diffArriba : "+diffArriba);
+
+
+                            int diffAbajo = ubicador(finalCoordX + 1, (finalCoordY+indice));
+
+
+
+                            if (((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE))
+                                    || ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) && (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED)) ){
+                                System.out.println("no pasa na");
+                            }
+
+
+
+                            //Pasa la carga de arriba hacia abajo
+                            if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) ){
+                                CargarPistas(finalCoordY-1+indice, 1, 2);
+                                test[indice] = 1;
+                                if (Pasa_corriente[indice]){
+                                    CargarPistas(finalCoordY-1+indice, 0, 2);
+                                }
+
+                            } else if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE) ){
+                                CargarPistas(finalCoordY-1+indice, -1, 2);
+                                test[indice] = 1;
+                                if (Pasa_corriente[indice]){
+                                    CargarPistas(finalCoordY-1+indice, 0, 2);
+                                }
+                            }
+
+                            if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) && test[indice] == 1){
+                                CargarPistas(finalCoordY-1+indice, 1, 2);
+                                if (Pasa_corriente[indice]){
+                                    CargarPistas(finalCoordY-1+indice, 0, 2);
+                                }
+
+                            } else if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE) && test[indice] == 1){
+                                CargarPistas(finalCoordY-1+indice, -1, 2);
+                                if (Pasa_corriente[indice]){
+                                    CargarPistas(finalCoordY-1+indice, 0, 2);
+                                }
+                            }
+
+                            //Pasa la carga de abajo hacia arriba
+                            if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) ){
+                                CargarPistas(finalCoordY-1+indice, 1, 1);
+                                Comprobacion_de_corriente[indice] = true;
+                                test[indice] = 2;
+                                if (Pasa_corriente[indice]){
+                                    CargarPistas(finalCoordY-1+indice, 0, 1);
+                                }
+                            } else if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) ){
+                                CargarPistas(finalCoordY-1+indice, -1, 1);
+                                Comprobacion_de_corriente[indice] = true;
+                                test[indice] = 2;
+                                if (Pasa_corriente[indice]){
+                                    CargarPistas(finalCoordY-1+indice, 0, 1);
+                                }
+                            }
+
+                            if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) && test[indice] == 2){
+                                CargarPistas(finalCoordY-1+indice, 1, 1);
+                                Comprobacion_de_corriente[indice] = true;
+                                if (Pasa_corriente[indice]){
+                                    CargarPistas(finalCoordY-1+indice, 0, 1);
+                                }
+                            } else if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) && test[indice] == 2){
+                                CargarPistas(finalCoordY-1+indice, -1, 1);
+                                Comprobacion_de_corriente[indice] = true;
+                                if (Pasa_corriente[indice]){
+                                    CargarPistas(finalCoordY-1+indice, 0, 1);
+                                }
+                            }
+
+
+
+                            if (!Pasa_corriente[indice]){
+                                interruptor.setFill(Color.GRAY);
+                            }else{
+                                interruptor.setFill(Color.WHITE);
+                            }
+
+
+                            Pasa_corriente[indice]=!Pasa_corriente[indice];
                         }
                     });
 
                 }
+                Agrupar_Dibujo_Swich8P.getChildren().addAll(Agrupar_Dibujo_interruptor);
                 // cada vez que se haga click en un Agrupar_Dibujo_Chip, se borra independiente del orden colocado
                 AnchorPane.getChildren().add(Agrupar_Dibujo_Swich8P);
                 Agrupar_Dibujo_Swich8P.setOnMouseClicked((event) -> {
@@ -578,9 +719,6 @@ public class SampleController implements Initializable {
                         Borrar_pieza(indice);
                     }
                 });
-
-
-
 
 
 
@@ -594,7 +732,7 @@ public class SampleController implements Initializable {
 
     }
 
-    public int[] DibujoChip(int tipoChip){
+    public int[] DibujoChip(int tipoChip, String texto){
         double diffX = 0 ;
         int coordY = 0;
         int coordX = 0;
@@ -668,6 +806,7 @@ public class SampleController implements Initializable {
 
                 cuerpoChip.setFill(Color.BLACK);
                 cuerpoChip.setStroke(Color.BLACK);
+                Tooltip.install(cuerpoChip,Texto_Aparente(texto));
                 Agrupar_Dibujo_Chip.getChildren().add(cuerpoChip);
 
 
@@ -722,13 +861,13 @@ public class SampleController implements Initializable {
             System.out.println("No ingresado dentro de los parametros");
         }
 
-    return new int[] {(int) diffX, coordX, coordY} ;
+        return new int[] {(int) diffX, coordX, coordY} ;
     }
 
 
     @FXML
     public void DibujoChipAND(){
-        int[] req = DibujoChip(1);
+        int[] req = DibujoChip(1, "CHIP AND");
         if((( req[0]/30)+1) % 3 == 1) {
             for (int i = 0; (i * 30) < req[0]; i = i + 3) {
 
@@ -757,7 +896,7 @@ public class SampleController implements Initializable {
     @FXML
     public void DibujoChipOR(){
 
-        int[] req = DibujoChip(1);
+        int[] req = DibujoChip(1, "CHIP OR");
         if((( req[0]/30)+1) % 3 == 1) {
             for (int i = 0; (i * 30) < req[0]; i = i + 3) {
 
@@ -794,7 +933,7 @@ public class SampleController implements Initializable {
     }
     @FXML
     public void DibujoChipNOT(){
-        int[] req = DibujoChip(2);
+        int[] req = DibujoChip(2, "CHIP NOT");
         if(((( req[0]) / 30 ) + 1 ) % 2 == 1) {
             for (int i = 0; (i * 30) < req[0]; i = i + 2) {
 
@@ -1501,6 +1640,12 @@ public class SampleController implements Initializable {
         for (int i = AnchorPane.getChildren().size(); i > lastMod; i--) {
             AnchorPane.getChildren().removeLast();
         }
+        for (int i = 0; i < 32; i++){
+            for (int j = 0; j < 16; j++){
+                status_hoyitos[i][j] = false;
+            }
+        }
+
         btnLed.setDisable(false);
 
         btnCable.setDisable(false);
@@ -1513,6 +1658,7 @@ public class SampleController implements Initializable {
         Boton_encendido.setDisable(false);
 
         colocarHoyitos();
+
     }
 
     public void colocarHoyitos(){
