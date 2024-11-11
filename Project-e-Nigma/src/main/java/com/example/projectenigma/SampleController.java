@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -268,13 +269,14 @@ public class SampleController implements Initializable {
                 semicirculo.setType(ArcType.ROUND);
                 int diff1 = ubicador(registro[2][1], registro[2][0]);
                 int diff2 = ubicador(registro[3][1], registro[3][0]);
-                Color Color1 = (Color) ((Circle) AnchorPane.getChildren().get(diff1) ).getStroke();
-                Color Color2 = (Color) ((Circle) AnchorPane.getChildren().get(diff2) ).getStroke();
+                Color Polaridad_positiva = (Color) ((Circle) AnchorPane.getChildren().get(diff1) ).getStroke();
+                Color Polaridad_negativa = (Color) ((Circle) AnchorPane.getChildren().get(diff2) ).getStroke();
 
-                if ( Color1 == Color.BLUE  && Color2 == Color.RED || Color1 == Color.RED  && Color2 == Color.BLUE){
+                if ( Polaridad_positiva == Color.RED  && Polaridad_negativa == Color.BLUE){
                     semicirculo.setFill(Color.RED);
-                }else {
+                }else if (Polaridad_negativa == Color.RED  && Polaridad_positiva == Color.BLUE){
                     semicirculo.setFill(Color.WHITE);
+                    System.out.println("Polaridad invertida");
                 }
 
                 semicirculo.setStroke(Color.BLACK);
@@ -403,7 +405,7 @@ public class SampleController implements Initializable {
                     Agrupar_Dibujo_Resistencia.getChildren().add(cruz2);
                     Agrupar_Dibujo_Resistencia.getChildren().add(resta);
 
-                    Tooltip.install(resistenciaD, Texto_Aparente("Resistencia : "+ohmTxt));
+                    Tooltip.install(resistenciaD, Texto_Aparente("Resistencia : "+ohmTxt+"Ω"));
 
                     AnchorPane.getChildren().add(Agrupar_Dibujo_Resistencia);
                     Historial.add(4);
@@ -437,7 +439,27 @@ public class SampleController implements Initializable {
 
     }
 
+    public void Eliminar_ocupa(Circle circle){
+        int Columna = (((int) circle.getCenterX()) - 30) / 30;
+        int Fila;
 
+        if ((int) circle.getCenterY() <= 90) {
+            Fila = ((int) circle.getCenterY() - 60) / 30;
+        } else if ((int) circle.getCenterY() > 90 && (int) circle.getCenterY() <= 260) {
+            Fila = ((int) circle.getCenterY() - 80) / 30;
+        } else if ((int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480) {
+            Fila = ((int) circle.getCenterY() - 100) / 30;
+        } else {
+            Fila = ((int) circle.getCenterY() - 120) / 30;
+        }
+
+        Fila += 1;
+
+        System.out.println("Columna : "+Columna);
+        System.out.println("Fila : "+Fila);
+
+        status_hoyitos[Fila][Columna] = false;
+    }
 
     @FXML
     public void DibujoSwitch8Pines(){
@@ -1536,9 +1558,9 @@ public class SampleController implements Initializable {
         Color color = null;
 
         if (carga == -1){
-            color = Color.BLUE;
+            color = Color.BLUE;     // carga negativa
         }else if (carga == 1){
-            color = Color.RED;
+            color = Color.RED;      // carga posivita
         } else if (carga==0) {
             color = Color.BLACK;
         } else {
@@ -1907,6 +1929,13 @@ public class SampleController implements Initializable {
                 circle.setStroke(Color.BLACK);
                 circle.setFill(Color.WHITE);
                 circle.setOnMouseClicked(event -> ClickCirculo(circle));
+
+                /*circle.setOnMouseClicked((event) -> {
+                    if (event.getButton() == MouseButton.SECONDARY){
+                        Eliminar_ocupa(circle);
+                    }
+                });*/
+
 
                 ArCircles[i][j] = circle;
 
