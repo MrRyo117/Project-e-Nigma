@@ -730,8 +730,9 @@ public class SampleController implements Initializable {
     public void DibujoChipAND(){
         int[] req = DibujoChip(1);
         int diffPrimero = ubicador(req[1], req[2]);
-        int diffUltimo = ubicador(req[1], req[2]);
-        if((( req[0]/30)+1) % 3 == 1 && (((Circle) AnchorPane.getChildren().get(diffPrimero)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffPrimero)).getStroke() == Color.RED)) {
+        int reqAux= req[2] + req[0]/30 ;
+        int diffUltimo = ubicador(req[1]+1, reqAux);
+        if((( req[0]/30)+1) % 3 == 1 && (((Circle) AnchorPane.getChildren().get(diffPrimero)).getStroke() == Color.RED) && ( (((Circle) AnchorPane.getChildren().get(diffUltimo)).getStroke() == Color.GREEN))|| (((Circle) AnchorPane.getChildren().get(diffUltimo)).getStroke() == Color.BLUE)|| (((Circle) AnchorPane.getChildren().get(diffUltimo)).getStroke() == Color.CHOCOLATE)) {
             for (int i = 0; (i * 30) < req[0]; i = i + 3) {
 
                 int diffArriba = ubicador(req[1], req[2] + i + 1);
@@ -740,11 +741,11 @@ public class SampleController implements Initializable {
                 int diffAbajo = ubicador(req[1]+1, req[2] + i);
                 int diffAbajoAux = ubicador(req[1]+1, req[2] + i + 1);
 
-                if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffArribaAux)).getStroke() == Color.RED)) {
+                if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffArribaAux)).getStroke() == Color.RED) &&(((Circle) AnchorPane.getChildren().get(diffPrimero)).getStroke() == Color.RED) ) {
                     CargarPistas(req[2] + i + 2, 1, 1);
                 }
 
-                if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffAbajoAux)).getStroke() == Color.RED)) {
+                if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffAbajoAux)).getStroke() == Color.RED)&&(((Circle) AnchorPane.getChildren().get(diffPrimero)).getStroke() == Color.RED) ) {
                     CargarPistas(req[2] + i + 1, 1, 2);
                 }
             }
@@ -754,7 +755,10 @@ public class SampleController implements Initializable {
     public void DibujoChipOR(){
 
         int[] req = DibujoChip(1);
-        if((( req[0]/30)+1) % 3 == 1) {
+        int diffPrimero = ubicador(req[1], req[2]);
+        int reqAux= req[2] + req[0]/30 ;
+        int diffUltimo = ubicador(req[1]+1, reqAux);
+        if((( req[0]/30)+1) % 3 == 1 && (((Circle) AnchorPane.getChildren().get(diffPrimero)).getStroke() == Color.RED) && ( (((Circle) AnchorPane.getChildren().get(diffUltimo)).getStroke() == Color.GREEN))|| (((Circle) AnchorPane.getChildren().get(diffUltimo)).getStroke() == Color.BLUE)|| (((Circle) AnchorPane.getChildren().get(diffUltimo)).getStroke() == Color.CHOCOLATE)) {
             for (int i = 0; (i * 30) < req[0]; i = i + 3) {
 
                 int diffArriba = ubicador(req[1], req[2] + i + 1);
@@ -763,20 +767,13 @@ public class SampleController implements Initializable {
                 int diffAbajo = ubicador(req[1]+1, req[2] + i);
                 int diffAbajoAux = ubicador(req[1]+1, req[2] + i+1);
 
-                if( ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE) && (((Circle) AnchorPane.getChildren().get(diffArribaAux)).getStroke() == Color.RED)) ||
-                        ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE) && (((Circle) AnchorPane.getChildren().get(diffArribaAux)).getStroke() == Color.RED)) ){
 
-                }
-                else if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) || (((Circle) AnchorPane.getChildren().get(diffArribaAux)).getStroke() == Color.RED)) {
+                if ((((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED) || (((Circle) AnchorPane.getChildren().get(diffArribaAux)).getStroke() == Color.RED)) {
                     CargarPistas(req[2] + i + 2, 1, 1);
                 }
 
-                if( ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) && (((Circle) AnchorPane.getChildren().get(diffAbajoAux)).getStroke() == Color.RED)) ||
-                        ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) && (((Circle) AnchorPane.getChildren().get(diffAbajoAux)).getStroke() == Color.RED)) ){
-                }
-                else if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) || (((Circle) AnchorPane.getChildren().get(diffAbajoAux)).getStroke() == Color.RED)) {
+                if ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) || (((Circle) AnchorPane.getChildren().get(diffAbajoAux)).getStroke() == Color.RED)) {
                     CargarPistas(req[2] + i + 1, 1, 2);
-                    System.out.println("HERE");
                 }
             }
         }
@@ -784,24 +781,31 @@ public class SampleController implements Initializable {
     @FXML
     public void DibujoChipNOT(){
         int[] req = DibujoChip(2);
-        if(((( req[0]) / 30 ) + 1 ) % 2 == 1) {
+        int diffPrimero = ubicador(req[1], req[2]);
+        int reqAux= req[2] + req[0]/30 ;
+        int diffUltimo = ubicador(req[1]+1, reqAux);
+
+        if(((( req[0]) / 30 ) + 1 ) % 2 == 1 && (((Circle) AnchorPane.getChildren().get(diffPrimero)).getStroke() == Color.RED) && ( (((Circle) AnchorPane.getChildren().get(diffUltimo)).getStroke() == Color.GREEN))|| (((Circle) AnchorPane.getChildren().get(diffUltimo)).getStroke() == Color.BLUE)|| (((Circle) AnchorPane.getChildren().get(diffUltimo)).getStroke() == Color.CHOCOLATE)) {
             for (int i = 0; (i * 30) < req[0]; i = i + 2) {
 
                 int diffArriba = ubicador(req[1], req[2] + i + 1);
-
                 int diffAbajo = ubicador(req[1]+1, req[2] + i);
 
-                if (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED){
-                    CargarPistas(req[2] + i + 1, 0, 1);
-                } else if (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLACK){
-                    CargarPistas(req[2] + i + 1, 1, 1);
+                if ((((Circle) AnchorPane.getChildren().get(diffPrimero)).getStroke() == Color.RED)){
+                    if (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED){
+                        CargarPistas(req[2] + i + 1, 0, 1);
+                    } else if (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.GREEN|| ((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.CHOCOLATE|| ((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLACK){
+                        //CargarPistas(req[2] + i + 1, 1, 1);
+                    }
+                    if (((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED){
+                        CargarPistas(req[2] + i, 0, 2);
+                    } else if (((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.GREEN|| ((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.CHOCOLATE|| ((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLACK){
+                        //CargarPistas(req[2] + i, 1, 2);
+                    }
                 }
 
-                if (((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED){
-                    CargarPistas(req[2] + i, 0, 2);
-                }else if (((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLACK){
-                    CargarPistas(req[2] + i + 1, 1, 2);
-                }
+
+
             }
         }
     }
