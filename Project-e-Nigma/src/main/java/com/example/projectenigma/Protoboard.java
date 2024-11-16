@@ -11,7 +11,7 @@ public class Protoboard {
 
     //Atributos
     //[Fila][Comulmna]
-    Hoyito[][] protoboard = new Hoyito[14][30];
+    Hoyito[][] protoboard = new Hoyito[14][32];
     ArrayList<Cable> cables = new ArrayList<>();
 
     //Metodos
