@@ -4,12 +4,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="666.0" prefWidth="666.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectenigma.SampleController">
+<VBox alignment="CENTER" prefHeight="980.0" prefWidth="1216.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectenigma.SampleController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <AnchorPane fx:id="AnchorPane" minWidth="-Infinity" prefHeight="578.0" prefWidth="1266.0" />
+   <ScrollPane prefHeight="794.0" prefWidth="1176.0">
+      <content>
+         <AnchorPane fx:id="AnchorPane" minWidth="-Infinity" prefHeight="641.0" prefWidth="1246.0" />
+      </content>
+   </ScrollPane>
    <HBox alignment="CENTER" prefHeight="0.0" prefWidth="1266.0">
       <children>
          <Button fx:id="btnLed" cache="true" mnemonicParsing="false" onAction="#DibujoLed" text="Led">
@@ -35,7 +39,7 @@
             </HBox.margin></TextField>
       </children>
    </HBox>
-   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+   <HBox alignment="CENTER" prefHeight="0.0" prefWidth="626.0">
       <children>
          <Button fx:id="btnChipAND" mnemonicParsing="false" onAction="#DibujoChipAND" text="Chip AND">
             <HBox.margin>
@@ -55,8 +59,20 @@
             </HBox.margin></Button>
       </children>
    </HBox>
-   <Button mnemonicParsing="false" onAction="#reset" text="Reset" />
-   <Button fx:id="btnBorrar" mnemonicParsing="false" onAction="#reset" text="Borrar" visible="false" />
-   <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED" visible="false" />
+   <HBox alignment="CENTER" prefHeight="7.0" prefWidth="626.0">
+      <children>
+         <Button mnemonicParsing="false" onAction="#Eliminar_ocupa" text="Limpiar">
+            <HBox.margin>
+               <Insets right="4.0" />
+            </HBox.margin></Button>
+         <Button fx:id="btnReset" mnemonicParsing="false" onAction="#reset" text="Reset">
+            <HBox.margin>
+               <Insets right="5.0" />
+            </HBox.margin></Button>
+         <Button mnemonicParsing="false" onAction="#dibujoProtoboard" text="Boton universal quien mantiene todos nuestros sueños y esperanzas" />
+         <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED" />
+      </children>
+   </HBox>
+
 
 </VBox>
