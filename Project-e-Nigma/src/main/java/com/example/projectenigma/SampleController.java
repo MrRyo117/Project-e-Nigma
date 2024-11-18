@@ -75,9 +75,6 @@ public class SampleController implements Initializable {
 
     public ArrayList<Integer> Historial = new ArrayList<Integer>(); //cada numero representa una pieza: 1 cable, 2 led, 3 switch, 4 resistencia, 5 chip, 6 swich8P
 
-    public boolean Color_Rojo = false;
-    public boolean Cargado_motor=false;
-
     //Recurso a utilizar (Futuro)
     private boolean[][] status_hoyitos = new boolean[36][16];
 
@@ -859,7 +856,6 @@ public class SampleController implements Initializable {
         }
     }
 
-
     @FXML
     public void DibujoChipOR() {
 
@@ -1139,7 +1135,143 @@ public class SampleController implements Initializable {
 
 
     }
+    @FXML
+    public void Display_Numero(){
+        double diffX = 0 ;
+        int coordY = 0;
+        int coordX = 0;
+        if ((registro[0][1] == 7 || registro[0][1] == 8)
+                && (registro[1][1] == 7 || registro[1][1] == 8)
+                && (registro[2][1] == 7 || registro[2][1] == 8)
+                && (registro[3][1] == 7 || registro[3][1] == 8)) {
 
+            diffX = -1;
+            double diffY = -1;
+
+            coordY = registro[0][0];
+            coordX = registro[0][1];
+
+            /* Condicional el cual me guarda en las variables coordY, coordX cual es el punto menor dentro del protoboard
+            Esto sirve para la creacion de la figura, pues permite que siempre se sepa cual es la esquina en donde se debe
+            empezar a dibujar*/
+            if (coordY > registro[1][0]) {
+                coordY = registro[1][0];
+                coordX = registro[1][1];
+            } else if (coordY > registro[2][0]) {
+                coordY = registro[2][0];
+                coordX = registro[2][1];
+            }
+
+            /*Grupo de condicionales quienes comprueban que las coordenadas X correspondan con las coordenadas Y*/
+            if (coordY == registro[0][0] && coordX != registro[0][1]) {
+
+                if (coordX > registro[0][1]) {
+                    coordX = registro[0][1];
+                }
+
+            } else if (coordY == registro[1][0] && coordX != registro[1][1]) {
+
+                if (coordX > registro[1][1]) {
+                    coordX = registro[1][1];
+                }
+
+            } else if (coordY == registro[2][0] && coordX != registro[2][1]) {
+
+                if (coordX > registro[2][1]) {
+                    coordX = registro[2][1];
+                }
+
+            } else if (coordY == registro[3][0] && coordX != registro[3][1]) {
+
+                if (coordX > registro[3][1]) {
+                    coordX = registro[3][1];
+                }
+
+            }
+
+            /*Ciclo para saber el surco de las coordenadas X e Y*/
+            for (int i = 0; i <= 3; i++) {
+
+                if (coordX == registro[i][1] && coordY != registro[i][0]) {
+
+                    diffX = ArCircles[registro[i][0]][registro[i][1]].getCenterX() - ArCircles[coordY][coordX].getCenterX();
+                }
+
+                if (coordY == registro[i][0] && coordX != registro[i][1]) {
+
+                    diffY = ArCircles[registro[i][0] - 1][registro[i][1] - 1].getCenterY() - ArCircles[coordY - 1][coordX - 1].getCenterY();
+
+                }
+            }
+
+            //Agrupar_Dibujo_Swich8P se encarga de encapsular todas las figuras que conforman el swich en un solo objeto.
+            Group Agrupar_Dibujo_Swich8P = new Group();
+            Group Agrupar_Dibujo_interruptor = new Group();
+
+            Rectangle cuerpoSwich8P = new Rectangle(
+                    ArCircles[coordY - 1][coordX - 1].getCenterX() - 50, //Altura
+                    ArCircles[coordY - 1][coordX - 1].getCenterY() + 5,   //Ancho
+                    diffX + 20,   //coordenada X
+                    diffY - 10    //coordena Y
+            );
+
+
+            cuerpoSwich8P.setStroke(Color.BLACK);
+            cuerpoSwich8P.setStrokeWidth(2);
+            cuerpoSwich8P.setFill(Color.RED);
+
+            Agrupar_Dibujo_Swich8P.getChildren().add(cuerpoSwich8P);
+
+            if ((((int) diffX / 30) + 1) % 7 == 1) {
+                for (int i = 0; (i * 30) <= diffX; i++) {
+
+
+                    Line patitaSup = new Line(
+                            ArCircles[coordY - 1][coordX - 1].getCenterX() + 30 * i,
+                            ArCircles[coordY - 1][coordX - 1].getCenterY(),
+                            ArCircles[coordY - 1][coordX - 1].getCenterX() + 30 * i,
+                            ArCircles[coordY - 1][coordX - 1].getCenterY() + 5
+
+                    );
+
+                    Line patitaInf = new Line(
+                            ArCircles[coordY - 1][coordX - 1].getCenterX() + 30 * i,
+                            ArCircles[coordY - 1][coordX - 1].getCenterY() + diffY,
+                            ArCircles[coordY - 1][coordX - 1].getCenterX() + 30 * i,
+                            ArCircles[coordY - 1][coordX - 1].getCenterY() - 5 + diffY
+
+                    );
+
+                    Rectangle interruptor = new Rectangle(
+                            (ArCircles[coordY - 1][coordX - 1].getCenterX() - 5) + 30 * i,
+                            ArCircles[coordY - 1][coordX - 1].getCenterY() + 18,
+                            10,
+                            diffY - 37
+                    );
+
+
+                    interruptor.setStrokeWidth(1);
+
+                    patitaSup.setStrokeWidth(2);
+                    patitaInf.setStrokeWidth(2);
+
+                    patitaSup.setStroke(Color.GRAY);
+                    patitaInf.setStroke(Color.GRAY);
+
+                    interruptor.setStroke(Color.BLACK);
+                    interruptor.setFill(Color.WHITE);
+
+                    Agrupar_Dibujo_Swich8P.getChildren().add(patitaInf);
+                    Agrupar_Dibujo_Swich8P.getChildren().add(patitaSup);
+                    Agrupar_Dibujo_interruptor.getChildren().add(interruptor);
+
+                    Historial.add(6);
+
+
+                }
+            }
+        }
+    }
     private void ClickCirculo(Circle circle) {
         int Columna = (((int) circle.getCenterX()) - 30) / 30;
         int Fila;
@@ -1215,7 +1347,6 @@ public class SampleController implements Initializable {
             } else if (registro[1][0] == 35) {
                 ((Rectangle) AnchorPane.getChildren().get(3)).setStroke(Color.CHOCOLATE);
                 ((Rectangle) AnchorPane.getChildren().get(3)).setStrokeWidth(3);
-
             }
 
         } else {
@@ -1257,7 +1388,6 @@ public class SampleController implements Initializable {
                 ((Rectangle) AnchorPane.getChildren().get(3)).setStroke(Color.BLACK);
                 ((Rectangle) AnchorPane.getChildren().get(3)).setStrokeWidth(3);
             }
-
 
             for (int i = 0; i < 3; i++) {
 
@@ -1373,17 +1503,15 @@ public class SampleController implements Initializable {
                     alright = true;
 
                 } else if (registro[3][0] == 35 && !status_hoyitos[registro[3][0]][registro[3][1]]) {
-                    System.out.println("Registro motor");
-                    System.out.println("AS: " + registro[3][1]);
-                    System.out.println("AS: " + registro[3][0]);
 
-                    boolean Cargapositiva = (registro[3][1] % 2 == 0);
+                    /*boolean Cargapositiva = (registro[3][1] % 2 == 0);*/
+                    int Cargapositiva= 1;
 
                     int coordX = 1150;
                     int coordY;
 
-                    if (Cargapositiva) {
-                        coordY = 420;
+                    if (Cargapositiva==1) {
+                        coordY = 450;
                         carga = 1;
                     } else {
                         coordY = 450;
@@ -1395,11 +1523,12 @@ public class SampleController implements Initializable {
                             coordY,
                             ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX(),
                             ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY());
-                    System.out.println("DS " + registro[3][1]);
-                    System.out.println("DS " + registro[3][0]);
 
                     columna = registro[2][0];
                     fila = registro[2][1];
+
+                    System.out.println(columna);
+                    System.out.println(fila);
 
 
                     status_hoyitos[registro[2][0]][registro[2][1]] = true;
@@ -1573,7 +1702,9 @@ public class SampleController implements Initializable {
             color = Color.BLUE;
         } else if (carga == 1) {
             color = Color.RED;
-        } else {
+        } else if(carga ==0){
+            color= Color.BLACK;
+        }else {
             color = Color.BROWN;
         }
 
@@ -1737,6 +1868,7 @@ public class SampleController implements Initializable {
         Circle boton_en_ap;
         Circle circulo_der;
         Circle circulo_izq;
+        Rectangle cambiar_Cargas;
 
         superficie = new Rectangle();
         superficie.setX(1150);
@@ -1766,45 +1898,55 @@ public class SampleController implements Initializable {
         circulo_izq.setRadius(12);
         circulo_izq.setFill(Color.rgb(43, 123, 228));
         circulo_izq.setStroke(Color.rgb(0, 0, 0));
+
+        cambiar_Cargas=new Rectangle();
+        cambiar_Cargas.setY(480);
+        cambiar_Cargas.setX(1230);
+        cambiar_Cargas.setHeight(10);
+        cambiar_Cargas.setWidth(10);
+        cambiar_Cargas.setFill(Color.RED);
+        cambiar_Cargas.setStroke(Color.BLACK);
+
         superficie.setOnMouseClicked(mouseEvent -> CapturarMotor(35, superficie));
+
+        int[] Memoria_estado_original = new int[2];
         boton_en_ap.setOnMouseClicked(event -> {
-                    boolean Color_Columna = false;
-                    int carga = 0;
+            int carga = 0;
+            int columna_motor=registro[registro.length-2][0]-1;
+            int fila_motor=registro[registro.length-2][1];
 
-                    Color colorFinal = (Color) ArCircles[registro[registro.length - 2][0] - 1][registro[registro.length - 2][1] - 1].getStroke();
+            Color colorFinal = (Color) ArCircles[registro[registro.length - 2][0] - 1][registro[registro.length - 2][1] - 1].getStroke();
 
-                    int countR = 0;
-                    int countA = 0;
+            if((colorFinal==Color.RED && Memoria_estado_original[0]==0)|| Memoria_estado_original[0]==1){
+                Memoria_estado_original[0] = 1;
 
-                    if (colorFinal == Color.RED) {
-                        countR++;
-                    }
-                    if (colorFinal == Color.BLUE) {
-                        countA++;
-                    }
-                    if (countR == 1 || countA == 1) {
-                        Color_Columna = true;
-                        if
-                        (countR == 1) {
-                            carga = 1;
-                        } else if (countA == 1) {
-                            carga = -1;
-                        }
-                    }
-                    if (!Cargado_motor) {
-                        boton_en_ap.setFill(Color.RED);
-                        if (carga == 1) {
-                            CargarPistas(registro[countR][0] - 1, 1, 1);
-                        } else if (carga == -1) {
-                            CargarPistas(registro[countR][0] - 1, 1, 1);
-                        }
-                    } else {
+
+                if(3<=fila_motor && fila_motor<=7){
+                    CargarPistas(columna_motor,0,1);
+                    boton_en_ap.setFill(Color.RED);
+                }else if(8<=fila_motor && fila_motor<=12){
+                    CargarPistas(columna_motor,0,2);
+                    boton_en_ap.setFill(Color.RED);
+                } else if (fila_motor==1 || fila_motor==2 || fila_motor==13 || fila_motor==14) {
+                    CargasBuses(fila_motor-1,0);
+                }
+
+                if(colorFinal==Color.BLACK){
+                    if(3<=fila_motor && fila_motor<=7){
                         boton_en_ap.setFill(Color.BLACK);
-                        CargarPistas(registro[2][0] - 1, 0, 0);
+                        CargarPistas(columna_motor , 1, 1);
+                    }else if(8<=fila_motor && fila_motor<=12){
+                        boton_en_ap.setFill(Color.BLACK);
+                        CargarPistas(columna_motor,1,2);
+                    }else if (fila_motor==1 || fila_motor==2 || fila_motor==13 || fila_motor==14) {
+                        CargasBuses(fila_motor-1,1);
                     }
-                });
+                }
+             }
 
-        AnchorPane.getChildren().addAll(superficie, boton_en_ap, circulo_der, circulo_izq);
+        });
+
+        AnchorPane.getChildren().addAll(superficie, boton_en_ap, circulo_der, circulo_izq,cambiar_Cargas);
 
 
         //Creacion de los label
@@ -2020,16 +2162,7 @@ public class SampleController implements Initializable {
     }
 
 
-    private void boton_encendido_apagado(Circle boton) {
-        if (Color_Rojo) {
-            boton.setFill(Color.rgb(67, 228, 28));
 
-        } else {
-            boton.setFill(Color.rgb(224, 60, 28));
-        }
-        Color_Rojo =!Color_Rojo;
-
-    }
 
 
 }
