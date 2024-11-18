@@ -1142,21 +1142,24 @@ public class SampleController implements Initializable {
 
     }
 
-    private void ClickCirculo(Circle circle) {
-        int Columna = (((int) circle.getCenterX()) - 30) / 30;
+    private void ClickCirculo(Circle circle, int correccion_pos) {
+        int Columna = ((((int) circle.getCenterX()) - 30) + correccion_pos) / 30;    //obtener la columna del circulo que uno hace click
         int Fila;
 
-        if ((int) circle.getCenterY() <= 90) {
-            Fila = ((int) circle.getCenterY() - 60) / 30;
-        } else if ((int) circle.getCenterY() > 90 && (int) circle.getCenterY() <= 260) {
-            Fila = ((int) circle.getCenterY() - 80) / 30;
-        } else if ((int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480) {
-            Fila = ((int) circle.getCenterY() - 100) / 30;
-        } else {
-            Fila = ((int) circle.getCenterY() - 120) / 30;
+        //obtener la fila del circulo que uno hace click
+        if ((int) circle.getCenterY() <= (90 + correccion_pos)) {                               //Captuta los circulos de los buses superiores
+            Fila = (((int) circle.getCenterY() - 60) + correccion_pos) / 30;
+        } else if ((int) circle.getCenterY() > (90 + correccion_pos) && (int) circle.getCenterY() <= (260 + correccion_pos)) {        //Captuta los circulos de las pistas superiores
+            Fila = (((int) circle.getCenterY() - 80) + correccion_pos) / 30;
+        } else if ((int) circle.getCenterY() > (260 + correccion_pos) && (int) circle.getCenterY() <= (480 + correccion_pos)) {       //Captuta los circulos de las pistas inferiores
+            Fila = (((int) circle.getCenterY() - 100) + correccion_pos) / 30;
+        } else {                                                                                //Captuta los circulos de los buses inferiores
+            Fila = (((int) circle.getCenterY() - 120) + correccion_pos) / 30;
         }
 
         Fila += 1;
+
+        System.out.println("Fila : "+Fila+"\tColumna : "+Columna);
 
         int diff;
 
@@ -1894,7 +1897,7 @@ public class SampleController implements Initializable {
                 circle.setCenterY((j + 2) * 30 + AuxSpace + corrector_de_pos);
                 circle.setStroke(Color.BLACK);
                 circle.setFill(Color.WHITE);
-                circle.setOnMouseClicked(event -> ClickCirculo(circle));
+                circle.setOnMouseClicked(event -> ClickCirculo(circle, 550));
 
                 ArCircles_v2[i][j] = circle;
 
@@ -1903,8 +1906,8 @@ public class SampleController implements Initializable {
 
             AuxSpace = 0;
         }
-
-        corrector_de_pos += corrector_de_pos;
+        // 511 cantidad de objetos con el nuevo protoboard
+        corrector_de_pos = corrector_de_pos + 550;
     }
 
 
@@ -2221,7 +2224,7 @@ public class SampleController implements Initializable {
                 circle.setCenterY((j + 2) * 30 + AuxSpace);
                 circle.setStroke(Color.BLACK);
                 circle.setFill(Color.WHITE);
-                circle.setOnMouseClicked(event -> ClickCirculo(circle));
+                circle.setOnMouseClicked(event -> ClickCirculo(circle,0));
 
                 ArCircles[i][j] = circle;
 
@@ -2233,7 +2236,7 @@ public class SampleController implements Initializable {
         ohm.setText("1");
         ohm.setPrefColumnCount(2);
 
-        lastInt = AnchorPane.getChildren().size(); // Tamano del anchorpane, cantidad de cosas que es 522 (DEBE ESTAR AL FINAL, PUES SI ESTA EN EL PRINCIPIO, NO HAY NADA; ENTONCES EL PROGRAMA SE MUERE)
+        lastInt = AnchorPane.getChildren().size(); // Tamano del anchorpane, cantidad de cosas que es 518 (DEBE ESTAR AL FINAL, PUES SI ESTA EN EL PRINCIPIO, NO HAY NADA; ENTONCES EL PROGRAMA SE MUERE)
 
     }
 
