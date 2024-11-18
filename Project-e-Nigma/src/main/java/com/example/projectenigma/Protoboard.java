@@ -26,7 +26,6 @@ public class Protoboard {
         }
     }
 
-
     public void CambiarCargaBus(int fila, int columna, int carga){
         //dependiendo del valor de la fila, sabemos si son buses
         //el metodo crea un hoyito temporal que remplaza al original con los valores modificados

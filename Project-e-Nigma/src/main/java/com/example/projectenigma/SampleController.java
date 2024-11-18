@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -17,7 +16,6 @@ import javafx.scene.Node;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 
@@ -54,7 +52,7 @@ public class SampleController implements Initializable {
     private Button Boton_encendido;
 
     @FXML
-    private Button btnBorrar;
+    private Button btnReset;
 
     @FXML
     private TextField ohm;
@@ -79,7 +77,7 @@ public class SampleController implements Initializable {
     private boolean[][] status_hoyitos = new boolean[36][16];
 
     //Funcion para identificar el lugar del hoyito dentreo de la matriz
-    // Ademas deja registrado los ultimos 2 clickeados
+    // Además deja registrado los ultimos 2 clickeados
 
 
     //Funcion para dejar en "registro" cuando se clickee la bateria
@@ -245,79 +243,91 @@ public class SampleController implements Initializable {
         double puntoY1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY();
         double puntoX2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX();
         double puntoY2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterY();
+        int diff1 = ubicador(registro[2][1], registro[2][0]);
+        int diff2 = ubicador(registro[3][1], registro[3][0]);
 
-        if (!status_hoyitos[registro[3][0]][registro[3][1]] && !status_hoyitos[registro[2][0]][registro[2][1]]) {
-            status_hoyitos[registro[3][0]][registro[3][1]] = true;
-            status_hoyitos[registro[2][0]][registro[2][1]] = true;
-            if (puntoX1 > puntoX2) {
-                double aux = puntoX1;
-                puntoX1 = puntoX2;
-                puntoX2 = aux;
+        if (diff1 == diff2){
+            System.out.println("no se pueden poner en el mismo lugar");
+        }else {
 
-                aux = puntoY1;
-                puntoY1 = puntoY2;
-                puntoY2 = aux;
+            if (!status_hoyitos[registro[3][0]][registro[3][1]] && !status_hoyitos[registro[2][0]][registro[2][1]]) {
+                status_hoyitos[registro[3][0]][registro[3][1]] = true;
+                status_hoyitos[registro[2][0]][registro[2][1]] = true;
 
-            }
-            double DiffSpaceX = puntoX2 - puntoX1;
 
-            Arc semicirculo = new Arc();
-            Line conector1 = new Line();
-            Line conector2 = new Line();
-            if (puntoY1 == puntoY2) {
+                if (puntoX1 > puntoX2) {
+                    double aux = puntoX1;
+                    puntoX1 = puntoX2;
+                    puntoX2 = aux;
 
-                semicirculo.setCenterX(puntoX1 + (DiffSpaceX) / 2);
-                semicirculo.setCenterY((puntoY1 * 2 - puntoY2) - 10);
-                semicirculo.setRadiusX(10);
-                semicirculo.setRadiusY(20);
-                semicirculo.setStartAngle(0);
-                semicirculo.setLength(180);
-                semicirculo.setType(ArcType.ROUND);
-                int diff1 = ubicador(registro[2][1], registro[2][0]);
-                int diff2 = ubicador(registro[3][1], registro[3][0]);
-                Color Polaridad_positiva = (Color) ((Circle) AnchorPane.getChildren().get(diff1) ).getStroke();
-                Color Polaridad_negativa = (Color) ((Circle) AnchorPane.getChildren().get(diff2) ).getStroke();
+                    aux = puntoY1;
+                    puntoY1 = puntoY2;
+                    puntoY2 = aux;
 
-                if ( Polaridad_positiva == Color.RED  && Polaridad_negativa == Color.BLUE){
-                    semicirculo.setFill(Color.RED);
-                }else if (Polaridad_negativa == Color.RED  && Polaridad_positiva == Color.BLUE){
-                    semicirculo.setFill(Color.WHITE);
-                    System.out.println("Polaridad invertida");
+                }
+                double DiffSpaceX = puntoX2 - puntoX1;
+
+                Arc semicirculo = new Arc();
+                Line conector1 = new Line();
+                Line conector2 = new Line();
+                if (puntoY1 == puntoY2) {
+
+                    semicirculo.setCenterX(puntoX1 + (DiffSpaceX) / 2);
+                    semicirculo.setCenterY((puntoY1 * 2 - puntoY2) - 10);
+                    semicirculo.setRadiusX(10);
+                    semicirculo.setRadiusY(20);
+                    semicirculo.setStartAngle(0);
+                    semicirculo.setLength(180);
+                    semicirculo.setType(ArcType.ROUND);
+
+                    Color Polaridad_positiva = (Color) ((Circle) AnchorPane.getChildren().get(diff1)).getStroke();
+                    Color Polaridad_negativa = (Color) ((Circle) AnchorPane.getChildren().get(diff2)).getStroke();
+
+                    if (Polaridad_positiva == Color.RED && Polaridad_negativa == Color.BLUE) {
+                        semicirculo.setFill(Color.RED);
+                    } else if (Polaridad_negativa == Color.RED && Polaridad_positiva == Color.BLUE) {
+                        semicirculo.setFill(Color.BLACK);
+                        System.out.println("Polaridad invertida");
+                    } else if (Polaridad_negativa == Color.GREEN && Polaridad_positiva == Color.GREEN
+                            || Polaridad_negativa == Color.CHOCOLATE && Polaridad_positiva == Color.GREEN
+                            || Polaridad_negativa == Color.GREEN && Polaridad_positiva == Color.CHOCOLATE) {
+                        semicirculo.setFill(Color.WHITE);
+                    }
+
+                    semicirculo.setStroke(Color.WHITE);
+
+
+                    conector1.setStartX(puntoX1);
+                    conector1.setStartY(puntoY1);
+                    conector1.setEndX(puntoX1 + 7);
+                    conector1.setEndY(puntoY1 - 10);
+                    conector1.setStroke(Color.BLACK);
+                    conector1.setStrokeWidth(3);
+
+
+                    conector2.setStartX(puntoX2);
+                    conector2.setStartY(puntoY2);
+                    conector2.setEndX(puntoX2 - 7);
+                    conector2.setEndY(puntoY2 - 10);
+                    conector2.setStroke(Color.BLACK);
+                    conector2.setStrokeWidth(3);
                 }
 
-                semicirculo.setStroke(Color.BLACK);
+                Group led = new Group();
 
+                led.getChildren().addAll(semicirculo, conector2, conector1);
+                AnchorPane.getChildren().add(led);
+                Historial.add(2);
 
-                conector1.setStartX(puntoX1);
-                conector1.setStartY(puntoY1);
-                conector1.setEndX(puntoX1 + 7);
-                conector1.setEndY(puntoY1 - 10);
-                conector1.setStroke(Color.BLACK);
-                conector1.setStrokeWidth(3);
-
-
-                conector2.setStartX(puntoX2);
-                conector2.setStartY(puntoY2);
-                conector2.setEndX(puntoX2 - 7);
-                conector2.setEndY(puntoY2 - 10);
-                conector2.setStroke(Color.BLACK);
-                conector2.setStrokeWidth(3);
+                // cada vez que se haga click en un led, se borra independiente del orden colocado
+                led.setOnMouseClicked((event) -> {
+                    if (event.getButton() == MouseButton.SECONDARY) {
+                        Node presionado = (Node) event.getSource();
+                        int indice = AnchorPane.getChildren().indexOf(presionado);
+                        Borrar_pieza(indice);
+                    }
+                });
             }
-
-            Group led = new Group();
-
-            led.getChildren().addAll(semicirculo, conector2, conector1);
-            AnchorPane.getChildren().add(led);
-            Historial.add(2);
-
-            // cada vez que se haga click en un led, se borra independiente del orden colocado
-            led.setOnMouseClicked((event) -> {
-                if (event.getButton() == MouseButton.SECONDARY) {
-                    Node presionado = (Node) event.getSource();
-                    int indice = AnchorPane.getChildren().indexOf(presionado);
-                    Borrar_pieza(indice);
-                }
-            });
         }
     }
 
@@ -445,26 +455,12 @@ public class SampleController implements Initializable {
 
     }
 
-    public void Eliminar_ocupa(Circle circle){
-        int Columna = (((int) circle.getCenterX()) - 30) / 30;
-        int Fila;
-
-        if ((int) circle.getCenterY() <= 90) {
-            Fila = ((int) circle.getCenterY() - 60) / 30;
-        } else if ((int) circle.getCenterY() > 90 && (int) circle.getCenterY() <= 260) {
-            Fila = ((int) circle.getCenterY() - 80) / 30;
-        } else if ((int) circle.getCenterY() > 260 && (int) circle.getCenterY() <= 480) {
-            Fila = ((int) circle.getCenterY() - 100) / 30;
-        } else {
-            Fila = ((int) circle.getCenterY() - 120) / 30;
-        }
-
-        Fila += 1;
-
-        System.out.println("Columna : "+Columna);
-        System.out.println("Fila : "+Fila);
-
-        status_hoyitos[Fila][Columna] = false;
+    @FXML
+    public void Eliminar_ocupa(){
+        status_hoyitos[registro[3][0]][registro[3][1]] = false;
+        status_hoyitos[registro[2][0]][registro[2][1]] = false;
+        status_hoyitos[registro[1][0]][registro[1][1]] = false;
+        status_hoyitos[registro[0][0]][registro[0][1]] = false;
     }
 
     @FXML
@@ -473,9 +469,9 @@ public class SampleController implements Initializable {
         int coordY = 0;
         int coordX = 0;
 
-        //Arreglo con el cual uno puede saber cual de los 8 switches esta siendo presionado
+        //Arreglo con el cual uno puede saber cuál de los 8 switches esta siendo presionado
         boolean[] Pasa_corriente = new boolean[8];
-        int[] Memoria_estado_original = new int[8];   //Guarda el estado original con el que llega la corriente (1 para cuando  la carga venia de abajo y 2 para cuando  la carga venia de arriba)
+        int[] Memoria_estado_original = new int[8];   //Guarda el estado original con el que llega la corriente (1 para cuando la carga venia de abajo, 2 para cuando la carga venia de arriba y -1 para cuando haya cortocircuito)
 
         //Este condicional es para saber si los puntos seleccionados estan al rededor del surco del protoboard
         if ((registro[0][1] == 7 || registro[0][1] == 8)
@@ -625,6 +621,9 @@ public class SampleController implements Initializable {
                             //Condicional que revisa: que pasa si hay corriente arriba y abajo opuestas. La respuesta es que nada porque se cierra el circuito nomas
                             if (((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE))
                                     || ((((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE) && (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED)) ){
+                                interruptor.setFill(Color.BLACK);
+                                Memoria_estado_original[indice] = -1;
+
                             }else {
 
                                 //Condicional que revisa: (si no hay carga arriba y no ha sido precionado) o si ya sabemos cual era el estado original
@@ -665,13 +664,16 @@ public class SampleController implements Initializable {
 
                             }
 
-                            if (!Pasa_corriente[indice]){
-                                interruptor.setFill(Color.GRAY);
-                            }else{
-                                interruptor.setFill(Color.WHITE);
+                            if (Memoria_estado_original[indice]!=-1){
+                                if (!Pasa_corriente[indice]){
+                                    interruptor.setFill(Color.GRAY);
+                                }else{
+                                    interruptor.setFill(Color.WHITE);
+                                }
+
+                                Pasa_corriente[indice]=!Pasa_corriente[indice];
                             }
 
-                            Pasa_corriente[indice]=!Pasa_corriente[indice];
 
                         }
                     });
@@ -1288,6 +1290,8 @@ public class SampleController implements Initializable {
 
         Fila += 1;
 
+        System.out.println("Fila : "+Fila+"\tColumna : "+Columna);
+
         int diff;
 
         if (registro[0][0] == 0) {
@@ -1776,7 +1780,7 @@ public class SampleController implements Initializable {
 
         btnCable.setDisable(false);
         btnResistencia.setDisable(false);
-        btnBorrar.setDisable(false);
+        btnReset.setDisable(false);
         btnChipAND.setDisable(false);
         btnChipOR.setDisable(false);
         btnChipNOT.setDisable(false);
@@ -1784,13 +1788,14 @@ public class SampleController implements Initializable {
         Boton_encendido.setDisable(false);
 
         colocarHoyitos();
-
+        corrector_de_pos = 550;
     }
 
     public void colocarHoyitos() {
         //ArCircles.length-4 debe ser restado con 4 en vez de 2 o da error de que ArCircles[i][j] son nulos
+        //ACTUALIZACION: ArCircles.length-6 debe ser restado con 6, porque? no se
         //porque es eso asi, pues me gustaria saber
-        for (int i = 0; i < ArCircles.length - 4; i++) {
+        for (int i = 0; i < ArCircles.length-6; i++) {
             for (int j = 0; j < ArCircles[i].length - 2; j++) {
                 ArCircles[i][j].setStroke(Color.BLACK);
                 ArCircles[i][j].setStrokeWidth(1);
@@ -1815,6 +1820,228 @@ public class SampleController implements Initializable {
         //Boton_encendido.setDisable(true);
         System.out.println("-----> Corto en corto <------");
     }
+
+    int corrector_de_pos = 550;
+
+    @FXML
+    public void dibujoProtoboard(){
+
+        Circle[][] ArCircles_v2 = new Circle[36][16];
+
+        //Creacion del rectangulo
+        Rectangle Rectangulo = new Rectangle();
+        Rectangulo.setWidth(1080);
+        Rectangulo.setHeight(540);
+        Rectangulo.setX(-30);                           //og Rectangulo.setX(-30);
+        Rectangulo.setY(-10 + corrector_de_pos);                           //og Rectangulo.setY(-10);
+        Rectangulo.setFill(Color.LIGHTGRAY);
+        Rectangulo.setStroke(Color.BLACK);
+        AnchorPane.getChildren().addAll(Rectangulo);
+
+        //Creacion de los label
+        //Signo "+" arriba izq
+        Label label1 = new Label();
+        label1.setLayoutX(20);
+        label1.setLayoutY(35 + corrector_de_pos);
+        label1.setText("+");
+        label1.setTextFill(Color.RED);
+        label1.setFont(Font.font(30));
+        AnchorPane.getChildren().addAll(label1);
+
+        //Signo "-" arriba izq
+        Label label2 = new Label();
+        label2.setLayoutX(25);
+        label2.setLayoutY(65 + corrector_de_pos);
+        label2.setText("-");
+        label2.setTextFill(Color.BLACK);
+        label2.setFont(Font.font(30));
+        AnchorPane.getChildren().addAll(label2);
+
+        //Signo "+" Abajo iqz
+        Label label3 = new Label();
+        label3.setLayoutX(20);
+        label3.setLayoutY(458 + corrector_de_pos);
+        label3.setText("+");
+        label3.setTextFill(Color.RED);
+        label3.setFont(Font.font(30));
+        AnchorPane.getChildren().addAll(label3);
+
+        //Signo "-" Abajo izq
+        Label label4 = new Label();
+        label4.setLayoutX(25);
+        label4.setLayoutY(488 + corrector_de_pos);
+        label4.setText("-");
+        label4.setTextFill(Color.BLACK);
+        label4.setFont(Font.font(30));
+        AnchorPane.getChildren().addAll(label4);
+
+        //Signo "+" arriba der
+        Label label5 = new Label();
+        label5.setLayoutX(945);
+        label5.setLayoutY(35 + corrector_de_pos);
+        label5.setText("+");
+        label5.setTextFill(Color.RED);
+        label5.setFont(Font.font(30));
+        AnchorPane.getChildren().addAll(label5);
+
+        //Signo "-" arriba der
+        Label label6 = new Label();
+        label6.setLayoutX(950);
+        label6.setLayoutY(70 + corrector_de_pos);
+        label6.setText("-");
+        label6.setTextFill(Color.BLACK);
+        label6.setFont(Font.font(30));
+        AnchorPane.getChildren().addAll(label6);
+
+        //Signo "+" Abajo der
+        Label label7 = new Label();
+        label7.setLayoutX(945);
+        label7.setLayoutY(458 + corrector_de_pos);
+        label7.setText("+");
+        label7.setTextFill(Color.RED);
+        label7.setFont(Font.font(30));
+        AnchorPane.getChildren().addAll(label7);
+
+        //Signo "-" Abajo der
+        Label label8 = new Label();
+        label8.setLayoutX(950);
+        label8.setLayoutY(488 + corrector_de_pos);
+        label8.setText("-");
+        label8.setTextFill(Color.BLACK);
+        label8.setFont(Font.font(30));
+        AnchorPane.getChildren().addAll(label8);
+
+        int correcion_posy = 0, salto = 0; //valores para corregir la disposicion visual de las letras
+
+        //creacion del abcedario parte izquierda
+        for (char letter = 'a'; letter <= 'j'; letter++) {
+            if (letter == 'f') {
+                //añade una separacion
+                Label label9 = new Label();
+                label9.setLayoutX(25);
+                label9.setLayoutY((418 - (letter - 'a') * 30) + corrector_de_pos);
+                label9.setText(String.valueOf(' '));
+                label9.setTextFill(Color.BLACK);
+                label9.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label9);
+
+                //coloca la letra f
+                Label label9_5 = new Label();
+                label9_5.setLayoutX(25);
+                label9_5.setLayoutY((429 - (letter - 'a' + 1) * 30) + corrector_de_pos);
+                label9_5.setText(String.valueOf(letter));
+                label9_5.setTextFill(Color.BLACK);
+                label9_5.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label9_5);
+
+                correcion_posy = 11;
+                salto++;
+
+            } else {
+                Label label9 = new Label();
+                label9.setLayoutX(25);
+                label9.setLayoutY(((418 + correcion_posy) - (letter - 'a' + salto) * 30) + corrector_de_pos);
+                label9.setText(String.valueOf(letter));
+                label9.setTextFill(Color.BLACK);
+                label9.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label9);
+            }
+        }
+
+        correcion_posy = 0;
+        salto = 0;
+
+        //creacion del abcedario parte derecha
+        for (char letter = 'a'; letter <= 'j'; letter++) {
+            if (letter == 'f') {
+                //añade una separacion
+                Label label10 = new Label();
+                label10.setLayoutX(950);
+                label10.setLayoutY((418 - (letter - 'a') * 30) + corrector_de_pos);
+                label10.setText(String.valueOf(' '));
+                label10.setTextFill(Color.BLACK);
+                label10.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label10);
+
+                //coloca la letra f
+                Label label10_5 = new Label();
+                label10_5.setLayoutX(950);
+                label10_5.setLayoutY((429 - (letter - 'a' + 1) * 30) + corrector_de_pos);
+                label10_5.setText(String.valueOf(letter));
+                label10_5.setTextFill(Color.BLACK);
+                label10_5.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label10_5);
+
+                correcion_posy = 11;
+                salto++;
+
+            } else {
+                Label label10 = new Label();
+                label10.setLayoutX(950);
+                label10.setLayoutY(((418 + correcion_posy) - (letter - 'a' + salto) * 30) + corrector_de_pos);
+                label10.setText(String.valueOf(letter));
+                label10.setTextFill(Color.BLACK);
+                label10.setFont(Font.font(15));
+                AnchorPane.getChildren().addAll(label10);
+            }
+        }
+        //creacion de los numeros parte superior
+        for (int i = 1; i <= 30; i++) {
+            Label label11 = new Label();
+            label11.setLayoutX(25 + (i * 30));
+            label11.setLayoutY(110 + corrector_de_pos);
+            label11.setText(String.valueOf(i));
+            label11.setTextFill(Color.BLACK);
+            label11.setFont(Font.font(15));
+            label11.setRotate(-90);
+            AnchorPane.getChildren().addAll(label11);
+        }
+
+        //creacion de los numeros parte inferior
+        for (int i = 1; i <= 30; i++) {
+            Label label12 = new Label();
+            label12.setLayoutX(25 + (i * 30));
+            label12.setLayoutY(440  + corrector_de_pos);
+            label12.setText(String.valueOf(i));
+            label12.setTextFill(Color.BLACK);
+            label12.setFont(Font.font(15));
+            label12.setRotate(-90);
+            AnchorPane.getChildren().addAll(label12);
+
+        }
+
+        //Creacion del protoboard
+        int AuxSpace = 0;
+        for (int i = 0; i < 30; i++) {
+
+            for (int j = 0; j < 14; j++) {
+
+                Circle circle = new Circle(i, j, 7);
+
+                //espacios extra
+                if (j == 2 || j == 7 || j == 12) {
+                    AuxSpace += 20;
+                }
+
+                circle.setCenterX((i + 2) * 30);
+                circle.setCenterY((j + 2) * 30 + AuxSpace + corrector_de_pos);
+                circle.setStroke(Color.BLACK);
+                circle.setFill(Color.WHITE);
+                circle.setOnMouseClicked(event -> ClickCirculo(circle));
+
+                ArCircles_v2[i][j] = circle;
+
+                AnchorPane.getChildren().add(ArCircles_v2[i][j]);
+            }
+
+            AuxSpace = 0;
+        }
+        // 511 cantidad de objetos con el nuevo protoboard
+        corrector_de_pos = corrector_de_pos + 550;
+    }
+
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -2140,13 +2367,6 @@ public class SampleController implements Initializable {
                 circle.setFill(Color.WHITE);
                 circle.setOnMouseClicked(event -> ClickCirculo(circle));
 
-                /*circle.setOnMouseClicked((event) -> {
-                    if (event.getButton() == MouseButton.SECONDARY){
-                        Eliminar_ocupa(circle);
-                    }
-                });*/
-
-
                 ArCircles[i][j] = circle;
 
                 AnchorPane.getChildren().add(ArCircles[i][j]);
@@ -2157,7 +2377,7 @@ public class SampleController implements Initializable {
         ohm.setText("1");
         ohm.setPrefColumnCount(2);
 
-        lastInt = AnchorPane.getChildren().size(); // Tamano del anchorpane, cantidad de cosas que es 522 (DEBE ESTAR AL FINAL, PUES SI ESTA EN EL PRINCIPIO, NO HAY NADA; ENTONCES EL PROGRAMA SE MUERE)
+        lastInt = AnchorPane.getChildren().size(); // Tamano del anchorpane, cantidad de cosas que es 518 (DEBE ESTAR AL FINAL, PUES SI ESTA EN EL PRINCIPIO, NO HAY NADA; ENTONCES EL PROGRAMA SE MUERE)
 
     }
 
