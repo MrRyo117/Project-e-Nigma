@@ -349,6 +349,7 @@ public class SampleController implements Initializable {
                 Resistencia resistencia = new Resistencia(ohmInt);
 
                 boolean negativoP1 = false;
+                boolean negativoP2 = false;
                 double puntoX1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterX();
                 double puntoY1 = ArCircles[registro[2][0] - 1][registro[2][1] - 1].getCenterY();
                 double puntoX2 = ArCircles[registro[3][0] - 1][registro[3][1] - 1].getCenterX();
@@ -429,9 +430,9 @@ public class SampleController implements Initializable {
                     Historial.add(4);
                     buildResistencia = true;
                 }
-                else if (puntoX1 == puntoX2 && puntoY1 + 60 == puntoY2 || puntoY1 - 60 == puntoY2){
-                    boolean negativoP2 = false;
-                    if (puntoY1 - 60 == puntoY2){
+                else if (puntoX1 == puntoX2 && puntoY1 + 60 == puntoY2 || puntoY1 - 60 == puntoY2 || puntoY1 + 50 == puntoY2 || puntoY1 - 50 == puntoY2 ){
+
+                    if (puntoY1 > puntoY2){
                         double aux = puntoY1;
                         puntoY1 = puntoY2;
                         puntoY2 = aux;
@@ -503,6 +504,10 @@ public class SampleController implements Initializable {
                     Color color2 = (Color) ((Circle) AnchorPane.getChildren().get(diff)).getStroke();
                     if (((negativoP1 && (color == Color.BLUE)) || color2 == Color.RED)) {
                         System.out.println("Instalado correctamente");
+                        Cargar();
+                    }
+                    else if (((!negativoP2 && (color == Color.BLUE)) || color2 == Color.RED)){
+                        System.out.println("Instalado correctamente en vertical");
                         Cargar();
                     }
                     // cada vez que se haga click en un Agrupar_Dibujo_Resistencia, se borra independiente del orden colocado
@@ -2108,9 +2113,6 @@ public class SampleController implements Initializable {
         // 511 cantidad de objetos con el nuevo protoboard
         corrector_de_pos = corrector_de_pos + 550;
     }
-
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
