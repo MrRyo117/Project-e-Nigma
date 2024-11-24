@@ -3,15 +3,15 @@ package com.example.projectenigma;
 import java.util.ArrayList;
 
 public class Resistencia implements Insertables{
+    int carga;
+    int ValorResistencia;
 
     public Resistencia(int valorResistencia) {
         ValorResistencia = valorResistencia;
     }
 
-    int ValorResistencia;
-    @Override
-    public void getCarga(int carga) {
-
+    public int getCarga() {
+        return carga;
     }
 
     @Override
@@ -23,4 +23,5 @@ public class Resistencia implements Insertables{
     public ArrayList<Integer> CoordFilas() {
         return null;
     }
+
 }

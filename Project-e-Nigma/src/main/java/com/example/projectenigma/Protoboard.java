@@ -11,7 +11,7 @@ public class Protoboard {
 
     //Atributos
     //[Fila][Comulmna]
-    Hoyito[][] protoboard = new Hoyito[14][30];
+    Hoyito[][] protoboard = new Hoyito[14][32];
     ArrayList<Cable> cables = new ArrayList<>();
 
     //Metodos
@@ -25,7 +25,6 @@ public class Protoboard {
             }
         }
     }
-
 
     public void CambiarCargaBus(int fila, int columna, int carga){
         //dependiendo del valor de la fila, sabemos si son buses
