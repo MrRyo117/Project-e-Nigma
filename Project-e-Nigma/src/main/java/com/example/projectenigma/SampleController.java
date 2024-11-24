@@ -363,8 +363,10 @@ public class SampleController implements Initializable {
                     puntoY2 = aux;
                     negativoP1 = true;
 
+
                 }
                 Group Agrupar_Dibujo_Resistencia = null;
+                boolean buildResistencia = false;
                 if (puntoY1 == puntoY2 && puntoX1 + 60 == puntoX2) {
                     Rectangle resistenciaD = new Rectangle(
                             puntoX1 + 10,
@@ -425,27 +427,94 @@ public class SampleController implements Initializable {
 
                     AnchorPane.getChildren().add(Agrupar_Dibujo_Resistencia);
                     Historial.add(4);
-
+                    buildResistencia = true;
                 }
-
-                int diff = ubicador(registro[2][1], registro[2][0]);
-                Color color = (Color) ((Circle) AnchorPane.getChildren().get(diff)).getStroke();
-
-                diff = ubicador(registro[3][1], registro[3][0]);
-                Color color2 = (Color) ((Circle) AnchorPane.getChildren().get(diff)).getStroke();
-                System.out.println(negativoP1);
-                if (((negativoP1 && (color == Color.BLUE)) || color2 == Color.RED)) {
-                    System.out.println("Instalado correctamente");
-                    Cargar();
-                }
-                // cada vez que se haga click en un Agrupar_Dibujo_Resistencia, se borra independiente del orden colocado
-                Agrupar_Dibujo_Resistencia.setOnMouseClicked((event) -> {
-                    if (event.getButton() == MouseButton.SECONDARY) {
-                        Node presionado = (Node) event.getSource();
-                        int indice = AnchorPane.getChildren().indexOf(presionado);
-                        Borrar_pieza(indice);
+                else if (puntoX1 == puntoX2 && puntoY1 + 60 == puntoY2 || puntoY1 - 60 == puntoY2){
+                    boolean negativoP2 = false;
+                    if (puntoY1 - 60 == puntoY2){
+                        double aux = puntoY1;
+                        puntoY1 = puntoY2;
+                        puntoY2 = aux;
+                        negativoP2 = true;
                     }
-                });
+                    System.out.println("Vertical");
+                    Rectangle resistenciaD = new Rectangle(
+                            puntoX1 - 6,
+                            puntoY1 + 10,
+                            12,
+                            40
+                    );
+                    Line patitas = new Line(
+                            puntoX1,
+                            puntoY1,
+                            puntoX2,
+                            puntoY2
+                    );
+                    patitas.setStroke(Color.BLACK);
+                    resistenciaD.setFill(Color.BURLYWOOD);
+                    resistenciaD.setStroke(Color.BLACK);
+
+                    Line cruz = new Line(
+                            puntoX1 + 2.5,
+                            puntoY1 + 20,
+                            puntoX1 - 2.5,
+                            puntoY1 + 20
+                    );
+                    Line cruz2 = new Line(
+                            puntoX1 ,
+                            puntoY1 + 17.5,
+                            puntoX1,
+                            puntoY1 + 22.5
+                    );
+                    Line resta = new Line(
+                            puntoX1 + 2.5,
+                            puntoY1 + 40,
+                            puntoX1 - 2.5,
+                            puntoY1 + 40
+                    );
+
+                    if (!negativoP2) {
+                        cruz2.setStartY(puntoY1 + 37.5);
+                        cruz2.setEndY(puntoY1 + 42.5);
+                    }
+
+
+                    //Agrupa todos los elementos graficos que componen la resistencia en uno, para que sea mas facil su manejo
+                    Agrupar_Dibujo_Resistencia = new Group();
+
+
+                    Agrupar_Dibujo_Resistencia.getChildren().add(patitas);
+                    Agrupar_Dibujo_Resistencia.getChildren().add(resistenciaD);
+                    Agrupar_Dibujo_Resistencia.getChildren().add(cruz);
+                    Agrupar_Dibujo_Resistencia.getChildren().add(cruz2);
+                    Agrupar_Dibujo_Resistencia.getChildren().add(resta);
+
+                    Tooltip.install(resistenciaD, Texto_Aparente("Resistencia : "+ohmTxt+"Ω"));
+
+                    AnchorPane.getChildren().add(Agrupar_Dibujo_Resistencia);
+                    Historial.add(4);
+                    buildResistencia = true;
+                }
+                if (buildResistencia){
+                    int diff = ubicador(registro[2][1], registro[2][0]);
+                    Color color = (Color) ((Circle) AnchorPane.getChildren().get(diff)).getStroke();
+
+                    diff = ubicador(registro[3][1], registro[3][0]);
+                    Color color2 = (Color) ((Circle) AnchorPane.getChildren().get(diff)).getStroke();
+                    if (((negativoP1 && (color == Color.BLUE)) || color2 == Color.RED)) {
+                        System.out.println("Instalado correctamente");
+                        Cargar();
+                    }
+                    // cada vez que se haga click en un Agrupar_Dibujo_Resistencia, se borra independiente del orden colocado
+                    Agrupar_Dibujo_Resistencia.setOnMouseClicked((event) -> {
+                        if (event.getButton() == MouseButton.SECONDARY) {
+                            Node presionado = (Node) event.getSource();
+                            int indice = AnchorPane.getChildren().indexOf(presionado);
+                            Borrar_pieza(indice);
+                        }
+                    });
+                }
+
             }
 
         } catch (NumberFormatException e) {
