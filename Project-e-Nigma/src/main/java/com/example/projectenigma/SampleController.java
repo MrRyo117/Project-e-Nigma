@@ -1961,7 +1961,7 @@ public class SampleController implements Initializable {
                 }
             }
         }
-
+        /*
         for (int i = lastMod; i< lastInt; i = i+14){
 
             for (int j = 0; j < cables.size(); j++) {
@@ -1994,7 +1994,7 @@ public class SampleController implements Initializable {
 
             }
             //((Circle)AnchorPane.getChildren().get(i)).setStroke(Color.ORANGE);
-        }
+        }*/
 
 
     }
