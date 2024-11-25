@@ -1668,6 +1668,7 @@ public class SampleController implements Initializable {
 
             Cable cable = new Cable(cable1, entrada1, entrada2, carga);
 
+
             cables.add(cable);
 
             Historial.add(1);
@@ -1677,7 +1678,16 @@ public class SampleController implements Initializable {
                 if (event.getButton() == MouseButton.SECONDARY) {
                     Node presionado = (Node) event.getSource();
                     int indice = AnchorPane.getChildren().indexOf(presionado);
+                    System.out.println(cables.size());
+                    for (int i = 0; i < cables.size(); i++) {
+
+                        if(cables.get(i).linea == AnchorPane.getChildren().get(indice)){
+                            cables.remove(i);
+                        }
+                    }
+                    System.out.println(cables.size());
                     Borrar_pieza(indice);
+                    //Recargar();
                 }
             });
         } else {
@@ -1749,9 +1759,17 @@ public class SampleController implements Initializable {
 
 
     }
-
+    @FXML
     public void Recargar() {
         int count = 0;
+        //Resetea dejando todo el neutro excepto lo quemado
+        for (int i = lastMod; i< lastInt; i++){
+            if(((Circle)AnchorPane.getChildren().get(i)).getStroke() != Color.BROWN){
+                ((Circle)AnchorPane.getChildren().get(i)).setStroke(Color.BLACK);
+                ((Circle)AnchorPane.getChildren().get(i)).setStrokeWidth(1);
+            }
+        }
+        //Carga los buses de vuelta
         for (int i = 0; i < cables.size(); i++) {
 
             if (cables.get(i).getHoyitosConectados()[0][1] == 15 || cables.get(i).getHoyitosConectados()[1][1] == 15) {
@@ -1760,15 +1778,72 @@ public class SampleController implements Initializable {
                 System.out.println("Hay " + count + " cable a bateria");
 
                 if (cables.get(i).getHoyitosConectados()[0][1] == 1) {
-                    System.out.println("Hay un cable de bateria al primer bus -> a");
+                    //System.out.println("Hay un cable de bateria al primer bus -> a");
                     CargasBuses(0, cables.get(i).getCarga());
                 } else if (cables.get(i).getHoyitosConectados()[1][1] == 1) {
-                    System.out.println("Hay un cable de bateria al primer bus -> b");
+                    //System.out.println("Hay un cable de bateria al primer bus -> b");
                     CargasBuses(0, cables.get(i).getCarga());
                 }
 
+                if (cables.get(i).getHoyitosConectados()[0][1] == 2) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> a");
+                    CargasBuses(1, cables.get(i).getCarga());
+                } else if (cables.get(i).getHoyitosConectados()[1][1] == 2) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> b");
+                    CargasBuses(1, cables.get(i).getCarga());
+                }
+
+                if (cables.get(i).getHoyitosConectados()[0][1] == 13) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> a");
+                    CargasBuses(12, cables.get(i).getCarga());
+                } else if (cables.get(i).getHoyitosConectados()[1][1] == 13) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> b");
+                    CargasBuses(12, cables.get(i).getCarga());
+                }
+                if (cables.get(i).getHoyitosConectados()[0][1] == 14) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> a");
+                    CargasBuses(13, cables.get(i).getCarga());
+                } else if (cables.get(i).getHoyitosConectados()[1][1] == 14) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> b");
+                    CargasBuses(13, cables.get(i).getCarga());
+                }
             }
         }
+
+        for (int i = lastMod; i< lastInt; i = i+14){
+
+            for (int j = 0; j < cables.size(); j++) {
+                if(cables.get(j).getHoyitosConectados()[0][0]== 1 && cables.get(j).getHoyitosConectados()[0][1] != 15){
+                    int diff = ubicador(cables.get(j).getHoyitosConectados()[0][1],cables.get(j).getHoyitosConectados()[0][0]);
+                    int carga = 0;
+                    Color colorAux = (Color) ((Circle)AnchorPane.getChildren().get(diff)).getStroke();
+                    if(colorAux == Color.RED){
+                        carga = 1;
+                    }else if(colorAux == Color.BLUE){
+                        carga = -1;
+                    }
+                    System.out.println("CABLES GET: " +cables.get(j).getHoyitosConectados()[1][0]);
+                    if(cables.get(j).getHoyitosConectados()[1][0] >= 1 && cables.get(j).getHoyitosConectados()[1][0] < 3){
+                        System.out.println("Here");
+                        CargasBuses(cables.get(j).getHoyitosConectados()[0][0],carga);
+                    }else if(cables.get(j).getHoyitosConectados()[1][0] >= 3 && cables.get(j).getHoyitosConectados()[1][0] < 7){
+                        CargarPistas(cables.get(j).getHoyitosConectados()[1][1],carga,1);
+                    }else if(cables.get(j).getHoyitosConectados()[1][0] >= 7 && cables.get(j).getHoyitosConectados()[1][0] < 13){
+                        CargarPistas(cables.get(j).getHoyitosConectados()[1][1],carga,2);
+                    }else if(cables.get(j).getHoyitosConectados()[1][0] >= 13 && cables.get(j).getHoyitosConectados()[1][0] <= 14){
+                        CargasBuses(cables.get(j).getHoyitosConectados()[0][0],carga);
+                    }
+
+                }
+                else if(cables.get(j).getHoyitosConectados()[1][0]== 1 && cables.get(j).getHoyitosConectados()[1][1] != 15){
+
+                    //CargarPistas(cables.get(i).getHoyitosConectados()[1][1],-1);
+                }
+
+            }
+            //((Circle)AnchorPane.getChildren().get(i)).setStroke(Color.ORANGE);
+        }
+
 
     }
 
