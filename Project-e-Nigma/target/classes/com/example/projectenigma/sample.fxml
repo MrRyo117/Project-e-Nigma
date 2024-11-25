@@ -61,16 +61,15 @@
    </HBox>
    <HBox alignment="CENTER" prefHeight="7.0" prefWidth="626.0">
       <children>
-         <Button mnemonicParsing="false" onAction="#Eliminar_ocupa" text="Limpiar">
+         <Button mnemonicParsing="false" onAction="#Eliminar_ocupa" text="Limpiar hoyitos">
             <HBox.margin>
                <Insets right="4.0" />
             </HBox.margin></Button>
-         <Button fx:id="btnReset" mnemonicParsing="false" onAction="#reset" text="Reset">
+         <Button fx:id="btnReset" mnemonicParsing="false" onAction="#reset" text="Reseteo de Protoboard">
             <HBox.margin>
                <Insets right="5.0" />
             </HBox.margin></Button>
-         <Button mnemonicParsing="false" onAction="#dibujoProtoboard" text="Boton universal quien mantiene todos nuestros sueños y esperanzas" />
-         <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED" />
+         <Button fx:id="Boton_encendido" mnemonicParsing="false" onAction="#cantidad_objetos" text="Debug" textFill="RED" visible="false" />
       </children>
    </HBox>
 
