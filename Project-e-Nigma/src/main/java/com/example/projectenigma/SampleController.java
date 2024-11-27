@@ -1682,10 +1682,12 @@ public class SampleController implements Initializable {
                     for (int i = 0; i < cables.size(); i++) {
 
                         if(cables.get(i).linea == AnchorPane.getChildren().get(indice)){
+                            status_hoyitos[ cables.get(i).hoyitosConectados[0][0] ][ cables.get(i).hoyitosConectados[0][1] ] = false;
+                            status_hoyitos[ cables.get(i).hoyitosConectados[1][0] ][ cables.get(i).hoyitosConectados[1][1] ] = false;
                             cables.remove(i);
+
                         }
                     }
-                    System.out.println(cables.size());
                     Borrar_pieza(indice);
                     //Recargar();
                 }
@@ -1761,7 +1763,6 @@ public class SampleController implements Initializable {
     }
     @FXML
     public void Recargar() {
-        int count = 0;
         //Resetea dejando todo el neutro excepto lo quemado
         for (int i = lastMod; i< lastInt; i++){
             if(((Circle)AnchorPane.getChildren().get(i)).getStroke() != Color.BROWN){
@@ -1769,14 +1770,10 @@ public class SampleController implements Initializable {
                 ((Circle)AnchorPane.getChildren().get(i)).setStrokeWidth(1);
             }
         }
-        //Carga los buses de vuelta
+        //Carga los buses de vuelta (Bateria a buses)
         for (int i = 0; i < cables.size(); i++) {
 
             if (cables.get(i).getHoyitosConectados()[0][1] == 15 || cables.get(i).getHoyitosConectados()[1][1] == 15) {
-
-                count++;
-                System.out.println("Hay " + count + " cable a bateria");
-
                 if (cables.get(i).getHoyitosConectados()[0][1] == 1) {
                     //System.out.println("Hay un cable de bateria al primer bus -> a");
                     CargasBuses(0, cables.get(i).getCarga());
@@ -1809,41 +1806,81 @@ public class SampleController implements Initializable {
                 }
             }
         }
-
-        for (int i = lastMod; i< lastInt; i = i+14){
-
+        //Carga de Buses a puertos
+        for (int i = 1; i <= 14 ; i++){
+            if (i == 3){
+                i = 13;
+            }
             for (int j = 0; j < cables.size(); j++) {
-                if(cables.get(j).getHoyitosConectados()[0][0]== 1 && cables.get(j).getHoyitosConectados()[0][1] != 15){
+
+                if((cables.get(j).getHoyitosConectados()[0][1]== i || cables.get(j).getHoyitosConectados()[1][1]== i)
+                        && (cables.get(j).getHoyitosConectados()[0][1] != 15 && cables.get(j).getHoyitosConectados()[1][1] != 15)){
+
+                    int target = 2;
+                    System.out.println("Cable encontrado");
+
                     int diff = ubicador(cables.get(j).getHoyitosConectados()[0][1],cables.get(j).getHoyitosConectados()[0][0]);
+                    int diff2 = ubicador(cables.get(j).getHoyitosConectados()[1][1],cables.get(j).getHoyitosConectados()[1][0]);
+
                     int carga = 0;
+                    int carga2 = 0;
+
                     Color colorAux = (Color) ((Circle)AnchorPane.getChildren().get(diff)).getStroke();
+                    Color colorAux2 = (Color) ((Circle)AnchorPane.getChildren().get(diff2)).getStroke();
+
                     if(colorAux == Color.RED){
                         carga = 1;
                     }else if(colorAux == Color.BLUE){
                         carga = -1;
                     }
-                    System.out.println("CABLES GET: " +cables.get(j).getHoyitosConectados()[1][0]);
-                    if(cables.get(j).getHoyitosConectados()[1][0] >= 1 && cables.get(j).getHoyitosConectados()[1][0] < 3){
-                        System.out.println("Here");
-                        CargasBuses(cables.get(j).getHoyitosConectados()[0][0],carga);
-                    }else if(cables.get(j).getHoyitosConectados()[1][0] >= 3 && cables.get(j).getHoyitosConectados()[1][0] < 7){
-                        CargarPistas(cables.get(j).getHoyitosConectados()[1][1],carga,1);
-                    }else if(cables.get(j).getHoyitosConectados()[1][0] >= 7 && cables.get(j).getHoyitosConectados()[1][0] < 13){
-                        CargarPistas(cables.get(j).getHoyitosConectados()[1][1],carga,2);
-                    }else if(cables.get(j).getHoyitosConectados()[1][0] >= 13 && cables.get(j).getHoyitosConectados()[1][0] <= 14){
-                        CargasBuses(cables.get(j).getHoyitosConectados()[0][0],carga);
+
+                    if(colorAux2 == Color.RED){
+                        System.out.println("Rojo2");
+                        carga2 = 1;
+
+                    }else if(colorAux2 == Color.BLUE){
+                        carga2 = -1;
                     }
-
+                    target = 1;
+                    if (carga == carga2*-1 && carga != 0) {
+                        carga = 3;
+                        target = 2;
+                    }else if (carga == 0 && carga2 != 0){
+                        System.out.println("Rojo confirmed");
+                        target = 0;
+                        carga = carga2;
+                    }
+                    System.out.println("CABLES1 GET Columna: " +cables.get(j).getHoyitosConectados()[0][0]);
+                    System.out.println("CABLES1 GET Fila: " +cables.get(j).getHoyitosConectados()[0][1]);
+                    System.out.println("CABLES2 GET Columna: " +cables.get(j).getHoyitosConectados()[1][0]);
+                    System.out.println("CABLES2 GET Fila: " +cables.get(j).getHoyitosConectados()[1][1]);
+                    System.out.println(carga);
+                    if (target == 0){
+                        System.out.println("Target 0");
+                        if(cables.get(j).getHoyitosConectados()[1][1] >= 1 && cables.get(j).getHoyitosConectados()[1][1] < 3){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[0][1]-1,carga);
+                        }else if(cables.get(j).getHoyitosConectados()[1][1] >= 3 && cables.get(j).getHoyitosConectados()[1][1] < 7){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[1][0],carga,1);
+                        }else if(cables.get(j).getHoyitosConectados()[1][1] >= 7 && cables.get(j).getHoyitosConectados()[1][1] < 13){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[1][0],carga,2);
+                        }else if(cables.get(j).getHoyitosConectados()[1][1] >= 13 && cables.get(j).getHoyitosConectados()[1][1] <= 14){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[0][1]-1,carga);
+                        }
+                    }else if (target == 1){
+                        System.out.println("Target 1");
+                        if(cables.get(j).getHoyitosConectados()[0][1] >= 1 && cables.get(j).getHoyitosConectados()[0][1] < 3){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[1][1]-1,carga);
+                        }else if(cables.get(j).getHoyitosConectados()[0][1] >= 3 && cables.get(j).getHoyitosConectados()[0][1] < 7){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[0][0],carga,1);
+                        }else if(cables.get(j).getHoyitosConectados()[0][1] >= 7 && cables.get(j).getHoyitosConectados()[0][1] < 13){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[0][0],carga,2);
+                        }else if(cables.get(j).getHoyitosConectados()[0][1] >= 13 && cables.get(j).getHoyitosConectados()[0][1] <= 14){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[1][1]-1,carga);
+                        }
+                    }
                 }
-                else if(cables.get(j).getHoyitosConectados()[1][0]== 1 && cables.get(j).getHoyitosConectados()[1][1] != 15){
-
-                    //CargarPistas(cables.get(i).getHoyitosConectados()[1][1],-1);
-                }
-
             }
-            //((Circle)AnchorPane.getChildren().get(i)).setStroke(Color.ORANGE);
         }
-
 
     }
 
@@ -1866,7 +1903,12 @@ public class SampleController implements Initializable {
             int diff = lastInt - (14 * i) - (14 - fila);
 
             ((Circle) AnchorPane.getChildren().get(diff)).setStroke(color);
-            ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(2);
+            if (color != Color.BLACK){
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(2);
+            }else{
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            }
+
         }
     }
 
