@@ -1814,7 +1814,8 @@ public class SampleController implements Initializable {
             for (int j = 0; j < cables.size(); j++) {
 
                 if(((cables.get(j).getHoyitosConectados()[0][1]== i && cables.get(j).getHoyitosConectados()[1][1] >= i) ||
-                        (cables.get(j).getHoyitosConectados()[0][1] >= i && cables.get(j).getHoyitosConectados()[1][1]== i))
+                        (cables.get(j).getHoyitosConectados()[0][1] >= i && cables.get(j).getHoyitosConectados()[1][1]== i)||
+                        i == 13)
 
                         && (cables.get(j).getHoyitosConectados()[0][1] != 15 && cables.get(j).getHoyitosConectados()[1][1] != 15)){
 
@@ -1848,12 +1849,22 @@ public class SampleController implements Initializable {
                         target = 2;
                         carga = 3;
                     }else if (carga == 0 && carga2 != 0){
-                        System.out.println("Rojo confirmed");
                         target = 1;
                         carga = carga2;
                     }
+                    System.out.println("Cable GET [0][1]: "+cables.get(j).getHoyitosConectados()[0][1]);
+                    System.out.println("Cable GET [0][0]: "+cables.get(j).getHoyitosConectados()[0][0]);
+                    System.out.println("Cable GET [1][1]: "+cables.get(j).getHoyitosConectados()[1][1]);
+                    System.out.println("Cable GET [1][0]: "+cables.get(j).getHoyitosConectados()[1][0]);
                     if (i == 13 && cables.get(j).getHoyitosConectados()[1][1] == i){
+                        System.out.println("Cambio");
                         target = 0;
+                    }
+                    if (i == 13 && cables.get(j).getHoyitosConectados()[1][1] < i ){
+                        System.out.println("Cambio2");
+                        target = 0;
+                    }else if (i == 13 && cables.get(j).getHoyitosConectados()[0][1] < i){
+                        target = 1;
                     }
                     if (target == 0){
                         System.out.println(cables.get(j).getHoyitosConectados()[1][1]);
@@ -1891,8 +1902,8 @@ public class SampleController implements Initializable {
 
                 if (cables.get(i).hoyitosConectados[0][1] != 1 && cables.get(i).hoyitosConectados[1][1] != 1
                 && cables.get(i).hoyitosConectados[0][1] != 2 && cables.get(i).hoyitosConectados[1][1] != 2
-                && cables.get(i).hoyitosConectados[0][1] != 13 && cables.get(i).hoyitosConectados[1][1] != 3
-                && cables.get(i).hoyitosConectados[0][1] != 14 && cables.get(i).hoyitosConectados[1][1] != 4){
+                && cables.get(i).hoyitosConectados[0][1] != 13 && cables.get(i).hoyitosConectados[1][1] != 13
+                && cables.get(i).hoyitosConectados[0][1] != 14 && cables.get(i).hoyitosConectados[1][1] != 14){
                     int target = 2;
 
                     int diff = ubicador(cables.get(i).getHoyitosConectados()[0][1],cables.get(i).getHoyitosConectados()[0][0]);
@@ -1921,14 +1932,15 @@ public class SampleController implements Initializable {
                         target = 2;
                         carga = 3;
                     }else if (carga == 0 && carga2 != 0){
-                        System.out.println("Rojo confirmed");
+
                         target = 1;
                         carga = carga2;
                     }
+
                     if (i == 13 && cables.get(i).getHoyitosConectados()[0][0] < cables.get(i).getHoyitosConectados()[1][0]
                             && cables.get(i).getHoyitosConectados()[0][1] == cables.get(i).getHoyitosConectados()[1][1]
                     ){
-                        System.out.println("Cambio");
+
                         target = 1;
                     }
                     if (target == 0){
