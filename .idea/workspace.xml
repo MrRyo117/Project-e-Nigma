@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/src/main/java/com/example/projectenigma/SampleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/SampleController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Project-e-Nigma/target/classes/com/example/projectenigma/sample.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +130,8 @@
       <workItem from="1731092692310" duration="10641000" />
       <workItem from="1731441615762" duration="5016000" />
       <workItem from="1731540477840" duration="6896000" />
-      <workItem from="1732727314240" duration="11199000" />
+      <workItem from="1732727314240" duration="12067000" />
+      <workItem from="1732835976377" duration="3706000" />
     </task>
     <servers />
   </component>
