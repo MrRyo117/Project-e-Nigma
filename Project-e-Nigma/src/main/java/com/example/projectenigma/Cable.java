@@ -4,6 +4,7 @@ import javafx.scene.shape.Line;
 
 import java.util.ArrayList;
 
+
 public class Cable implements Insertables{
     //Atributos
 
@@ -35,6 +36,9 @@ public class Cable implements Insertables{
         this.hoyitosConectados[0][1] = hoyitoC;
     }
 
+    public void eliminarLinea(int index){
+
+    }
     public int[][] getHoyitosConectados() {
         return hoyitosConectados;
     }

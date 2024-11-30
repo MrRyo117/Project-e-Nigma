@@ -1308,54 +1308,55 @@ public class SampleController implements Initializable {
     }
     @FXML
     public void Display_Numero(){
-        double diffX = 0 ;
-        int coordY = 0;
-        int coordX = 0;
-        if ((registro[0][1] == 7 || registro[0][1] == 8)
-                && (registro[1][1] == 7 || registro[1][1] == 8)
-                && (registro[2][1] == 7 || registro[2][1] == 8)
-                && (registro[3][1] == 7 || registro[3][1] == 8)) {
+        double diffX2 = 0 ;
+        int coordY2 = 0;
+        int coordX2 = 0;
 
-            diffX = -1;
+        if ((registro[0][1] == 5 || registro[0][1] == 10)
+                && (registro[1][1] == 5 || registro[1][1] == 10)
+                && (registro[2][1] == 5 || registro[2][1] == 10)
+                && (registro[3][1] == 5 || registro[3][1] == 10)) {
+
+            diffX2 = -1;
             double diffY = -1;
 
-            coordY = registro[0][0];
-            coordX = registro[0][1];
+            coordY2= registro[0][0];
+            coordX2 = registro[0][1];
 
             /* Condicional el cual me guarda en las variables coordY, coordX cual es el punto menor dentro del protoboard
             Esto sirve para la creacion de la figura, pues permite que siempre se sepa cual es la esquina en donde se debe
             empezar a dibujar*/
-            if (coordY > registro[1][0]) {
-                coordY = registro[1][0];
-                coordX = registro[1][1];
-            } else if (coordY > registro[2][0]) {
-                coordY = registro[2][0];
-                coordX = registro[2][1];
+            if (coordY2 > registro[1][0]) {
+                coordY2 = registro[1][0];
+                coordX2 = registro[1][1];
+            } else if (coordY2 > registro[2][0]) {
+                coordY2 = registro[2][0];
+                coordX2 = registro[2][1];
             }
 
             /*Grupo de condicionales quienes comprueban que las coordenadas X correspondan con las coordenadas Y*/
-            if (coordY == registro[0][0] && coordX != registro[0][1]) {
+            if (coordY2 == registro[0][0] && coordX2 != registro[0][1]) {
 
-                if (coordX > registro[0][1]) {
-                    coordX = registro[0][1];
+                if (coordX2 > registro[0][1]) {
+                    coordX2 = registro[0][1];
                 }
 
-            } else if (coordY == registro[1][0] && coordX != registro[1][1]) {
+            } else if (coordY2 == registro[1][0] && coordX2 != registro[1][1]) {
 
-                if (coordX > registro[1][1]) {
-                    coordX = registro[1][1];
+                if (coordX2 > registro[1][1]) {
+                    coordX2 = registro[1][1];
                 }
 
-            } else if (coordY == registro[2][0] && coordX != registro[2][1]) {
+            } else if (coordY2 == registro[2][0] && coordX2 != registro[2][1]) {
 
-                if (coordX > registro[2][1]) {
-                    coordX = registro[2][1];
+                if (coordX2 > registro[2][1]) {
+                    coordX2 = registro[2][1];
                 }
 
-            } else if (coordY == registro[3][0] && coordX != registro[3][1]) {
+            } else if (coordY2 == registro[3][0] && coordX2 != registro[3][1]) {
 
-                if (coordX > registro[3][1]) {
-                    coordX = registro[3][1];
+                if (coordX2 > registro[3][1]) {
+                    coordX2 = registro[3][1];
                 }
 
             }
@@ -1363,83 +1364,104 @@ public class SampleController implements Initializable {
             /*Ciclo para saber el surco de las coordenadas X e Y*/
             for (int i = 0; i <= 3; i++) {
 
-                if (coordX == registro[i][1] && coordY != registro[i][0]) {
+                if (coordX2 == registro[i][1] && coordY2 != registro[i][0]) {
 
-                    diffX = ArCircles[registro[i][0]][registro[i][1]].getCenterX() - ArCircles[coordY][coordX].getCenterX();
+                    diffX2 = ArCircles[registro[i][0]][registro[i][1]].getCenterX() - ArCircles[coordY2][coordX2].getCenterX();
                 }
 
-                if (coordY == registro[i][0] && coordX != registro[i][1]) {
+                if (coordY2 == registro[i][0] && coordX2 != registro[i][1]) {
 
-                    diffY = ArCircles[registro[i][0] - 1][registro[i][1] - 1].getCenterY() - ArCircles[coordY - 1][coordX - 1].getCenterY();
+                    diffY = ArCircles[registro[i][0] - 1][registro[i][1] - 1].getCenterY() - ArCircles[coordY2 - 1][coordX2 - 1].getCenterY();
 
                 }
+
             }
 
-            //Agrupar_Dibujo_Swich8P se encarga de encapsular todas las figuras que conforman el swich en un solo objeto.
-            Group Agrupar_Dibujo_Swich8P = new Group();
-            Group Agrupar_Dibujo_interruptor = new Group();
+            //Agrupar_Dibujo_Display se encarga de encapsular todas las figuras que conforman el swich en un solo objeto.
+            Group Agrupar_Dibujo_Display = new Group();
+            Group Agrupar_Dibujo_lineas_display = new Group();
 
-            Rectangle cuerpoSwich8P = new Rectangle(
-                    ArCircles[coordY - 1][coordX - 1].getCenterX() - 50, //Altura
-                    ArCircles[coordY - 1][coordX - 1].getCenterY() + 5,   //Ancho
-                    diffX + 20,   //coordenada X
-                    diffY - 10    //coordena Y
+            Rectangle cuerpoDisplay = new Rectangle(
+                    ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 10, //coordenada X
+                    ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + 5,   //coordenada Y
+                    diffX2 + 20,   //Ancho
+                    diffY - 10   //Altura
             );
 
 
-            cuerpoSwich8P.setStroke(Color.BLACK);
-            cuerpoSwich8P.setStrokeWidth(2);
-            cuerpoSwich8P.setFill(Color.RED);
 
-            Agrupar_Dibujo_Swich8P.getChildren().add(cuerpoSwich8P);
+            cuerpoDisplay.setStroke(Color.BLACK);
+            cuerpoDisplay.setStrokeWidth(2);
+            cuerpoDisplay.setFill(Color.BLACK);
 
-            if ((((int) diffX / 30) + 1) % 7 == 1) {
-                for (int i = 0; (i * 30) <= diffX; i++) {
+            Agrupar_Dibujo_Display.getChildren().add(cuerpoDisplay);
+            int dibujo_vertical=18;
+            int dibujo_horizontal=60;
+            int desplazamineto_vertical=18;
+            if ((((int) diffX2*2 / 60) + 1) % 4== 1) {//con % 4 son 5 hoyitos
+                for (int i = 1; (i * 30) <= diffX2; i++) {
+                    if(i<=2) {
+                        Rectangle lineas_verticales_sup = new Rectangle(
+                                (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 ,
+                                ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + dibujo_vertical,
+                                10,
+                                diffY - 110
+                        );
+                        lineas_verticales_sup.setStrokeWidth(1);
 
+                        lineas_verticales_sup.setStroke(Color.BLACK);
+                        lineas_verticales_sup.setFill(Color.GRAY);
+                        Agrupar_Dibujo_lineas_display.getChildren().add(lineas_verticales_sup);
 
-                    Line patitaSup = new Line(
-                            ArCircles[coordY - 1][coordX - 1].getCenterX() + 30 * i,
-                            ArCircles[coordY - 1][coordX - 1].getCenterY(),
-                            ArCircles[coordY - 1][coordX - 1].getCenterX() + 30 * i,
-                            ArCircles[coordY - 1][coordX - 1].getCenterY() + 5
+                    }
+                    else if(i<=4) {
+                        Rectangle lineas_verticales_inferiores = new Rectangle(
+                                (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 + dibujo_horizontal,
+                                ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + dibujo_vertical-156,
+                                10,
+                                diffY - 110
+                        );
 
-                    );
+                        lineas_verticales_inferiores.setStrokeWidth(1);
 
-                    Line patitaInf = new Line(
-                            ArCircles[coordY - 1][coordX - 1].getCenterX() + 30 * i,
-                            ArCircles[coordY - 1][coordX - 1].getCenterY() + diffY,
-                            ArCircles[coordY - 1][coordX - 1].getCenterX() + 30 * i,
-                            ArCircles[coordY - 1][coordX - 1].getCenterY() - 5 + diffY
+                        lineas_verticales_inferiores.setStroke(Color.BLACK);
+                        lineas_verticales_inferiores.setFill(Color.GRAY);
+                        Agrupar_Dibujo_lineas_display.getChildren().add(lineas_verticales_inferiores);
 
-                    );
-
-                    Rectangle interruptor = new Rectangle(
-                            (ArCircles[coordY - 1][coordX - 1].getCenterX() - 5) + 30 * i,
-                            ArCircles[coordY - 1][coordX - 1].getCenterY() + 18,
-                            10,
-                            diffY - 37
-                    );
-
-
-                    interruptor.setStrokeWidth(1);
-
-                    patitaSup.setStrokeWidth(2);
-                    patitaInf.setStrokeWidth(2);
-
-                    patitaSup.setStroke(Color.GRAY);
-                    patitaInf.setStroke(Color.GRAY);
-
-                    interruptor.setStroke(Color.BLACK);
-                    interruptor.setFill(Color.WHITE);
-
-                    Agrupar_Dibujo_Swich8P.getChildren().add(patitaInf);
-                    Agrupar_Dibujo_Swich8P.getChildren().add(patitaSup);
-                    Agrupar_Dibujo_interruptor.getChildren().add(interruptor);
+                    }
+                    dibujo_vertical=dibujo_vertical+78;
 
                     Historial.add(6);
 
+                }for(int i = 2; (i * 30) <= diffX2; i++){
+                    Rectangle lineas_horizontales = new Rectangle(
+                            (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 +20,
+                            ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + desplazamineto_vertical,
+                            30,
+                            diffY - 160
+                    );
+                    lineas_horizontales.setStrokeWidth(1);
+
+                    lineas_horizontales.setStroke(Color.BLACK);
+                    lineas_horizontales.setFill(Color.GRAY);
+                    Agrupar_Dibujo_lineas_display.getChildren().add(lineas_horizontales);
+                    desplazamineto_vertical=desplazamineto_vertical+65;
 
                 }
+                Rectangle punto = new Rectangle(
+                        (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 +80,
+                        ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + 148,
+                        10,
+                        diffY-160
+                );
+                punto.setStrokeWidth(1);
+
+                punto.setStroke(Color.BLACK);
+                punto.setFill(Color.GRAY);
+                Agrupar_Dibujo_lineas_display.getChildren().add(punto);
+                AnchorPane.getChildren().addAll(Agrupar_Dibujo_Display,Agrupar_Dibujo_lineas_display);
+            }else{
+                System.out.println("Seleccionado una cantidad de hoyitos no admisibles");
             }
         }
     }
@@ -1771,6 +1793,7 @@ public class SampleController implements Initializable {
 
             Cable cable = new Cable(cable1, entrada1, entrada2, carga);
 
+
             cables.add(cable);
 
             Historial.add(1);
@@ -1780,7 +1803,18 @@ public class SampleController implements Initializable {
                 if (event.getButton() == MouseButton.SECONDARY) {
                     Node presionado = (Node) event.getSource();
                     int indice = AnchorPane.getChildren().indexOf(presionado);
+                    System.out.println(cables.size());
+                    for (int i = 0; i < cables.size(); i++) {
+
+                        if(cables.get(i).linea == AnchorPane.getChildren().get(indice)){
+                            status_hoyitos[ cables.get(i).hoyitosConectados[0][0] ][ cables.get(i).hoyitosConectados[0][1] ] = false;
+                            status_hoyitos[ cables.get(i).hoyitosConectados[1][0] ][ cables.get(i).hoyitosConectados[1][1] ] = false;
+                            cables.remove(i);
+
+                        }
+                    }
                     Borrar_pieza(indice);
+                    //Recargar();
                 }
             });
         } else {
@@ -1879,27 +1913,219 @@ public class SampleController implements Initializable {
 
 
     }
-
+    @FXML
     public void Recargar() {
-        int count = 0;
+        //Resetea dejando todo el neutro excepto lo quemado
+        for (int i = lastMod; i< lastInt; i++){
+            if(((Circle)AnchorPane.getChildren().get(i)).getStroke() != Color.BROWN){
+                ((Circle)AnchorPane.getChildren().get(i)).setStroke(Color.BLACK);
+                ((Circle)AnchorPane.getChildren().get(i)).setStrokeWidth(1);
+            }
+        }
+        //Carga los buses de vuelta (Bateria a buses)
         for (int i = 0; i < cables.size(); i++) {
 
             if (cables.get(i).getHoyitosConectados()[0][1] == 15 || cables.get(i).getHoyitosConectados()[1][1] == 15) {
-
-                count++;
-                System.out.println("Hay " + count + " cable a bateria");
-
                 if (cables.get(i).getHoyitosConectados()[0][1] == 1) {
-                    System.out.println("Hay un cable de bateria al primer bus -> a");
+                    //System.out.println("Hay un cable de bateria al primer bus -> a");
                     CargasBuses(0, cables.get(i).getCarga());
                 } else if (cables.get(i).getHoyitosConectados()[1][1] == 1) {
-                    System.out.println("Hay un cable de bateria al primer bus -> b");
+                    //System.out.println("Hay un cable de bateria al primer bus -> b");
                     CargasBuses(0, cables.get(i).getCarga());
                 }
 
+                if (cables.get(i).getHoyitosConectados()[0][1] == 2) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> a");
+                    CargasBuses(1, cables.get(i).getCarga());
+                } else if (cables.get(i).getHoyitosConectados()[1][1] == 2) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> b");
+                    CargasBuses(1, cables.get(i).getCarga());
+                }
+
+                if (cables.get(i).getHoyitosConectados()[0][1] == 13) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> a");
+                    CargasBuses(12, cables.get(i).getCarga());
+                } else if (cables.get(i).getHoyitosConectados()[1][1] == 13) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> b");
+                    CargasBuses(12, cables.get(i).getCarga());
+                }
+                if (cables.get(i).getHoyitosConectados()[0][1] == 14) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> a");
+                    CargasBuses(13, cables.get(i).getCarga());
+                } else if (cables.get(i).getHoyitosConectados()[1][1] == 14) {
+                    //System.out.println("Hay un cable de bateria al primer bus -> b");
+                    CargasBuses(13, cables.get(i).getCarga());
+                }
             }
         }
+        //Carga de Buses a puertos
+        for (int i = 1; i <= 14 ; i++){
+            if (i == 3){
+                i = 13;
+            }
+            for (int j = 0; j < cables.size(); j++) {
 
+                if(((cables.get(j).getHoyitosConectados()[0][1]== i && cables.get(j).getHoyitosConectados()[1][1] >= i) ||
+                        (cables.get(j).getHoyitosConectados()[0][1] >= i && cables.get(j).getHoyitosConectados()[1][1]== i)||
+                        i == 13)
+
+                        && (cables.get(j).getHoyitosConectados()[0][1] != 15 && cables.get(j).getHoyitosConectados()[1][1] != 15)){
+
+                    int target = 2;
+
+                    int diff = ubicador(cables.get(j).getHoyitosConectados()[0][1],cables.get(j).getHoyitosConectados()[0][0]);
+                    int diff2 = ubicador(cables.get(j).getHoyitosConectados()[1][1],cables.get(j).getHoyitosConectados()[1][0]);
+
+                    int carga = 0;
+                    int carga2 = 0;
+
+                    Color colorAux = (Color) ((Circle)AnchorPane.getChildren().get(diff)).getStroke();
+                    Color colorAux2 = (Color) ((Circle)AnchorPane.getChildren().get(diff2)).getStroke();
+                    target = 0;
+                    if (cables.get(j).getHoyitosConectados()[0][1] > cables.get(j).getHoyitosConectados()[1][1]){
+                        target = 1;
+                    }
+                    if(colorAux == Color.RED){
+                        carga = 1;
+                    }else if(colorAux == Color.BLUE){
+                        carga = -1;
+                    }
+
+                    if(colorAux2 == Color.RED){
+                        carga2 = 1;
+
+                    }else if(colorAux2 == Color.BLUE){
+                        carga2 = -1;
+                    }
+                    if (carga == carga2*-1 && carga != 0) {
+                        target = 2;
+                        carga = 3;
+                    }else if (carga == 0 && carga2 != 0){
+                        target = 1;
+                        carga = carga2;
+                    }
+                    System.out.println("Cable GET [0][1]: "+cables.get(j).getHoyitosConectados()[0][1]);
+                    System.out.println("Cable GET [0][0]: "+cables.get(j).getHoyitosConectados()[0][0]);
+                    System.out.println("Cable GET [1][1]: "+cables.get(j).getHoyitosConectados()[1][1]);
+                    System.out.println("Cable GET [1][0]: "+cables.get(j).getHoyitosConectados()[1][0]);
+                    if (i == 13 && cables.get(j).getHoyitosConectados()[1][1] == i){
+                        System.out.println("Cambio");
+                        target = 0;
+                    }
+                    if (i == 13 && cables.get(j).getHoyitosConectados()[1][1] < i ){
+                        System.out.println("Cambio2");
+                        target = 0;
+                    }else if (i == 13 && cables.get(j).getHoyitosConectados()[0][1] < i){
+                        target = 1;
+                    }
+                    if (target == 0){
+                        System.out.println(cables.get(j).getHoyitosConectados()[1][1]);
+                        if(cables.get(j).getHoyitosConectados()[1][1] >= 1 && cables.get(j).getHoyitosConectados()[1][1] < 3){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[1][1]-1,carga);
+                        }else if(cables.get(j).getHoyitosConectados()[1][1] >= 3 && cables.get(j).getHoyitosConectados()[1][1] < 7){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[1][0]-1,carga,1);
+                        }else if(cables.get(j).getHoyitosConectados()[1][1] >= 7 && cables.get(j).getHoyitosConectados()[1][1] < 13){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[1][0]-1,carga,2);
+                        }else if(cables.get(j).getHoyitosConectados()[1][1] >= 13 && cables.get(j).getHoyitosConectados()[1][1] <= 14){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[1][1]-1,carga);
+                        }
+                    }else if (target == 1){
+                        System.out.println(cables.get(j).getHoyitosConectados()[0][1]);
+                        if(cables.get(j).getHoyitosConectados()[0][1] >= 1 && cables.get(j).getHoyitosConectados()[0][1] < 3){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[0][1]-1,carga);
+                        }else if(cables.get(j).getHoyitosConectados()[0][1] >= 3 && cables.get(j).getHoyitosConectados()[0][1] < 7){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[0][0]-1,carga,1);
+                        }else if(cables.get(j).getHoyitosConectados()[0][1] >= 7 && cables.get(j).getHoyitosConectados()[0][1] < 13){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[0][0]-1,carga,2);
+                        }else if(cables.get(j).getHoyitosConectados()[0][1] >= 13 && cables.get(j).getHoyitosConectados()[0][1] <= 14){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[0][1]-1,carga);
+                        }
+                    }
+                }
+            }
+        }
+        //Carga entre puertos medios
+        boolean proceso = true;
+        int count = 0;
+        while(proceso && count<10){
+            proceso = false;
+            count++;
+            for(int i = 0; i < cables.size(); i++){
+
+                if (cables.get(i).hoyitosConectados[0][1] != 1 && cables.get(i).hoyitosConectados[1][1] != 1
+                && cables.get(i).hoyitosConectados[0][1] != 2 && cables.get(i).hoyitosConectados[1][1] != 2
+                && cables.get(i).hoyitosConectados[0][1] != 13 && cables.get(i).hoyitosConectados[1][1] != 13
+                && cables.get(i).hoyitosConectados[0][1] != 14 && cables.get(i).hoyitosConectados[1][1] != 14){
+                    int target = 2;
+
+                    int diff = ubicador(cables.get(i).getHoyitosConectados()[0][1],cables.get(i).getHoyitosConectados()[0][0]);
+                    int diff2 = ubicador(cables.get(i).getHoyitosConectados()[1][1],cables.get(i).getHoyitosConectados()[1][0]);
+
+                    int carga = 0;
+                    int carga2 = 0;
+
+                    Color colorAux = (Color) ((Circle)AnchorPane.getChildren().get(diff)).getStroke();
+                    Color colorAux2 = (Color) ((Circle)AnchorPane.getChildren().get(diff2)).getStroke();
+                    target = 0;
+                    if(colorAux == Color.RED){
+                        carga = 1;
+                    }else if(colorAux == Color.BLUE){
+                        carga = -1;
+                    }
+
+                    if(colorAux2 == Color.RED){
+                        carga2 = 1;
+
+                    }else if(colorAux2 == Color.BLUE){
+                        carga2 = -1;
+                    }
+                    if (carga == carga2 && carga != 0) {
+                        System.out.println("Same confirmed");
+                        target = 2;
+                        carga = 3;
+                    }else if (carga == 0 && carga2 != 0){
+
+                        target = 1;
+                        carga = carga2;
+                    }
+
+                    if (i == 13 && cables.get(i).getHoyitosConectados()[0][0] < cables.get(i).getHoyitosConectados()[1][0]
+                            && cables.get(i).getHoyitosConectados()[0][1] == cables.get(i).getHoyitosConectados()[1][1]
+                    ){
+
+                        target = 1;
+                    }
+                    if (target == 0){
+                        System.out.println(cables.get(i).getHoyitosConectados()[1][1]);
+                        if(cables.get(i).getHoyitosConectados()[1][1] >= 1 && cables.get(i).getHoyitosConectados()[1][1] < 3){
+                            CargasBuses(cables.get(i).getHoyitosConectados()[1][1]-1,carga);
+                        }else if(cables.get(i).getHoyitosConectados()[1][1] >= 3 && cables.get(i).getHoyitosConectados()[1][1] < 8){
+                            CargarPistas(cables.get(i).getHoyitosConectados()[1][0]-1,carga,1);
+                        }else if(cables.get(i).getHoyitosConectados()[1][1] >= 8 && cables.get(i).getHoyitosConectados()[1][1] < 13){
+                            CargarPistas(cables.get(i).getHoyitosConectados()[1][0]-1,carga,2);
+                        }else if(cables.get(i).getHoyitosConectados()[1][1] >= 13 && cables.get(i).getHoyitosConectados()[1][1] <= 14){
+                            CargasBuses(cables.get(i).getHoyitosConectados()[1][1]-1,carga);
+                        }
+                        proceso = true;
+                    }else if (target == 1){
+                        System.out.println(cables.get(i).getHoyitosConectados()[0][1]);
+                        if(cables.get(i).getHoyitosConectados()[0][1] >= 1 && cables.get(i).getHoyitosConectados()[0][1] < 3){
+                            CargasBuses(cables.get(i).getHoyitosConectados()[0][1]-1,carga);
+                        }else if(cables.get(i).getHoyitosConectados()[0][1] >= 3 && cables.get(i).getHoyitosConectados()[0][1] < 8){
+                            CargarPistas(cables.get(i).getHoyitosConectados()[0][0]-1,carga,1);
+                        }else if(cables.get(i).getHoyitosConectados()[0][1] >= 8 && cables.get(i).getHoyitosConectados()[0][1] < 13){
+                            CargarPistas(cables.get(i).getHoyitosConectados()[0][0]-1,carga,2);
+                        }else if(cables.get(i).getHoyitosConectados()[0][1] >= 13 && cables.get(i).getHoyitosConectados()[0][1] <= 14){
+                            CargasBuses(cables.get(i).getHoyitosConectados()[0][1]-1,carga);
+                        }
+                        proceso = true;
+                    }
+                }
+
+            }
+
+
+        }
     }
 
     public void CargasBuses(int fila, int carga) {
@@ -1928,7 +2154,12 @@ public class SampleController implements Initializable {
             int diff = lastInt - (14 * i) - (14 - fila);
 
             ((Circle) AnchorPane.getChildren().get(diff)).setStroke(color);
-            ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(2);
+            if (color != Color.BLACK){
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(2);
+            }else{
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            }
+
         }
     }
 
@@ -2256,6 +2487,7 @@ public class SampleController implements Initializable {
         // 511 cantidad de objetos con el nuevo protoboard
         corrector_de_pos = corrector_de_pos + 550;
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
