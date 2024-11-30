@@ -1807,10 +1807,12 @@ public class SampleController implements Initializable {
                     for (int i = 0; i < cables.size(); i++) {
 
                         if(cables.get(i).linea == AnchorPane.getChildren().get(indice)){
+                            status_hoyitos[ cables.get(i).hoyitosConectados[0][0] ][ cables.get(i).hoyitosConectados[0][1] ] = false;
+                            status_hoyitos[ cables.get(i).hoyitosConectados[1][0] ][ cables.get(i).hoyitosConectados[1][1] ] = false;
                             cables.remove(i);
+
                         }
                     }
-                    System.out.println(cables.size());
                     Borrar_pieza(indice);
                     //Recargar();
                 }
@@ -1913,7 +1915,6 @@ public class SampleController implements Initializable {
     }
     @FXML
     public void Recargar() {
-        int count = 0;
         //Resetea dejando todo el neutro excepto lo quemado
         for (int i = lastMod; i< lastInt; i++){
             if(((Circle)AnchorPane.getChildren().get(i)).getStroke() != Color.BROWN){
@@ -1921,14 +1922,10 @@ public class SampleController implements Initializable {
                 ((Circle)AnchorPane.getChildren().get(i)).setStrokeWidth(1);
             }
         }
-        //Carga los buses de vuelta
+        //Carga los buses de vuelta (Bateria a buses)
         for (int i = 0; i < cables.size(); i++) {
 
             if (cables.get(i).getHoyitosConectados()[0][1] == 15 || cables.get(i).getHoyitosConectados()[1][1] == 15) {
-
-                count++;
-                System.out.println("Hay " + count + " cable a bateria");
-
                 if (cables.get(i).getHoyitosConectados()[0][1] == 1) {
                     //System.out.println("Hay un cable de bateria al primer bus -> a");
                     CargasBuses(0, cables.get(i).getCarga());
@@ -1961,42 +1958,174 @@ public class SampleController implements Initializable {
                 }
             }
         }
-        /*
-        for (int i = lastMod; i< lastInt; i = i+14){
-
+        //Carga de Buses a puertos
+        for (int i = 1; i <= 14 ; i++){
+            if (i == 3){
+                i = 13;
+            }
             for (int j = 0; j < cables.size(); j++) {
-                if(cables.get(j).getHoyitosConectados()[0][0]== 1 && cables.get(j).getHoyitosConectados()[0][1] != 15){
+
+                if(((cables.get(j).getHoyitosConectados()[0][1]== i && cables.get(j).getHoyitosConectados()[1][1] >= i) ||
+                        (cables.get(j).getHoyitosConectados()[0][1] >= i && cables.get(j).getHoyitosConectados()[1][1]== i)||
+                        i == 13)
+
+                        && (cables.get(j).getHoyitosConectados()[0][1] != 15 && cables.get(j).getHoyitosConectados()[1][1] != 15)){
+
+                    int target = 2;
+
                     int diff = ubicador(cables.get(j).getHoyitosConectados()[0][1],cables.get(j).getHoyitosConectados()[0][0]);
+                    int diff2 = ubicador(cables.get(j).getHoyitosConectados()[1][1],cables.get(j).getHoyitosConectados()[1][0]);
+
                     int carga = 0;
+                    int carga2 = 0;
+
                     Color colorAux = (Color) ((Circle)AnchorPane.getChildren().get(diff)).getStroke();
+                    Color colorAux2 = (Color) ((Circle)AnchorPane.getChildren().get(diff2)).getStroke();
+                    target = 0;
+                    if (cables.get(j).getHoyitosConectados()[0][1] > cables.get(j).getHoyitosConectados()[1][1]){
+                        target = 1;
+                    }
                     if(colorAux == Color.RED){
                         carga = 1;
                     }else if(colorAux == Color.BLUE){
                         carga = -1;
                     }
-                    System.out.println("CABLES GET: " +cables.get(j).getHoyitosConectados()[1][0]);
-                    if(cables.get(j).getHoyitosConectados()[1][0] >= 1 && cables.get(j).getHoyitosConectados()[1][0] < 3){
-                        System.out.println("Here");
-                        CargasBuses(cables.get(j).getHoyitosConectados()[0][0],carga);
-                    }else if(cables.get(j).getHoyitosConectados()[1][0] >= 3 && cables.get(j).getHoyitosConectados()[1][0] < 7){
-                        CargarPistas(cables.get(j).getHoyitosConectados()[1][1],carga,1);
-                    }else if(cables.get(j).getHoyitosConectados()[1][0] >= 7 && cables.get(j).getHoyitosConectados()[1][0] < 13){
-                        CargarPistas(cables.get(j).getHoyitosConectados()[1][1],carga,2);
-                    }else if(cables.get(j).getHoyitosConectados()[1][0] >= 13 && cables.get(j).getHoyitosConectados()[1][0] <= 14){
-                        CargasBuses(cables.get(j).getHoyitosConectados()[0][0],carga);
+
+                    if(colorAux2 == Color.RED){
+                        carga2 = 1;
+
+                    }else if(colorAux2 == Color.BLUE){
+                        carga2 = -1;
+                    }
+                    if (carga == carga2*-1 && carga != 0) {
+                        target = 2;
+                        carga = 3;
+                    }else if (carga == 0 && carga2 != 0){
+                        target = 1;
+                        carga = carga2;
+                    }
+                    System.out.println("Cable GET [0][1]: "+cables.get(j).getHoyitosConectados()[0][1]);
+                    System.out.println("Cable GET [0][0]: "+cables.get(j).getHoyitosConectados()[0][0]);
+                    System.out.println("Cable GET [1][1]: "+cables.get(j).getHoyitosConectados()[1][1]);
+                    System.out.println("Cable GET [1][0]: "+cables.get(j).getHoyitosConectados()[1][0]);
+                    if (i == 13 && cables.get(j).getHoyitosConectados()[1][1] == i){
+                        System.out.println("Cambio");
+                        target = 0;
+                    }
+                    if (i == 13 && cables.get(j).getHoyitosConectados()[1][1] < i ){
+                        System.out.println("Cambio2");
+                        target = 0;
+                    }else if (i == 13 && cables.get(j).getHoyitosConectados()[0][1] < i){
+                        target = 1;
+                    }
+                    if (target == 0){
+                        System.out.println(cables.get(j).getHoyitosConectados()[1][1]);
+                        if(cables.get(j).getHoyitosConectados()[1][1] >= 1 && cables.get(j).getHoyitosConectados()[1][1] < 3){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[1][1]-1,carga);
+                        }else if(cables.get(j).getHoyitosConectados()[1][1] >= 3 && cables.get(j).getHoyitosConectados()[1][1] < 7){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[1][0]-1,carga,1);
+                        }else if(cables.get(j).getHoyitosConectados()[1][1] >= 7 && cables.get(j).getHoyitosConectados()[1][1] < 13){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[1][0]-1,carga,2);
+                        }else if(cables.get(j).getHoyitosConectados()[1][1] >= 13 && cables.get(j).getHoyitosConectados()[1][1] <= 14){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[1][1]-1,carga);
+                        }
+                    }else if (target == 1){
+                        System.out.println(cables.get(j).getHoyitosConectados()[0][1]);
+                        if(cables.get(j).getHoyitosConectados()[0][1] >= 1 && cables.get(j).getHoyitosConectados()[0][1] < 3){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[0][1]-1,carga);
+                        }else if(cables.get(j).getHoyitosConectados()[0][1] >= 3 && cables.get(j).getHoyitosConectados()[0][1] < 7){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[0][0]-1,carga,1);
+                        }else if(cables.get(j).getHoyitosConectados()[0][1] >= 7 && cables.get(j).getHoyitosConectados()[0][1] < 13){
+                            CargarPistas(cables.get(j).getHoyitosConectados()[0][0]-1,carga,2);
+                        }else if(cables.get(j).getHoyitosConectados()[0][1] >= 13 && cables.get(j).getHoyitosConectados()[0][1] <= 14){
+                            CargasBuses(cables.get(j).getHoyitosConectados()[0][1]-1,carga);
+                        }
+                    }
+                }
+            }
+        }
+        //Carga entre puertos medios
+        boolean proceso = true;
+        int count = 0;
+        while(proceso && count<10){
+            proceso = false;
+            count++;
+            for(int i = 0; i < cables.size(); i++){
+
+                if (cables.get(i).hoyitosConectados[0][1] != 1 && cables.get(i).hoyitosConectados[1][1] != 1
+                && cables.get(i).hoyitosConectados[0][1] != 2 && cables.get(i).hoyitosConectados[1][1] != 2
+                && cables.get(i).hoyitosConectados[0][1] != 13 && cables.get(i).hoyitosConectados[1][1] != 13
+                && cables.get(i).hoyitosConectados[0][1] != 14 && cables.get(i).hoyitosConectados[1][1] != 14){
+                    int target = 2;
+
+                    int diff = ubicador(cables.get(i).getHoyitosConectados()[0][1],cables.get(i).getHoyitosConectados()[0][0]);
+                    int diff2 = ubicador(cables.get(i).getHoyitosConectados()[1][1],cables.get(i).getHoyitosConectados()[1][0]);
+
+                    int carga = 0;
+                    int carga2 = 0;
+
+                    Color colorAux = (Color) ((Circle)AnchorPane.getChildren().get(diff)).getStroke();
+                    Color colorAux2 = (Color) ((Circle)AnchorPane.getChildren().get(diff2)).getStroke();
+                    target = 0;
+                    if(colorAux == Color.RED){
+                        carga = 1;
+                    }else if(colorAux == Color.BLUE){
+                        carga = -1;
                     }
 
-                }
-                else if(cables.get(j).getHoyitosConectados()[1][0]== 1 && cables.get(j).getHoyitosConectados()[1][1] != 15){
+                    if(colorAux2 == Color.RED){
+                        carga2 = 1;
 
-                    //CargarPistas(cables.get(i).getHoyitosConectados()[1][1],-1);
+                    }else if(colorAux2 == Color.BLUE){
+                        carga2 = -1;
+                    }
+                    if (carga == carga2 && carga != 0) {
+                        System.out.println("Same confirmed");
+                        target = 2;
+                        carga = 3;
+                    }else if (carga == 0 && carga2 != 0){
+
+                        target = 1;
+                        carga = carga2;
+                    }
+
+                    if (i == 13 && cables.get(i).getHoyitosConectados()[0][0] < cables.get(i).getHoyitosConectados()[1][0]
+                            && cables.get(i).getHoyitosConectados()[0][1] == cables.get(i).getHoyitosConectados()[1][1]
+                    ){
+
+                        target = 1;
+                    }
+                    if (target == 0){
+                        System.out.println(cables.get(i).getHoyitosConectados()[1][1]);
+                        if(cables.get(i).getHoyitosConectados()[1][1] >= 1 && cables.get(i).getHoyitosConectados()[1][1] < 3){
+                            CargasBuses(cables.get(i).getHoyitosConectados()[1][1]-1,carga);
+                        }else if(cables.get(i).getHoyitosConectados()[1][1] >= 3 && cables.get(i).getHoyitosConectados()[1][1] < 8){
+                            CargarPistas(cables.get(i).getHoyitosConectados()[1][0]-1,carga,1);
+                        }else if(cables.get(i).getHoyitosConectados()[1][1] >= 8 && cables.get(i).getHoyitosConectados()[1][1] < 13){
+                            CargarPistas(cables.get(i).getHoyitosConectados()[1][0]-1,carga,2);
+                        }else if(cables.get(i).getHoyitosConectados()[1][1] >= 13 && cables.get(i).getHoyitosConectados()[1][1] <= 14){
+                            CargasBuses(cables.get(i).getHoyitosConectados()[1][1]-1,carga);
+                        }
+                        proceso = true;
+                    }else if (target == 1){
+                        System.out.println(cables.get(i).getHoyitosConectados()[0][1]);
+                        if(cables.get(i).getHoyitosConectados()[0][1] >= 1 && cables.get(i).getHoyitosConectados()[0][1] < 3){
+                            CargasBuses(cables.get(i).getHoyitosConectados()[0][1]-1,carga);
+                        }else if(cables.get(i).getHoyitosConectados()[0][1] >= 3 && cables.get(i).getHoyitosConectados()[0][1] < 8){
+                            CargarPistas(cables.get(i).getHoyitosConectados()[0][0]-1,carga,1);
+                        }else if(cables.get(i).getHoyitosConectados()[0][1] >= 8 && cables.get(i).getHoyitosConectados()[0][1] < 13){
+                            CargarPistas(cables.get(i).getHoyitosConectados()[0][0]-1,carga,2);
+                        }else if(cables.get(i).getHoyitosConectados()[0][1] >= 13 && cables.get(i).getHoyitosConectados()[0][1] <= 14){
+                            CargasBuses(cables.get(i).getHoyitosConectados()[0][1]-1,carga);
+                        }
+                        proceso = true;
+                    }
                 }
 
             }
-            //((Circle)AnchorPane.getChildren().get(i)).setStroke(Color.ORANGE);
-        }*/
 
 
+        }
     }
 
     public void CargasBuses(int fila, int carga) {
@@ -2025,7 +2154,12 @@ public class SampleController implements Initializable {
             int diff = lastInt - (14 * i) - (14 - fila);
 
             ((Circle) AnchorPane.getChildren().get(diff)).setStroke(color);
-            ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(2);
+            if (color != Color.BLACK){
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(2);
+            }else{
+                ((Circle) AnchorPane.getChildren().get(diff)).setStrokeWidth(1);
+            }
+
         }
     }
 
