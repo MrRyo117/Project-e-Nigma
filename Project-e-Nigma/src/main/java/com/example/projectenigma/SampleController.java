@@ -1311,6 +1311,14 @@ public class SampleController implements Initializable {
         double diffX2 = 0 ;
         int coordY2 = 0;
         int coordX2 = 0;
+        int punto_X2 =0 ;
+        int punto_Y2 = 0;
+        int punto_X3 =0 ;
+        int punto_Y3 = 0;
+        int punto_X4 =0 ;
+        int punto_Y4 = 0;
+
+        int[] Memoria_estado_original2 = new int[8];
 
         if ((registro[0][1] == 5 || registro[0][1] == 10)
                 && (registro[1][1] == 5 || registro[1][1] == 10)
@@ -1320,8 +1328,31 @@ public class SampleController implements Initializable {
             diffX2 = -1;
             double diffY = -1;
 
-            coordY2= registro[0][0];
+            coordY2 = registro[0][0];
             coordX2 = registro[0][1];
+
+            punto_X2 = registro[1][0];
+            punto_Y2 = registro[1][1];
+
+            punto_X3 = registro[2][0];
+            punto_Y3 = registro[2][1];
+
+            punto_X4 = registro[3][0];
+            punto_Y4 = registro[3][1];
+
+            int[] coordenadas ={coordY2,punto_X2,punto_X3,punto_X4};
+
+            for(int i =0;i<coordenadas.length-1;i++){
+                for(int j=0;j<coordenadas.length-1-i;j++){
+                    if(coordenadas[j]>coordenadas[j+1]){
+                        int temp= coordenadas[j];
+                        coordenadas[j]=coordenadas[j+1];
+                        coordenadas[j+1]=temp;
+                    }
+                }
+            }
+
+
 
             /* Condicional el cual me guarda en las variables coordY, coordX cual es el punto menor dentro del protoboard
             Esto sirve para la creacion de la figura, pues permite que siempre se sepa cual es la esquina en donde se debe
@@ -1388,21 +1419,20 @@ public class SampleController implements Initializable {
                     diffY - 10   //Altura
             );
 
-
-
             cuerpoDisplay.setStroke(Color.BLACK);
             cuerpoDisplay.setStrokeWidth(2);
             cuerpoDisplay.setFill(Color.BLACK);
 
             Agrupar_Dibujo_Display.getChildren().add(cuerpoDisplay);
-            int dibujo_vertical=18;
-            int dibujo_horizontal=60;
-            int desplazamineto_vertical=18;
-            if ((((int) diffX2*2 / 60) + 1) % 4== 1) {//con % 4 son 5 hoyitos
+
+            int dibujo_vertical = 18;
+            int dibujo_horizontal = 60;
+            int desplazamineto_vertical = 18;
+            if ((((int) diffX2 * 2 / 60) + 1) % 4 == 1) {//con % 4 son 5 hoyitos
                 for (int i = 1; (i * 30) <= diffX2; i++) {
-                    if(i<=2) {
+                    if (i <= 2) {
                         Rectangle lineas_verticales_sup = new Rectangle(
-                                (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 ,
+                                (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30,
                                 ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + dibujo_vertical,
                                 10,
                                 diffY - 110
@@ -1413,11 +1443,10 @@ public class SampleController implements Initializable {
                         lineas_verticales_sup.setFill(Color.GRAY);
                         Agrupar_Dibujo_lineas_display.getChildren().add(lineas_verticales_sup);
 
-                    }
-                    else if(i<=4) {
+                    } else if (i <= 4) {
                         Rectangle lineas_verticales_inferiores = new Rectangle(
                                 (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 + dibujo_horizontal,
-                                ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + dibujo_vertical-156,
+                                ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + dibujo_vertical - 156,
                                 10,
                                 diffY - 110
                         );
@@ -1429,13 +1458,14 @@ public class SampleController implements Initializable {
                         Agrupar_Dibujo_lineas_display.getChildren().add(lineas_verticales_inferiores);
 
                     }
-                    dibujo_vertical=dibujo_vertical+78;
+                    dibujo_vertical = dibujo_vertical + 78;
 
                     Historial.add(6);
 
-                }for(int i = 2; (i * 30) <= diffX2; i++){
+                }
+                for (int i = 2; (i * 30) <= diffX2; i++) {
                     Rectangle lineas_horizontales = new Rectangle(
-                            (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 +20,
+                            (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 + 20,
                             ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + desplazamineto_vertical,
                             30,
                             diffY - 160
@@ -1445,25 +1475,108 @@ public class SampleController implements Initializable {
                     lineas_horizontales.setStroke(Color.BLACK);
                     lineas_horizontales.setFill(Color.GRAY);
                     Agrupar_Dibujo_lineas_display.getChildren().add(lineas_horizontales);
-                    desplazamineto_vertical=desplazamineto_vertical+65;
+                    desplazamineto_vertical = desplazamineto_vertical + 65;
 
                 }
                 Rectangle punto = new Rectangle(
-                        (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 +80,
+                        (ArCircles[coordY2 - 1][coordX2 - 1].getCenterX() - 5) + 30 + 80,
                         ArCircles[coordY2 - 1][coordX2 - 1].getCenterY() + 148,
                         10,
-                        diffY-160
+                        diffY - 160
                 );
                 punto.setStrokeWidth(1);
 
                 punto.setStroke(Color.BLACK);
                 punto.setFill(Color.GRAY);
                 Agrupar_Dibujo_lineas_display.getChildren().add(punto);
-                AnchorPane.getChildren().addAll(Agrupar_Dibujo_Display,Agrupar_Dibujo_lineas_display);
-            }else{
+                AnchorPane.getChildren().addAll(Agrupar_Dibujo_Display, Agrupar_Dibujo_lineas_display);
+            } else {
                 System.out.println("Seleccionado una cantidad de hoyitos no admisibles");
             }
+
+            if(coordY2<punto_X2 && punto_X3<punto_X4){
+                int figura=0;
+                int figura2=4;
+                for(int i=coordY2;i<punto_X2+1;i++){
+                    int diffDisplay = ubicador(coordX2,i);
+                    if(figura==2 && (((Circle) AnchorPane.getChildren().get(diffDisplay)).getStroke() == Color.BLACK)){
+                        for(int j=1;j<figura;j++){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(j-1);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.GRAY);
+                            }
+                        }
+                    }
+                    else if((((Circle) AnchorPane.getChildren().get(diffDisplay)).getStroke() == Color.RED)) {
+                        if (figura ==0 ) {
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if (figura == 1) {
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if (figura == 3) {
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura - 1);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if (figura == 4) {
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura - 1);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                    }
+                    figura++;
+                }
+                for(int i=punto_X3;i<punto_X4+1;i++){
+                    int diffDisplay = ubicador(punto_Y3,i);
+                    if(figura2==6 && (((Circle) AnchorPane.getChildren().get(diffDisplay)).getStroke() == Color.BLACK)){
+                        for(int j=1;j<figura2;j++){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(j-1);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.GRAY);
+                            }
+                        }
+                    }
+                    else if((((Circle) AnchorPane.getChildren().get(diffDisplay)).getStroke() == Color.RED)){
+                        if(figura2==4){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura2);
+                            if(linea instanceof Rectangle){
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if(figura2==5){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura2);
+                            if(linea instanceof Rectangle){
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if(figura2==7){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura2-1);
+                            if(linea instanceof Rectangle){
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if(figura2==8){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura2-1);
+                            if(linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                    }
+                    figura2++;
+                }
+
+            }
         }
+
     }
     private void ClickCirculo(Circle circle) {
         int Columna = (((int) circle.getCenterX()) - 30) / 30;
