@@ -58,7 +58,7 @@
                <Insets right="5.0" />
             </HBox.margin></Button>
          <Button mnemonicParsing="false" onAction="#Display_Numero" text="Display Numero" />
-         <Button fx:id="cambiar_carga_motor" mnemonicParsing="false" text="Cambiar_carga_motor">
+         <Button fx:id="cambiar_carga_motor" mnemonicParsing="false" text="Cambiar carga motor">
             <HBox.margin>
                <Insets left="5.0" />
             </HBox.margin>
