@@ -1285,13 +1285,14 @@ public class SampleController implements Initializable {
 
                 if (((((Circle) AnchorPane.getChildren().get(diffPunto1)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffPunto3)).getStroke() == Color.RED))
                             || ((((Circle) AnchorPane.getChildren().get(diffPunto2)).getStroke() == Color.RED) && (((Circle) AnchorPane.getChildren().get(diffPunto4)).getStroke() == Color.RED))
-                                &&  (((((Circle) AnchorPane.getChildren().get(diffPunto1)).getStroke() == Color.BLUE)) && (((Circle) AnchorPane.getChildren().get(diffPunto3)).getStroke() == Color.BLUE))
-                                || (((((Circle) AnchorPane.getChildren().get(diffPunto2)).getStroke() == Color.BLUE)) && (((Circle) AnchorPane.getChildren().get(diffPunto4)).getStroke() == Color.BLUE))){
+                        &&  ((((((Circle) AnchorPane.getChildren().get(diffPunto1)).getStroke() == Color.BLUE)) && (((Circle) AnchorPane.getChildren().get(diffPunto3)).getStroke() == Color.BLUE))
+                        || (((((Circle) AnchorPane.getChildren().get(diffPunto2)).getStroke() == Color.BLUE)) && (((Circle) AnchorPane.getChildren().get(diffPunto4)).getStroke() == Color.BLUE)))){
                     System.out.println("Corto");
                     circulo_Centro.setFill(Color.GRAY);
                     memoria_color[0] = -1;
                 }else {
                     if (coodX[3]<=7){
+                        
                         if ((((Circle) AnchorPane.getChildren().get(diffPunto1)).getStroke() == Color.RED)
                                 && (((Circle) AnchorPane.getChildren().get(diffPunto3)).getStroke() == Color.RED)){
                             CargarPistas(coodY[1]-1,1,1);
