@@ -1819,6 +1819,7 @@ public class SampleController implements Initializable {
     }
 
     private int Carga_Motor=1;
+
     @FXML
     public int Cambiar_Carga_Motor(){
         if(Carga_Motor==1){
@@ -1828,6 +1829,8 @@ public class SampleController implements Initializable {
         }
         return Carga_Motor;
     }
+
+
     @FXML
     public void Cables() {
 
@@ -2575,8 +2578,8 @@ public class SampleController implements Initializable {
             Color colorFinal = (Color) ArCircles[registro[registro.length - 2][0] - 1][registro[registro.length - 2][1] - 1].getStroke();
 
             if((colorFinal==Color.RED && Memoria_estado_original[0]==0)|| Memoria_estado_original[0]==1){
-                Memoria_estado_original[0] = 1;
 
+                Memoria_estado_original[0] = 1;
 
                 if(3<=fila_motor && fila_motor<=7){
                     CargarPistas(columna_motor,0,1);
@@ -2591,15 +2594,46 @@ public class SampleController implements Initializable {
                 if(colorFinal==Color.BLACK){
                     if(3<=fila_motor && fila_motor<=7){
                         boton_en_ap.setFill(Color.BLACK);
-                        CargarPistas(columna_motor , 1, 1);
+                        CargarPistas(columna_motor, 1, 1);
+
                     }else if(8<=fila_motor && fila_motor<=12){
                         boton_en_ap.setFill(Color.BLACK);
                         CargarPistas(columna_motor,1,2);
+
                     }else if (fila_motor==1 || fila_motor==2 || fila_motor==13 || fila_motor==14) {
                         CargasBuses(fila_motor-1,1);
+
                     }
                 }
-             }
+             } else if ((colorFinal == Color.BLUE && Memoria_estado_original[0] == 0) || Memoria_estado_original[0] == 2) {
+
+                Memoria_estado_original[0] = 2;
+
+                if(3<=fila_motor && fila_motor<=7){
+                    CargarPistas(columna_motor,0,1);
+                    boton_en_ap.setFill(Color.BLUE);
+                }else if(8<=fila_motor && fila_motor<=12){
+                    CargarPistas(columna_motor,0,2);
+                    boton_en_ap.setFill(Color.BLUE);
+                } else if (fila_motor==1 || fila_motor==2 || fila_motor==13 || fila_motor==14) {
+                    CargasBuses(fila_motor-1,0);
+                }
+
+                if(colorFinal==Color.BLACK){
+                    if(3<=fila_motor && fila_motor<=7){
+                        boton_en_ap.setFill(Color.BLACK);
+                        CargarPistas(columna_motor, -1, 1);
+
+                    }else if(8<=fila_motor && fila_motor<=12){
+                        boton_en_ap.setFill(Color.BLACK);
+                        CargarPistas(columna_motor,-1,2);
+
+                    }else if (fila_motor==1 || fila_motor==2 || fila_motor==13 || fila_motor==14) {
+                        CargasBuses(fila_motor-1,-1);
+
+                    }
+                }
+            }
 
         });
 
