@@ -55,6 +55,9 @@ public class SampleController implements Initializable {
     private Button btnReset;
 
     @FXML
+    private Button cambiar_carga_motor;
+
+    @FXML
     private TextField ohm;
 
     private Protoboard Protoboard2 = new Protoboard();
@@ -1578,6 +1581,7 @@ public class SampleController implements Initializable {
         }
 
     }
+
     private void ClickCirculo(Circle circle) {
         int Columna = (((int) circle.getCenterX()) - 30) / 30;
         int Fila;
@@ -1682,8 +1686,8 @@ public class SampleController implements Initializable {
                 ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.CHOCOLATE);
                 ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(3);
             } else if (registro[2][0] == 35) {
-                ((Rectangle) AnchorPane.getChildren().get(3)).setStroke(Color.CHOCOLATE);
-                ((Rectangle) AnchorPane.getChildren().get(3)).setStrokeWidth(3);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.CHOCOLATE);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(3);
             }
 
             if (registro[0][0] == 33) {
@@ -1693,8 +1697,8 @@ public class SampleController implements Initializable {
                 ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.BLACK);
                 ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(1);
             } else if (registro[0][0] == 35) {
-                ((Rectangle) AnchorPane.getChildren().get(3)).setStroke(Color.BLACK);
-                ((Rectangle) AnchorPane.getChildren().get(3)).setStrokeWidth(3);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStroke(Color.BLACK);
+                ((Rectangle) AnchorPane.getChildren().get(2)).setStrokeWidth(1);
             }
 
             for (int i = 0; i < 3; i++) {
@@ -1738,6 +1742,16 @@ public class SampleController implements Initializable {
 
     }
 
+    private int Carga_Motor=1;
+    @FXML
+    public int Cambiar_Carga_Motor(){
+        if(Carga_Motor==1){
+            Carga_Motor=-1;
+        }else{
+            Carga_Motor=1;
+        }
+        return Carga_Motor;
+    }
     @FXML
     public void Cables() {
 
@@ -1820,13 +1834,13 @@ public class SampleController implements Initializable {
 
                 } else if (registro[3][0] == 35 && !status_hoyitos[registro[3][0]][registro[3][1]]) {
 
-                    /*boolean Cargapositiva = (registro[3][1] % 2 == 0);*/
-                    int Cargapositiva= 1;
+                    int Carga_actual=Cambiar_Carga_Motor();
 
                     int coordX = 1150;
                     int coordY;
+                    carga=Carga_actual;
 
-                    if (Cargapositiva==1) {
+                    if (carga==1) {
                         coordY = 450;
                         carga = 1;
                     } else {
