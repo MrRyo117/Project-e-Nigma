@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="980.0" prefWidth="1216.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectenigma.SampleController">
+<VBox alignment="CENTER" prefHeight="980.0" prefWidth="1216.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.projectenigma.SampleController">
 
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -58,6 +58,11 @@
                <Insets right="5.0" />
             </HBox.margin></Button>
          <Button mnemonicParsing="false" onAction="#Display_Numero" text="Display Numero" />
+         <Button fx:id="cambiar_carga_motor" mnemonicParsing="false" text="Cambiar_carga_motor">
+            <HBox.margin>
+               <Insets left="5.0" />
+            </HBox.margin>
+         </Button>
       </children>
    </HBox>
    <HBox alignment="CENTER" prefHeight="7.0" prefWidth="626.0">
