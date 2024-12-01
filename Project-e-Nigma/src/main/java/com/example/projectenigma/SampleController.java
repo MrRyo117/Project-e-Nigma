@@ -1329,9 +1329,7 @@ public class SampleController implements Initializable {
             double diffY = -1;
 
             coordY2 = registro[0][0];
-            System.out.println("punto: "+coordY2);
             coordX2 = registro[0][1];
-            System.out.println("punto:  "+coordX2);
 
             punto_X2 = registro[1][0];
             punto_Y2 = registro[1][1];
@@ -1496,21 +1494,87 @@ public class SampleController implements Initializable {
                 System.out.println("Seleccionado una cantidad de hoyitos no admisibles");
             }
 
-            if(coordY2<punto_X2){
+            if(coordY2<punto_X2 && punto_X3<punto_X4){
                 int figura=0;
-                for(int i=coordY2;i<punto_X2;i++){
+                int figura2=4;
+                for(int i=coordY2;i<punto_X2+1;i++){
                     int diffDisplay = ubicador(coordX2,i);
-                    if((((Circle) AnchorPane.getChildren().get(diffDisplay)).getStroke() == Color.RED)){
-                        Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura);
-                        if(linea instanceof Rectangle){
-                            ((Rectangle) linea).setFill(Color.RED);
+                    if(figura==2 && (((Circle) AnchorPane.getChildren().get(diffDisplay)).getStroke() == Color.BLACK)){
+                        for(int j=1;j<figura;j++){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(j-1);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.GRAY);
+                            }
+                        }
+                    }
+                    else if((((Circle) AnchorPane.getChildren().get(diffDisplay)).getStroke() == Color.RED)) {
+                        if (figura ==0 ) {
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if (figura == 1) {
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if (figura == 3) {
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura - 1);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if (figura == 4) {
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura - 1);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
                         }
                     }
                     figura++;
-                    
                 }
-            }
+                for(int i=punto_X3;i<punto_X4+1;i++){
+                    int diffDisplay = ubicador(punto_Y3,i);
+                    if(figura2==6 && (((Circle) AnchorPane.getChildren().get(diffDisplay)).getStroke() == Color.BLACK)){
+                        for(int j=1;j<figura2;j++){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(j-1);
+                            if (linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.GRAY);
+                            }
+                        }
+                    }
+                    else if((((Circle) AnchorPane.getChildren().get(diffDisplay)).getStroke() == Color.RED)){
+                        if(figura2==4){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura2);
+                            if(linea instanceof Rectangle){
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if(figura2==5){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura2);
+                            if(linea instanceof Rectangle){
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if(figura2==7){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura2-1);
+                            if(linea instanceof Rectangle){
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                        if(figura2==8){
+                            Node linea = Agrupar_Dibujo_lineas_display.getChildren().get(figura2-1);
+                            if(linea instanceof Rectangle) {
+                                ((Rectangle) linea).setFill(Color.RED);
+                            }
+                        }
+                    }
+                    figura2++;
+                }
 
+            }
         }
 
     }
