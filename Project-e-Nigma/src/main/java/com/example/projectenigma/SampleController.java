@@ -1569,6 +1569,23 @@ public class SampleController implements Initializable {
                 punto.setFill(Color.GRAY);
                 Agrupar_Dibujo_lineas_display.getChildren().add(punto);
                 AnchorPane.getChildren().addAll(Agrupar_Dibujo_Display, Agrupar_Dibujo_lineas_display);
+
+
+                Group Agrupador_Total = new Group();
+
+                Agrupador_Total.getChildren().add(Agrupar_Dibujo_Display);
+                Agrupador_Total.getChildren().add(Agrupar_Dibujo_lineas_display);
+                AnchorPane.getChildren().addAll(Agrupador_Total);
+
+
+                Agrupador_Total.setOnMouseClicked((event) -> {
+                    if (event.getButton() == MouseButton.SECONDARY) {
+                        Node presionado = (Node) event.getSource();
+                        int indice = AnchorPane.getChildren().indexOf(presionado);
+                        Borrar_pieza(indice);
+                    }
+                });
+
             } else {
                 System.out.println("Seleccionado una cantidad de hoyitos no admisibles");
             }
