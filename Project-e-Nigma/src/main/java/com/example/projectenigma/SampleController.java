@@ -1055,12 +1055,12 @@ public class SampleController implements Initializable {
                     if (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.RED){
                         CargarPistas(req[2] + i + 1, 0, 1);
                     } else if (((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.GREEN|| ((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.CHOCOLATE|| ((Circle) AnchorPane.getChildren().get(diffArriba)).getStroke() == Color.BLACK){
-                        //CargarPistas(req[2] + i + 1, 1, 1);
+                        CargarPistas(req[2] + i + 1, 1, 1);
                     }
                     if (((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.RED){
                         CargarPistas(req[2] + i, 0, 2);
                     } else if (((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLUE || ((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.GREEN|| ((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.CHOCOLATE|| ((Circle) AnchorPane.getChildren().get(diffAbajo)).getStroke() == Color.BLACK){
-                        //CargarPistas(req[2] + i, 1, 2);
+                        CargarPistas(req[2] + i, 1, 2);
                     }
 
                 }
